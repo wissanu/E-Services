@@ -1,0 +1,112 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    //Config
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard">
+            <a href="@Url.Action("Home", "Backend_Product", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-folder-open"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.pro</h3>
+                            หลักสูตรอบรม
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard hidden">
+            <a href="@Url.Action("Home", "Backend_Product", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-newspaper-o"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.co</h3>
+                            คอร์สการอบรม
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard">
+            <a href="@Url.Action("Home", "Backend_MembershipRegister", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-users"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.Online_membership</h3>
+                            ผู้ลงทะเบียนออนไลน์
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard">
+            <a href="@Url.Action("Home", "Backend_Membership", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-user"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.Membership</h3>
+                            ผู้สมัครสมาชิก
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard">
+            <a href="@Url.Action("Home", "Backend_PaymentProcess", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-shopping-cart"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.Pay</h3>
+                            จำนวนการสั่งซื้อหลักสูตร
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 Dashboard">
+            <a href="@Url.Action("Home", "Backend_PaymentConfirm_payment", null)">
+                <section class="panel">
+                    <div class="panel-body">
+                        <section class="circle-icon bg-default">
+                            <i class="fa fa-money"></i>
+                        </section>
+                        <div>
+                            <h3 class="no-margin">@ViewBag.Confirm</h3>
+                            จำนวนการยืนยันการสั่งซื้อหลักสูตร
+                        </div>
+                    </div>
+                </section>
+            </a>
+        </div>
+    </div>
+
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

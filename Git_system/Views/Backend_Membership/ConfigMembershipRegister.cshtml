@@ -1,0 +1,107 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.Product>
+
+    //Config
+    ViewBag.Title = "ยินยันการสมัครสมาชิก";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.MembershipMain = "active";
+    BackendMenuLayout.Membership.ConfigPrice = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+    }
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading">
+                <span>การชำระด้วยบัตรเครดิต</span>
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 col-md-3 control-label">ชำระด้วยบัตรเครดิต</label>
+                        <div class="col-sm-8 col-md-9">
+                            @{var membershipCredit = (Model.Count() > 0) ? Model.FirstOrDefault().isCreditCard : false;}
+                            @Html.CheckBoxFor(m => membershipCredit, new { @class = "js-switch-GreenSwitchery01" })
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <button id="ButtonSubmitMembershipCredit" class="hidden" type="submit" name="command" value="membershipCredit">Save</button>
+                    <button type="button" class="btn btn-git-default center-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmitMembershipCredit')">Save</button>
+                </p>
+            </div>
+        </section>
+    }
+
+    foreach (var item in Model)
+    {
+        using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <section class="panel">
+                <header class="panel-heading">
+                    <span>ราคาสมาชิก</span>
+                </header>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group hidden">
+                            <label class="col-sm-4 col-md-3 control-label">Id</label>
+                            <div class="col-sm-8 col-md-9">
+                                @Html.TextBoxFor(model => item.Id, new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 col-md-3 control-label">@item.Courses.FirstOrDefault().TitleTH</label>
+                            <div class="col-sm-8 col-md-9">
+                                @Html.TextBoxFor(model => item.Price, new { @class = "form-control" })
+                                @if (item.Id == 3 || item.Id == 4)
+                                {
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <p>
+                        <button id="@("ButtonSubmit" + item.Id)" class="hidden" type="submit" name="command" value="membershipPrice">Save</button>
+                        <button type="button" class="btn btn-git-default center-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('@("ButtonSubmit" + item.Id)')">Save</button>
+                    </p>
+                </div>
+            </section>
+        }
+    }
+
+    //<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/switchery")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

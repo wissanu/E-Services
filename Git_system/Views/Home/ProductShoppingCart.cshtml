@@ -1,0 +1,184 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+
+    }
+    <div class="row" ng-app="eComApp" ng-controller="CartCtrl">
+        <div ng-if="loadObject.status" class="text-center">
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+                <div class="sk-cube sk-cube5"></div>
+                <div class="sk-cube sk-cube6"></div>
+                <div class="sk-cube sk-cube7"></div>
+                <div class="sk-cube sk-cube8"></div>
+                <div class="sk-cube sk-cube9"></div>
+            </div>
+            <span ng-bind="loadObject.message"></span>
+        </div>
+        <div ng-show="!loadObject.status" class="ng-hide">
+            <div class="col-md-24 col-sm-24 col-xs-24">
+                <div class="row">
+                    <!--name header tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-4 col-sm-4" style="text-align:right;">
+                            <div class="row">
+                                <br /><br /><label class="purple-text font-size-20">GIT E-Store</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-1"></div>
+                    </div>
+                    <!--name header phone-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <div class="row text-center">
+                                &nbsp;
+                                <label class="purple-text font-size-12">GIT E-Store</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-12 col-sm-14">
+                            <img src="~/Images/register-step-1.png" class="col-md-24 col-sm-24 img-responsive" />
+                            <div class="col-md-7 col-sm-7 text-center purple-text">@Multi.Shopping_cart</div>
+                            <div class="col-md-10 col-sm-10 text-center">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-md-7 col-sm-7 text-center">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for mobile-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <img src="~/Images/register-step-1.png" class="col-xs-24 img-responsive" />
+                            <div class="col-xs-7 text-center purple-text" style="font-size:8px;">@Multi.Shopping_cart</div>
+                            <div class="col-xs-10 text-center" style="font-size:8px;">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-xs-7 text-center" style="font-size:8px;">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-24 col-sm-24 col-xs-24" style="height:30px;"></div>
+
+            <!--table-->
+            <div class="col-md-24 col-sm-24 col-xs-24" style="height:30px;"></div>
+            <div id="no-more-tables">
+                <table class="col-md-24 col-sm-24 col-xs-24 table-bordered table-condensed cf">
+                    <!--use class="table-striped" for anothor style-->
+                    <thead class="cf">
+                        <tr style="background-color:#EFEDED;">
+                            <th class="purple-text text-center"></th>
+                            <th class="purple-text text-center">@Multi.Product_id</th>
+                            <th class="purple-text text-center">@Multi.Product_name</th>
+                            <th class="numeric purple-text text-center">@Multi.Quantity</th>
+                            <th class="numeric purple-text text-center">@Multi.Price_Per_Unit</th>
+                            <th class="numeric purple-text text-center">@Multi.Total</th>
+                            <th class="purple-text text-center">@Multi.Remove_in_cart</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="productInCart in Cart.Cart.Items">
+                            <td data-title="" class="text-center">
+                                <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{productInCart.Id}}">
+                                    <img style="max-height:200px; width:auto; max-width:100%;" ng-src="{{productInCart.ImageFiles[0].FilePath}}" />
+                                </a>
+                            </td>
+                            <td data-title="@Multi.Product_id" class="text-center">
+                                <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{productInCart.Id}}" ng-bind="productInCart.Id">
+                                </a>
+                            </td>
+                            <td data-title="@Multi.Product_name" class="text-center">
+                                <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{productInCart.Id}}" ng-bind="productInCart.Name">
+                                </a>
+                            </td>
+                            <td data-title="@Multi.Quantity" class="numeric text-center">
+                                <input type="number" ng-model="productInCart.Quantity" style="background-color:transparent; border-style:none; text-align:center;" min="1" max="65535" />
+                            </td>
+                            <td data-title="@Multi.Price_Per_Unit" class="numeric text-center">
+                                <span ng-bind-html="productInCart.PricePerUnit | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </td>
+                            <td data-title="@Multi.Total" class="numeric text-center">
+                                <span ng-bind-html="productInCart.getPriceTotal() | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </td>
+                            <td data-title="@Multi.Remove_in_cart" class="text-center">
+                                <a ng-click="removeInCart(productInCart.Id)">
+                                    <img style="max-height:50px; width:auto;" src="~/Images/recycle-bin.png" />
+                                </a>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="text-center purple-text" colspan="5">@Multi.Total_price</td>
+                            <td data-title="@Multi.Total" class="numeric text-center purple-text">
+                                <span ng-bind-html="Cart.Cart.getPriceTotal() | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-24 col-sm-24 col-xs-24" style="height:30px;"></div>
+            <div class="col-md-12 col-sm-12"></div>
+            <!--select list type sending-->
+            <div class="col-md-12 col-sm-12 col-xs-24 text-center">
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"></div>
+            <section class="col-md-22 col-md-offset-1" style="clear:both;">
+                <div class="">
+                    <div class="col-sm-offset-7 col-md-offset-11">
+                        <dl class="dl-horizontal">
+                            <dt ng-if="!Cart.checkEletronicOrder()">@Multi.Deliver_type :</dt>
+                            <dd ng-if="!Cart.checkEletronicOrder()" class="text-right">
+                                <select name="mySelect" id="mySelect" style="width:100%"
+                                        ng-options="deliverType.Name for deliverType in deliverTypes.availableOptions track by deliverType.Id"
+                                        ng-model="deliverTypes.selectedOption"></select>
+                            </dd>
+                            @*<dt ng-if="Cart.getPriceDeliver() > 0">@Multi.Delivery_cost :</dt>
+                                <dd ng-if="Cart.getPriceDeliver() > 0" class="text-right">
+                                    <span ng-bind-html="Cart.getPriceDeliver() | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </dd>*@
+                            <dt>@Multi.Total :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="(Cart.Cart.getPriceTotal()) | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            @*<dt>@Multi.Total_price :</dt>
+                                <dd class="text-right">
+                                    <span ng-bind-html="(Cart.Cart.getPriceTotal() + Cart.getPriceDeliver()) | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </dd>*@
+                        </dl>
+                    </div>
+                </div>
+            </section>
+            <div class="col-md-12 col-sm-12 col-xs-24 pagination-right paragraph-extra">
+                <div class="col-md-12 col-sm-12 col-xs-24">
+                    @Html.ActionLink(Multi.Select_more, "ProductView", null, new { @class = "btn btn-git-default btn-block" })
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-24">
+                    @Html.ActionLink(Multi.Continue, "ProductShoppingDeliver", null, new { @class = "btn btn-git-default btn-block", @ng_click = "save()", ng_disabled = "Cart.Cart.Items.length == 0" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

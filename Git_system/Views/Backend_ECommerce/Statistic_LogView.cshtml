@@ -1,0 +1,40 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.Log>
+
+    //Config
+    ViewBag.Title = "สถิติ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Statistic = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">Statistic Logview</header>
+        <div class="panel-body">
+            <h1>Statistic Logview</h1>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,172 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.ProductSKU>
+
+    //Config
+    ViewBag.Title = "โปรโมชั่น";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.Product_SKU = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        <style>
+            .table tr > th {
+                vertical-align: middle;
+                text-align: center;
+            }
+
+            .table tr > td {
+                vertical-align: middle;
+                text-align: center;
+            }
+        </style>
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>โปรโมชั่น</span>
+            @Html.ActionLink("Create", "Create", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table id="datatable" class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                ชื่อส่วนลด
+                            </th>
+                            <th>
+                                ส่วนลด
+                            </th>
+                            <th>
+                                สมาชิกออนไลน์
+                            </th>
+                            <th>
+                                สมาชิกออนไลน์ (อินเตอร์)
+                            </th>
+                            <th>
+                                บุคคลธรรมดา
+                            </th>
+                            <th>
+                                บุคคลธรรมดา (อินเตอร์)
+                            </th>
+                            <th>
+                                นิติบุคคล
+                            </th>
+                            <th>
+                                นิติบุคคล (อินเตอร์)
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ชื่อส่วนลด" style="text-align:left;">
+                                    @Html.DisplayFor(showitem => item.NameTH)
+                                </td>
+                                <td data-title="Sale">
+                                    @Html.DisplayFor(showitem => item.Percent) %
+                                </td>
+                                <td data-title="สมาชิกออนไลน์" class="text-center">
+                                    @if (item.isGuest)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="สมาชิกออนไลน์ (อินเตอร์)" class="text-center">
+                                    @if (item.isGuest_Inter)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="บุคคลธรรมดา" class="text-center">
+                                    @if (item.isIndividual)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="บุคคลธรรมดา (อินเตอร์)" class="text-center">
+                                    @if (item.isIndividual_Inter)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="นิติบุคคล" class="text-center">
+                                    @if (item.isCorporate)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="นิติบุคคล (อินเตอร์)" class="text-center">
+                                    @if (item.isCorporate_Inter)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="สถานะ">
+                                    @if (item.Active)
+                                    {
+                                        <i class="fa fa-check text-success"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-minus text-danger"></i>
+                                    }
+                                </td>
+                                <td data-title="" class="text-center">
+                                    @Html.ActionLink("รายละเอียด", "Detail", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

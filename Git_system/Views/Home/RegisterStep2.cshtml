@@ -1,0 +1,496 @@
+﻿@using Git_system.MultiResources
+@{
+    @model Git_system.Models.Form.Frontend_RegisterStep2
+
+    //Config
+    ViewBag.Title = Multi._TitleWeb_RegisterStep;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+    @section BodySection_Core_styles {
+
+        <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+        <style type="text/css">
+
+        @@media (min-width: 768px) {
+            .form-group label{
+                line-height: 30px;
+            }
+        }
+
+        </style>
+    }
+    <div class="row">
+        <div class="col-md-12 col-md-offset-6 text-center">
+            <h5><label>@Multi._TitlePage_Head_RegisterStep2</label></h5>
+            <img src="~/Images/register-step-2.png" class="img-responsive display-inline stepImage">
+            <p>
+                <label>@ViewBag.RegisterTypeMessage</label>
+            </p>
+        </div>
+        <div class="col-sm-24 text-sm-right">
+            <div class="row">
+                @using (Html.BeginForm("RegisterStep2", "Home", FormMethod.Post, new { id = "form1" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <fieldset action="RegisterStep2" accept-charset="utf-8" class="form-horizontal" role="form">
+                        @Html.TextBoxFor(model => model.IdCRM, new { @class = "hidden", @readonly = "true" })
+                        @Html.TextBoxFor(model => model.GroupCRM, new { @class = "hidden", @readonly = "true" })
+                        @Html.TextBoxFor(model => model.MobileCRM, new { @class = "hidden", @readonly = "true" })
+                        @Html.TextBoxFor(model => model.ExpCRM, new { @class = "hidden", @readonly = "true" })
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Firstname</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control input-sm", @required = true })
+                                        @Html.ValidationMessageFor(model => model.Firstname, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Lastname</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control input-sm", @required = true })
+                                        @Html.ValidationMessageFor(model => model.Lastname, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @if (Multi.__LanguageType == "TH")
+                        {
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_FirstnameEN</label>
+                                        <div class="col-sm-18">
+                                            @Html.TextBoxFor(model => model.FirstnameEN, new { @class = "form-control input-sm", @required = true })
+                                            @Html.ValidationMessageFor(model => model.FirstnameEN, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_LastnameEN</label>
+                                        <div class="col-sm-18">
+                                            @Html.TextBoxFor(model => model.LastnameEN, new { @class = "form-control input-sm", @required = true })
+                                            @Html.ValidationMessageFor(model => model.LastnameEN, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Company</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Company, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Company, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_JobTitle</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.JobTitle, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Office_Phone</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.WorkTel, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.WorkTel, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-xs-16">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-9">@Multi.Office_Fax</label>
+                                    <div class="col-sm-15">
+                                        @Html.TextBoxFor(model => model.WorkFax, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.WorkFax, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-8">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Ext</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.ExtWorkFax, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.ExtWorkFax, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 hidden">
+                            <div class="form-group">
+                                <label class="form-label col-sm-6">@Multi.Membership_Email</label>
+                                <div class="col-sm-18">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-sm", @readonly = "true" })
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-24 hidden">
+                            <div class="form-group">
+                                <label class="form-label col-sm-6">@Multi.Membership_Password</label>
+                                <div class="col-sm-18">
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control input-sm hidden", @type = "password", @readonly = "true" })
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Religion</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Religion, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Religion, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_BirthDay</label>
+                                    <div class="col-sm-18">
+                                        <div class='input-group date'>
+                                            @if (Multi.__LanguageType == "TH")
+                                            {@Html.TextBoxFor(model => model.BirthDay, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker", @data_date_language = "th-th" }) }
+                                            else
+                                            {@Html.TextBoxFor(model => model.BirthDay, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker" }) }
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        @Html.ValidationMessageFor(model => model.BirthDay, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.IdentificationCardNo</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.IdentificationNo, new { @class = "form-control input-sm", @required = true })
+                                        @Html.ValidationMessageFor(model => model.IdentificationNo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Occupation</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Occupation, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.HighestLevelofEducation</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Education, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Education, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.DoyouhavestudyorworkexperienceinGemandJewelryField</label>
+                                    <div class="col-sm-18 text-left">
+                                        <label class="radio-inline">@Html.RadioButtonFor(model => model.ExperienceInGem, "True") @Multi.has</label>
+                                        <label class="radio-inline">@Html.RadioButtonFor(model => model.ExperienceInGem, "False") @Multi.none</label>
+                                        @Html.ValidationMessageFor(model => model.ExperienceInGem, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Question</label>
+                                    <div class="col-sm-18">
+                                        @Html.DropDownList("QuestionListId", null, null, new { @class = "form-control input-sm", @required = true })
+                                        @Html.ValidationMessageFor(model => model.QuestionListId, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Answer</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Answer, new { @class = "form-control input-sm", @required = true })
+                                        @Html.ValidationMessageFor(model => model.Answer, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-24">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-3">@Multi.Membership_Address</label>
+                                    <div class="col-sm-21">
+                                        @Html.TextAreaFor(model => model.Address, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Address, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Road</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Road, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Road, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Multi.__LanguageType == "TH")
+                            {
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_Province</label>
+                                        <div class="col-sm-18">
+                                            <select id="Province" name='Province' onchange="locationChange(3, this.value, 'Amphur')" class="form-control input-sm"></select>
+                                            @Html.ValidationMessageFor(model => model.Province, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_Amphur</label>
+                                        <div class="col-sm-18">
+                                            <select id="Amphur" name='Amphur' onchange="locationChange(4, this.value, 'District')" class="form-control input-sm"></select>
+                                            @Html.ValidationMessageFor(model => model.Amphur, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_District</label>
+                                        <div class="col-sm-18">
+                                            <select id="District" name='District' class="form-control input-sm"></select>
+                                            @Html.ValidationMessageFor(model => model.District, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_City</label>
+                                        <div class="col-sm-18">
+                                            @Html.TextBoxFor(model => model.City, new { @class = "form-control input-sm" })
+                                            @Html.ValidationMessageFor(model => model.City, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_State</label>
+                                        <div class="col-sm-18">
+                                            @Html.TextBoxFor(model => model.State, new { @class = "form-control input-sm" })
+                                            @Html.ValidationMessageFor(model => model.State, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-sm-6">@Multi.Membership_Country</label>
+                                        <div class="col-sm-18">
+                                            <select id="Country" name='Country' class="form-control input-sm"></select>
+                                            @Html.ValidationMessageFor(model => model.Country, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Postcode</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.Zipcode, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Zipcode, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Tel</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.TelNo, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.TelNo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Membership_Mobile</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.MobileNo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-xs-16">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-9">@Multi.Membership_Fax</label>
+                                    <div class="col-sm-15">
+                                        @Html.TextBoxFor(model => model.FaxNo, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.FaxNo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-xs-8">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-6">@Multi.Ext</label>
+                                    <div class="col-sm-18">
+                                        @Html.TextBoxFor(model => model.ExtFaxNo, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.ExtFaxNo, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8 col-md-offset-16">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    @Html.ActionLink(Multi._Button_Prev, "RegisterStep1", "Home", null, new { @class = "btn btn-git-default btn-block" })
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    <button class="btn btn-git-default btn-block" type="submit" id="submitBTN" onclick="sumbitfunction()">@Multi._Button_Next</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            function sumbitfunction() {
+                $("#submitBTN").attr('disabled', 'disabled');
+                document.getElementById("form1").submit();
+            }
+        </script>
+        @if (Multi.__LanguageType == "TH")
+        {
+            <script>
+                $(document).ready(function () {
+
+                    locationChange(2, -1, "Province");
+                    //locationChange(3, -1, "Amphur");
+                    //locationChange(4, -1, "District");
+                });
+            </script>
+        }
+        else
+        {
+            <script>
+                $(document).ready(function () {
+
+                    locationChange(0, -1, "Country");
+                });
+            </script>
+        }
+        <script>
+            $(function () {
+                $('.datepicker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            });
+
+            function locationChange(D, V, P) {
+
+                var url = '@Url.Action("APILocation", "Home", null)?D=' + D + '&V=' + V;
+                var mySelect = $('#' + P);
+
+                var defaultValue = "";
+                if (D == 2) {
+                    defaultValue = "เลือกจังหวัด";
+                }
+                else if (D == 3) {
+                    defaultValue = "เลือกอำเภอ/เขต";
+                }
+                else if (D == 4) {
+                    defaultValue = "เลือกตำบล/แขวง";
+                }
+                else if (D == 0) {
+                    defaultValue = "Select Country";
+                }
+
+                $.getJSON(url, function (json) {
+                    mySelect.find('option').remove();
+                    mySelect.append($('<option></option>').val("0").html(defaultValue));
+                    json.forEach(function (entry) {
+                        var _Name, _Value;
+                        if (D == 2) {
+                            _Name = entry.PROVINCE_NAME;
+                            _Value = entry.PROVINCE_ID;
+                        }
+                        else if (D == 3) {
+                            _Name = entry.AMPHUR_NAME;
+                            _Value = entry.AMPHUR_ID;
+                        }
+                        else if (D == 4) {
+                            _Name = entry.DISTRICT_NAME;
+                            _Value = entry.DISTRICT_ID;
+                        }
+                        else if (D == 0) {
+                            _Name = entry.Name;
+                            _Value = entry.Id;
+                        }
+                        mySelect.append($('<option></option>').val(_Value).html(_Name));
+
+                    });
+                });
+
+            }
+        </script>
+        <script>
+            $("#BirthDay").bind("focus", function () {
+                $(this).blur();
+            });
+        </script>
+        @* add asterisk to request field *@
+        <script>
+            $("input[required]").parent().append('<span class="fa fa-asterisk form-control-frontend-feedback-v1" aria-hidden="true" style="color: #a94442;"></span>');
+        </script>
+    }
+}

@@ -1,0 +1,373 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.Permission>
+
+    ViewBag.Title = "การกำหนดสิทธิ์";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.AdminAndSecurityMain = "active";
+    BackendMenuLayout.AdminAndSecurity.PermissionsManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span class="">การกำหนดสิทธิ์</span>
+            @Html.ActionLink("Create", "Create", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables hidden-xs">
+
+                @*desktop*@
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th style="vertical-align:middle;">
+                                ชื่อ
+                            </th>
+                            @foreach (var item in Model)
+                            {
+                                <th>
+                                    @item.Name<br />
+                                    @Html.ActionLink("แก้ไข", "Edit", new { id = item.permissionId })
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-title="isAdmin">isAdmin</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isAdmin)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isUser</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isUser)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isProduct</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isProduct)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isPayment</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isPayment)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isLog</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isLog)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isESlide</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isESlide)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEProduct</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEProduct)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEStock</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEStock)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEPayView</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEPayView)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEPayConfirm</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEPayConfirm)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEDeliver</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEDeliver)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEPromotion</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEPromotion)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td data-title="isAdmin">isEStatistic</td>
+                            @foreach (var item in Model)
+                            {
+                                <td data-title="@item.Name" class="text-center">
+                                    @if (item.isEStatistic)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            @*mobile*@
+            <div class="no-more-tables visible-xs">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                ชื่อ
+                            </th>
+                            <th>
+                                รายละเอียด
+                            </th>
+                            <th>
+                                isAdmin
+                            </th>
+                            <th>
+                                isUser
+                            </th>
+                            <th>
+                                isProduct
+                            </th>
+                            <th>
+                                isPayment
+                            </th>
+                            <th>
+                                isLog
+                            </th>
+                            <th>
+                                isESlide
+                            </th>
+                            <th>
+                                isEProduct
+                            </th>
+                            <th>
+                                isEStock
+                            </th>
+                            <th>
+                                isEPayView
+                            </th>
+                            <th>
+                                isEPayConfirm
+                            </th>
+                            <th>
+                                isEDeliver
+                            </th>
+                            <th>
+                                isEPromotion
+                            </th>
+                            <th>
+                                isEStatistic
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ชื่อ">
+                                    @Html.DisplayFor(showitem => item.Name)
+                                </td>
+                                <td data-title="รายละเอียด">
+                                    @Html.DisplayFor(showitem => item.Detail)
+                                </td>
+                                <td data-title="isAdmin" class="text-center">
+                                    @if (item.isAdmin)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                                <td data-title="isUser" class="text-center">
+                                    @if (item.isUser)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                                <td data-title="isProduct" class="text-center">
+                                    @if (item.isProduct)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                                <td data-title="isPayment" class="text-center">
+                                    @if (item.isPayment)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                                <td data-title="isLog" class="text-center">
+                                    @if (item.isLog)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isESlide" class="text-center">
+                                    @if (item.isESlide)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEProduct" class="text-center">
+                                    @if (item.isEProduct)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEStock" class="text-center">
+                                    @if (item.isEStock)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEPayView" class="text-center">
+                                    @if (item.isEPayView)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEPayConfirm" class="text-center">
+                                    @if (item.isEPayConfirm)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEDeliver" class="text-center">
+                                    @if (item.isEDeliver)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEPromotion" class="text-center">
+                                    @if (item.isEPromotion)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+
+                                <td data-title="isEStatistic" class="text-center">
+                                    @if (item.isEStatistic)
+                                    {<i class="fa fa-check text-success"></i>}
+                                    else
+                                    {<i class="fa fa-minus text-danger"></i>}
+                                </td>
+                                <td class="text-center">
+                                    @Html.ActionLink("แก้ไข", "Edit", new { id = item.permissionId })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

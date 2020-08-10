@@ -1,0 +1,563 @@
+﻿@using Git_system.MultiResources
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.Form.Frontend_RegisterStep2
+
+    //Config
+    ViewBag.Title = "สมาชิกสถาบัน";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.MembershipMain = "active";
+    BackendMenuLayout.Membership.MembershipManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+    }
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading">
+                <span>สมาชิกสถาบัน</span>
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    <fieldset>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">วันที่สมัคร</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.RegisterDate, "{0:dd/MM/yyyy HH:mm:ss}", new { @class = "form-control input-sm", @readonly = "true" })
+                                    @Html.ValidationMessageFor(model => model.RegisterDate)
+                                </div>
+                            </div>
+                        </div>
+                        <div id="DateExp" class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">วันหมดอายุ</label>
+                                <div class="col-sm-8">
+                                    <div class='input-group date'>
+                                        @Html.TextBoxFor(model => model.RegisterDateExp, "{0:dd/MM/yyyy}", new { @class = "form-control", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker", @data_date_language = "th-th" })
+                                        @Html.ValidationMessageFor(model => model.RegisterDateExp)
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ประเภทสมาชิก</label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownList("MembershipRegisterTypeId", null, null, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">หมายเลขการลงทะเบียน</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Id, new { @class = "form-control input-sm", @readonly = "true" })
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    @{var membership_is_crm = Model.MembershipRegisterTypeId == 3 || Model.MembershipRegisterTypeId == 4 || Model.MembershipRegisterTypeId == 5 || Model.MembershipRegisterTypeId == 6;}
+                    <fieldset>
+                        <legend></legend>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">หมายเลขสมาชิก CRM</label>
+                                <div class="col-sm-8">
+                                    @if (membership_is_crm)
+                                    {@Html.TextBoxFor(model => model.IdCRM, new { @class = "form-control input-sm" })}
+                                    else
+                                    {@Html.TextBoxFor(model => model.IdCRM, new { @class = "form-control input-sm", @readonly = "true" })}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">กลุ่มสมาชิก CRM</label>
+                                <div class="col-sm-8">
+                                    @if (membership_is_crm)
+                                    {@Html.TextBoxFor(model => model.GroupCRM, new { @class = "form-control input-sm" })}
+                                    else
+                                    {@Html.TextBoxFor(model => model.GroupCRM, new { @class = "form-control input-sm", @readonly = "true" })}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">โทรศัพท์สมาชิก CRM</label>
+                                <div class="col-sm-8">
+                                    @if (membership_is_crm)
+                                    {@Html.TextBoxFor(model => model.MobileCRM, new { @class = "form-control input-sm" })}
+                                    else
+                                    {@Html.TextBoxFor(model => model.MobileCRM, new { @class = "form-control input-sm", @readonly = membership_is_crm })}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">วันหมดอายุสมาชิก CRM</label>
+                                <div class="col-sm-8">
+                                    @if (membership_is_crm)
+                                    {
+                                        <div class='input-group date'>
+                                            @Html.TextBoxFor(model => model.ExpCRM, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker", @data_date_language = "th-th" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class='input-group date' style="cursor: not-allowed;">
+                                            @Html.TextBoxFor(model => model.ExpCRM, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker", @data_date_language = "th-th", @readonly = "true", @style = "pointer-events: none" })
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend></legend>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Firstname)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">นามสกุล</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Lastname)
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.MembershipRegisterTypeId == 1 || Model.MembershipRegisterTypeId == 3 || Model.MembershipRegisterTypeId == 5)
+                        {
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">ชื่อ (ภาษาอังกฤษ)</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.FirstnameEN, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.FirstnameEN)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">นามสกุล (ภาษาอังกฤษ)</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.LastnameEN, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.LastnameEN)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">สถานที่ทำงาน</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Company, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Company)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ตำแหน่ง / Job Title</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.JobTitle)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">โทรศัพท์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.WorkTel, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.WorkTel)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <label class="form-label col-sm-6">@Multi.Office_Fax</label>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(model => model.WorkFax, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.WorkFax, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-label col-sm-3">@Multi.Ext</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.ExtWorkFax, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.ExtWorkFax, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">วันเกิด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.BirthDay, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.BirthDay)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ศาสนา</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Religion, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Religion)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">เลขที่บัตรประชาชน</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.IdentificationNo, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.IdentificationNo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">อาชีพ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Occupation, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Occupation)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">วุฒิการศึกษาสูงสุด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Education, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Education)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ประสบการณ์ด้านอัญมณี</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.ExperienceInGem, new { @class = "js-switch-GreenSwitchery01" })
+                                    @Html.ValidationMessageFor(model => model.ExperienceInGem)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">คำถาม</label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownList("QuestionListId", null, null, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.QuestionListId)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">คำตอบ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Answer, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Answer)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ที่อยู่</label>
+                                <div class="col-sm-8">
+                                    @Html.TextAreaFor(model => model.Address, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Address)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">ถนน</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Road, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Road)
+                                </div>
+                            </div>
+                        </div>
+                        @if (Model.MembershipRegisterTypeId == 1 || Model.MembershipRegisterTypeId == 3 || Model.MembershipRegisterTypeId == 5)
+                        {
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">จังหวัด</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("Province", null, null, new { @class = "form-control input-sm", @onchange = "locationChange(3, this.value, 'Amphur')" })
+                                        @Html.ValidationMessageFor(model => model.Province)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">อำเภอ / เขต</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("Amphur", null, null, new { @class = "form-control input-sm", @onchange = "locationChange(4, this.value, 'District')" })
+                                        @Html.ValidationMessageFor(model => model.Amphur)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">ตำบล / แขวง</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("District", null, null, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.District)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">เมือง</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.City, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.City)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">รัฐ</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.State, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.State)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="form-label col-sm-4">ประเทศ</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownList("Country", null, null, new { @class = "form-control input-sm" })
+                                        @Html.ValidationMessageFor(model => model.Country)
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">รหัสไปรษณีย์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Zipcode, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.Zipcode)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">โทรศัพท์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.TelNo, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.TelNo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">โทรศัพท์มือถือ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.MobileNo, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.MobileNo)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-xs-8">
+                            <div class="form-group">
+                                <label class="form-label col-sm-6">@Multi.Membership_Fax</label>
+                                <div class="col-sm-6">
+                                    @Html.TextBoxFor(model => model.FaxNo, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.FaxNo, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="form-group">
+                                <label class="form-label col-sm-3">@Multi.Ext</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.ExtFaxNo, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.ExtFaxNo, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-24 hidden">
+                            <div class="form-group">
+                                <label class="form-label col-sm-4">Password</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control input-sm", @type = "password", @readonly = "true" })
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <p class="text-center">
+                    @Html.ActionLink("Back", "Home", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        </section>
+
+    }
+
+    //<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+        @Scripts.Render("~/Scripts/switchery")
+        <script>
+            //เพิ่ม class ที่ทำให้ validation-error เป็นสี แดง โดยใช้ class text-danger
+            $(".field-validation-error").addClass("text-danger");
+        </script>
+
+        <script>
+            $("#MembershipRegisterTypeId").change(function () {
+                var remove = function (array_of_key, is_remove) {
+                    $.each(array_of_key, function (key, value) {
+                        if (is_remove) {
+                            $(value).removeAttr("readonly");
+                            $(value).css("pointer-events", '');
+                            $(value).parent(".input-group.date").css('cursor', '');
+                        }
+                        else {
+                            $(value).attr('readonly', 'readonly');
+                            $(value).css('pointer-events', 'none');
+                            $(value).parent(".input-group.date").css('cursor', 'not-allowed');
+                        }
+                    });
+                };
+
+                var array_of_key_element = ['#IdCRM', '#GroupCRM', '#MobileCRM', '#ExpCRM'];
+                if ($.inArray(parseInt($("#MembershipRegisterTypeId").val()), [1, 2]) == -1) {
+                    remove(array_of_key_element, true);
+                }
+                else {
+                    remove(array_of_key_element, false);
+                }
+
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                $('.datepicker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            });
+        </script>
+
+        @if (Model.MembershipRegisterTypeId == 1 || Model.MembershipRegisterTypeId == 3 || Model.MembershipRegisterTypeId == 5)
+        {
+            <script>
+
+                function locationChange(D, V, P) {
+
+                    var url = '@Url.Action("APILocation", "Home", null)?D=' + D + '&V=' + V;
+                    var mySelect = $('#' + P);
+
+                    var defaultValue = "";
+                    if (D == 2) {
+                        defaultValue = "เลือกจังหวัด";
+                    }
+                    else if (D == 3) {
+                        defaultValue = "เลือกอำเภอ/เขต";
+                    }
+                    else if (D == 4) {
+                        defaultValue = "เลือกตำบล/แขวง";
+                    }
+                    else if (D == 0) {
+                        defaultValue = "Select Country";
+                    }
+
+                    $.getJSON(url, function (json) {
+                        mySelect.find('option').remove();
+                        mySelect.append($('<option></option>').val("0").html(defaultValue));
+                        json.forEach(function (entry) {
+                            var _Name, _Value;
+                            if (D == 2) {
+                                _Name = entry.PROVINCE_NAME;
+                                _Value = entry.PROVINCE_ID;
+                            }
+                            else if (D == 3) {
+                                _Name = entry.AMPHUR_NAME;
+                                _Value = entry.AMPHUR_ID;
+                            }
+                            else if (D == 4) {
+                                _Name = entry.DISTRICT_NAME;
+                                _Value = entry.DISTRICT_ID;
+                            }
+                            else if (D == 0) {
+                                _Name = entry.Name;
+                                _Value = entry.Id;
+                            }
+                            mySelect.append($('<option></option>').val(_Value).html(_Name));
+
+                        });
+                    });
+
+                }
+            </script>
+        }
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

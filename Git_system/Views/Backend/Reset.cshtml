@@ -1,0 +1,75 @@
+﻿@model Git_system.Models.Form.Frontend_ResetPassword
+@{
+
+}
+<html class="signin no-js" lang="">
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- /meta -->
+    <title>Sign in</title>
+
+    @Styles.Render("~/Content/BackendMain")
+    <link rel="stylesheet" href="~/Content/GitStyle.css" />
+
+    <!-- template styles -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- load modernizer -->
+    @Styles.Render("~/Scripts/BackendMain")
+</head>
+<body class="bg-color center-wrapper">
+    <div class="center-content">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+                    <section class="panel panel-default">
+                        <header class="panel-heading">
+                            <img src="~/Images/GIT_Headder_New.png" class="img-responsive display-inline" />
+                        </header>
+                        <div class="bg-white user pd-md">
+                            @using (Html.BeginForm(new { }))
+                            {
+                                @Html.AntiForgeryToken()
+                                bool CheckToken = Convert.ToBoolean(ViewBag.CheckToken);
+                                if (CheckToken)
+                                {
+                                    <fieldset>
+                                        @Html.HiddenFor(model => model.User)
+                                        @Html.HiddenFor(model => model.Token)
+                                        <div>
+                                            @Html.PasswordFor(model => model.Password, new { @class = "form-control mg-b-sm", @placeholder = "Password", @autofocus = true })
+                                            @Html.ValidationMessageFor(model => model.Password)
+                                        </div>
+                                        <div>
+                                            @Html.PasswordFor(model => model.Confirm_Password, new { @class = "form-control", @placeholder = "Repassword" })
+                                            @Html.ValidationMessageFor(model => model.Confirm_Password)
+                                        </div>
+                                        <div style="color:red;">
+                                            @Html.ValidationSummary(true)
+                                        </div>
+                                        <div class="text-right mg-b-sm mg-t-sm">
+                                        </div>
+                                        <input class="btn btn-block btn-git-default" type="submit" value="Change password" />
+                                    </fieldset>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <label>ท่านไม่ดำเนินการตั้งรหัสผ่านในเวลาที่กำหนด</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

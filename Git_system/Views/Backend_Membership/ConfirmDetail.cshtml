@@ -1,0 +1,116 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.ConfirmPayment
+
+    //Config
+    ViewBag.Title = "ตรวจสอบการโอนเงิน";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.MembershipMain = "active";
+    BackendMenuLayout.Membership.ConfirmPayment = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+    }
+
+    <section class="panel">
+        <header class="panel-heading">
+            <span>ตรวจสอบการโอนเงิน</span>
+        </header>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <fieldset class="form-horizontal @*bordered-group*@" role="form">
+
+                    <div class="form-group" style="display:none;">
+                        <label class="col-sm-2 control-label">ลำดับ</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ชื่อ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ธนาคาร</label>
+                        <div class="col-sm-9 col-md-10">
+                            <input type="text" class="form-control" readonly value='@(Model.ConfirmPaymentBankTypeId.HasValue ? String.Format("{0} ({1})", Model.ConfirmPaymentBankType.BanknameTH, Model.ConfirmPaymentBankType.AccountNo) : "-")' />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">วันเวลา</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (model.Date), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ราคาที่ยืนยัน</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.HiddenFor(model => (Model.Total))
+                            <input class="form-control" readonly value="@Git_system.Models.Helper.PriceAndCurrency(Model.Total, Model.Currency, true)" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ที่อยู่</label>
+                        <div class="col-sm-9 col-md-10">
+                            <textarea class="form-control" style="resize:none;" readonly>@Model.Pay.Membership.getFullAddressWithPhoneAndEmail()</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">อื่นๆ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => model.Other, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+                    @if (Model.Filename != "" && Model.Filename != null)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-2 control-label">หลักฐานการชำระ</label>
+                            <div class="col-sm-9 col-md-10">
+                                <a href="~/Images/Uploads/@Model.Filename" class="form-control">ดูรายละเอียด</a>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.FilenameConfirm != "" && Model.FilenameConfirm != null)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-2 control-label">หลักฐานการสมัคร</label>
+                            <div class="col-sm-9 col-md-10">
+                                <a href="~/Images/Uploads/@Model.FilenameConfirm" class="form-control">ดูรายละเอียด</a>
+                            </div>
+                        </div>
+                    }
+                </fieldset>
+            }
+        </div>
+        <footer class="panel-footer text-center">
+            <p>
+                @Html.ActionLink("Back", "Confirm", null, new { @class = "btn btn-git-default" })
+                @Html.ActionLink("Payment", "ConfirmMembership", null, new { @id = Model.PayId }, new { @class = "btn btn-git-default" })
+            </p>
+        </footer>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

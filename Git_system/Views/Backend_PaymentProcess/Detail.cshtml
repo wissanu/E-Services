@@ -1,0 +1,277 @@
+﻿@using Git_system.Models;
+@using Git_system.MultiResources
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.Pay
+
+    //Config
+    ViewBag.Title = "การสั่งซื้อ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.PaymentProcess = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section>
+        <p class="pull-right">
+            <button class="btn btn-git-default" onclick="return PrintPanel();">Print</button>
+        </p>
+    </section>
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading">
+                <span>การสั่งซื้อ</span>
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">เลขที่การสั่งซื้อ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (Model.Id), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">วันเวลา</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (Model.Date), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">สถานะ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.DropDownList("ProcessStatusTypeId", null, null, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">หมายเหตุ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextAreaFor(model => (Model.Note), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ราคา</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.HiddenFor(model => (Model.Price))
+                            <input id="" name="" class="form-control" readonly value="@Helper.PriceAndCurrency(Model.Price,Model.Currency)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <p>
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default center-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">บันทึก</button>
+                </p>
+            </footer>
+        </section>
+
+        <section class="panel">
+            <header class="panel-heading">
+                <span>รายละเอียดการสั่งซื้อ</span>
+            </header>
+            <div class="panel-body">
+                <div id="tableDetailPaymentList" class="no-more-tables">
+                    <table class="table table-bordered table-striped table-condensed dataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ลำดับ
+                                </th>
+                                <th>
+                                    หลักสูตร
+                                </th>
+                                <th>
+                                    รุ่น
+                                </th>
+                                <th>
+                                    วัน
+                                </th>
+                                <th>
+                                    เวลา
+                                </th>
+                                <th>
+                                    จำนวน
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.PayItems)
+                            {
+                                <tr>
+                                    <td data-title="ลำดับ" class="text-center"></td>
+                                    <td data-title="หลักสูตร">
+                                        @Html.DisplayFor(showitem => item.Course.Product.TitleTH)
+                                    </td>
+                                    <td data-title="รุ่น">
+                                        @Html.DisplayFor(showitem => item.Course.TitleTH)
+                                    </td>
+                                    <td data-title="วัน" class="text-center">
+                                        @Html.ValueFor(showitem => item.Course.DateStart, "{0:dd/MM/yyyy}") - @Html.ValueFor(showitem => item.Course.DateEnd, "{0:dd/MM/yyyy}")
+                                    </td>
+                                    <td data-title="เวลา" class="text-center">
+                                        @Html.ValueFor(showitem => item.Course.DateStart, "{0:hh:mm tt}") - @Html.ValueFor(showitem => item.Course.DateEnd, "{0:hh:mm tt}")
+                                    </td>
+                                    <td data-title="จำนวน">
+                                        @Html.DisplayFor(showitem => item.Quantity)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="pull-right">ราคา : @Helper.PriceAndCurrency(Model.Price, Model.Currency)</p>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    }
+
+    //<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        <script type="text/javascript">
+            function stringPrintOutputTextCol3(col1, col2, col3) {
+                var sO = "<p><div style='overflow:hidden;'><div style='width: 33%; float:left;'>" + col1 + "</div><div style='width: 33%; float:left;'>" + col2 + "</div><div style='width: 33%; float:left;'>" + col3 + "</div></div> </p>";
+                return sO;
+            }
+            function stringPrintOutputTextCol2(col1, col2) {
+                var sO = "<p><div style='overflow:hidden;'><div style='width: 50%; float:left;'>" + col1 + "</div><div style='width: 50%; float:left;'>" + col2 + "</div></div> </p>";
+                return sO;
+            }
+            function PrintPanel() {
+
+                var printWindow = window.open('', '', 'height=400,width=800');
+                printWindow.document.write('<html><head><title></title>');
+                printWindow.document.write('<style>  body{font-size: 13px; font-family: "Open Sans", Arial, sans-serif;} </style>')
+                printWindow.document.write('<style>  table{font-size: 13px; border: 2px solid #ddd; border-collapse: collapse;  padding: 5px; width:100%;} </style>')
+                printWindow.document.write('<style>  table>thead{background-color: #efefef; color: #2b3c94;} </style>')
+                printWindow.document.write('<style>  table th,td{border: 2px solid #ddd; border-collapse: collapse; padding: 5px;} </style>')
+
+                printWindow.document.write('</head><body>');
+
+                @{
+                    string name = string.Format("{0} {1}", Model.Membership.Firstname, Model.Membership.Lastname);
+                    if (Model.Membership.MembershipRegisterTypeId == 1 || Model.Membership.MembershipRegisterTypeId == 3 || Model.Membership.MembershipRegisterTypeId == 5)
+                    {
+                        if (!(Model.Membership.FirstnameEN == null || Model.Membership.LastnameEN == null))
+                        {
+                            string nameEng = string.Format(" ({0} {1})", Model.Membership.FirstnameEN, Model.Membership.LastnameEN);
+                            name = name + nameEng;
+                        }
+                    }
+                }
+                printWindow.document.write("<p><span>ชื่อ-สกุล : </span>@name</p>");
+                printWindow.document.write("<p><span>เลขที่บัตรประชาชน : </span>@Model.Membership.IdentificationNo</p>");
+                printWindow.document.write("<p><span>อาชีพ : </span>@Model.Membership.Occupation</p>");
+                printWindow.document.write("<p><span>วัน-เดือน-ปี ที่เกิด : </span>@Convert.ToDateTime(Model.Membership.BirthDay).ToString("dd MMM yyy")</p>");
+                printWindow.document.write("<p><span>ที่อยู่ปัจจุบัน : </span> @Model.Membership.getFullAddress()</p>");
+
+                printWindow.document.write(stringPrintOutputTextCol3("<span>โทรศัพท์ : </span>@Model.Membership.Tel", "<span>โทรสาร : </span>@Model.Membership.Fax", "<span>โทรสารมือถือ : </span>@Model.Membership.Mobile"));
+                printWindow.document.write("<p><span>อีเมล : </span>@Model.Membership.Email</p>");
+
+                printWindow.document.write(stringPrintOutputTextCol2("<span>สถานที่ทำงาน : </span>@Model.Membership.Company", "<span>ตำแหน่ง : </span>@Model.Membership.JobTitle"));
+                printWindow.document.write(stringPrintOutputTextCol2("<span>โทรศัพท์ : </span>@Model.Membership.WorkTel", "<span>โทรสาร : </span>@Model.Membership.WorkFax"));
+                printWindow.document.write("<p><span>วุฒิการศึกษาสูงสุด : </span>@Model.Membership.Education</p>");
+                printWindow.document.write("<p><span>ประสบการณ์ด้านอัญมณีและเครื่องประดับ : </span>@Html.Raw(Model.Membership.ExperienceInGem?"<input checked type='checkbox' />" :"<input type='checkbox' />") </p>");
+
+                printWindow.document.write("<hr />");
+
+                printWindow.document.write("<p><span>เลขที่การสั่งซื้อ : </span>" + document.getElementById("Id").value + "</p>");
+                printWindow.document.write("<p><span>วันเวลา : </span>@Model.Date.ToString("dd MMM yyyy HH:mm:ss")</p>");
+                printWindow.document.write("<p><span>ประเภทการสั่งซื้อ : </span>@Model.PayType.Name</p>");
+                printWindow.document.write("<p><span>สถานะ : </span>" + document.getElementById('ProcessStatusTypeId').options[document.getElementById('ProcessStatusTypeId').selectedIndex].innerHTML + "</p>");
+                printWindow.document.write("<p><span>ราคา : </span>@Helper.PriceAndCurrency(Model.Price,Model.Currency)</p>");
+
+                printWindow.document.write("<hr />");
+                printWindow.document.write("<p><span>ออกใบเสร็จในนาม</span></p>");
+                printWindow.document.write("<p><span>ชื่อ : @Model.Fullname</span></p>");
+                printWindow.document.write("<p><span>ที่อยู่ : @Model.Address</span></p>");
+
+                var tableDetailPaymentList = document.getElementById("tableDetailPaymentList");
+                printWindow.document.write(tableDetailPaymentList.innerHTML);
+
+                var legal = "<div><p><label>@Multi._MembershipRegisterString10</label></p><p><input checked type='checkbox' /> @Multi._MembershipRegisterString11@Multi._MembershipRegisterString_legal</p></div>";
+
+                printWindow.document.write(legal);
+
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                setTimeout(function () {
+                    printWindow.print();
+                }, 500);
+                return false;
+            }
+        </script>
+        @Scripts.Render("~/Scripts/DataTable_exprot_Custom")
+    }
+
+    @section BodySection_Template_scripts {
+
+        <script>
+            $.extend($.fn.dataTable.defaults, {
+                "displayLength": 300,//number entity in table
+                "ordering": false,
+                "info": false
+            });
+
+            $(document).ready(function () {
+                var t = $('.dataTable').DataTable({
+                    "dom": '<"row">'
+                });
+
+                t.on('order.dt search.dt', function () {
+                    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+
+                    t.column(0).nodes().each(function (cell, i) {
+                        if (cell.isConnected)
+                            t.data()[i][0] = cell.innerHTML;
+                    });
+                }).draw();
+            });
+        </script>
+    }
+
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

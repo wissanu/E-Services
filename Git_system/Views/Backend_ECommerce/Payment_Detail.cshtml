@@ -1,0 +1,204 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComConfirmOrder
+
+    //Config
+    ViewBag.Title = "การชำระเงิน";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Payment = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+
+    }
+    <section class="panel">
+        @using (Html.BeginForm("Payment_Detail", "Backend_ECommerce", FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            <header class="panel-heading">รายละเอียดการชำระเงิน</header>
+            <div class="panel-body">
+                <div class="form-horizontal bordered-group" role="form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">หมายเลขการชำระเงิน</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => Model.Id, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">หมายเลขการสั่งซื้อ</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => Model.EComOrderId, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">วัน/เวลา การชำระเงิน</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => Model.Datetime, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">ชื่อสมาชิก</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" disabled type="text" value="@String.Format("{0} {1}", Model.EComOrder.Membership.Firstname, Model.EComOrder.Membership.Lastname)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">ราคา</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" disabled type="text" value="@Helper.PriceAndCurrency(Model.EComOrder.Price, Model.EComOrder.Currency, true)" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">ราคา ที่ชำระ</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" disabled type="text" value="@Helper.PriceAndCurrency(Model.Price, Model.EComOrder.Currency, true)" />
+                            </div>
+                        </div>
+
+                        @if (Model.FilenamePayment != null && Model.FilenamePayment != "[]")
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-2  control-label">ไฟล์ประกอบการชำระเงิน</label>
+                                <div class="col-sm-10">
+                                    @{
+                            List<Git_system.Models.ECom.FileLink> filePayments = new List<Git_system.Models.ECom.FileLink>();
+                            filePayments = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.FilenamePayment);
+                            foreach (Git_system.Models.ECom.FileLink filePayment in filePayments)
+                            {
+                                @Html.ActionLink(filePayment.Filename, "EComDownload", "AuthenticationFile", null, null, null, new { @filename = filePayment.SaveFilename, @path = filePayment.Directory, @downloadname = filePayment.Filename }, new { @class = "form-control" })
+                            }}
+                                </div>
+                            </div>
+                        }
+
+                        @if (Model.FilenameConfirm != null && Model.FilenameConfirm != "[]")
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-2  control-label">ไฟล์อื่นๆ</label>
+                                <div class="col-sm-10">
+                                    @{
+                            List<Git_system.Models.ECom.FileLink> fileConfirms = new List<Git_system.Models.ECom.FileLink>();
+                            fileConfirms = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.FilenameConfirm);
+                            foreach (Git_system.Models.ECom.FileLink fileConfirm in fileConfirms)
+                            {
+                                @Html.ActionLink(fileConfirm.Filename, "EComDownload", "AuthenticationFile", null, null, null, new { @filename = fileConfirm.SaveFilename, @path = fileConfirm.Directory, @downloadname = fileConfirm.Filename }, new { @class = "form-control" })
+                            }
+                                    }
+                                </div>
+                            </div>
+                        }
+
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">สถานะการชำระเงิน</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownList(Html.NameFor(n => Model.EComOrder.PaymentProcessStatusId).ToString().Replace(".", "_"), null, null, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <footer class="panel-footer text-center">
+                <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                <a class="btn btn-git-default" href="@Url.Action("Order_Detail", new{id = @Model.EComOrderId})">การสั่งซื้อ</a>
+            </footer>
+        }
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            <span>รายการสั่งซื้อ</span>
+        </header>
+        <div class="panel-body">
+            <div id="tableDetailPaymentList" class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                สินค้า
+                            </th>
+                            <th>ประเภท</th>
+                            <th>
+                                จำนวน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EComOrder.EComOrderItems)
+                        {
+                            <tr>
+                                <td data-title="สินค้า">
+                                    @Html.ActionLink(item.EComProduct.NameTH, "Product_Detail", new { id = item.EComProduct.Id })
+                                </td>
+                                <td data-title="กลุ่มสินค้า">
+                                    @{
+                            List<string> CategoryMapName = new List<string>();
+                            foreach (var EComCategoryMap in item.EComProduct.EComCategoryMaps)
+                            {
+                                CategoryMapName.Add(EComCategoryMap.EComCategory.NameTH);
+                            }
+                            @Html.Raw(string.Join(" , ", CategoryMapName.ToArray()));
+                                    }
+                                </td>
+                                <td data-title="จำนวน">
+                                    @Html.DisplayFor(showitem => item.Quantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" id="modal_content_01" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/switchery")
+
+    }
+
+    @section BodySection_Template_scripts {
+        <script>
+            var htmlFormLoadCount = 0;
+            $("#@Html.NameFor(n => Model.EComOrder.PaymentProcessStatusId).ToString().Replace(".", "_")").change(function () {
+                var $input = $(this);
+                if (htmlFormLoadCount === 0)
+                    htmlFormLoadCount++;
+                else {
+                    ChangeNameForButton("ButtonSubmit");
+                    $("#modal_content_01").modal("show");
+                }
+            }).change();
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

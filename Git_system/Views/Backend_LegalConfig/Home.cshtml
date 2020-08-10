@@ -1,0 +1,139 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.WebSettingConfig
+    //Config
+    ViewBag.Title = "Legal";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_serviceMain = "active";
+    BackendMenuLayout.E_service.LegalSetting = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    }
+
+    <section role="tabpanel" class="panel" style="border-width:0;">
+        <header class="panel-heading">ข้อกำหนด/เงื่อนไข</header>
+        @using (Html.BeginForm("Home", null))
+        {
+
+            @Html.AntiForgeryToken()
+            <div class="row">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified panel-heading" role="tablist">
+                    <li role="presentation" class="active"><a href="#legalMembership" aria-controls="home" role="tab" data-toggle="tab">สมาชิก</a></li>
+                    <li role="presentation" class=""><a href="#legalCourse" aria-controls="profile" role="tab" data-toggle="tab">หลักสูตร</a></li>
+                    <li role="presentation" class=""><a href="#legalProduct" aria-controls="profile" role="tab" data-toggle="tab">E-Commerce</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="col-lg-12">
+                    <div class="tab-content panel-body">
+                        <div role="tabpanel" class="tab-pane active" id="legalMembership">
+                            <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาไทย</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalMembershipTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalMembershipTH)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาอังกฤษ</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalMembershipEN, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalMembershipEN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="legalCourse">
+                            <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาไทย</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalCourseTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalCourseTH)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาอังกฤษ</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalCourseEN, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalCourseEN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="legalProduct">
+                            <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาไทย</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalProductTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalProductTH)
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2">ข้อกำหนด/เงื่อนไข ภาษาอังกฤษ</label>
+                                        <div class="col-sm-10">
+                                            @Html.TextAreaFor(item => Model.legalProductEN, new { @class = "form-control ckeditor", @rows = "4" })
+                                            @Html.ValidationMessageFor(item => Model.legalProductEN)
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                <button type="button" class="btn btn-git-default btn-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+            </footer>
+        }
+    </section>
+
+            //<!-- /.modal-content -->
+            <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                        </div>
+                        <div class="modal-body">
+                            <span>คุณต้องการที่จะบันทึก?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @section BodySection_Page_level_scripts {
+
+            }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

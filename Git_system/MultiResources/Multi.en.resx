@@ -1,0 +1,1052 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActionRegisterStep2String1" xml:space="preserve">
+    <value>Information from CRM.</value>
+  </data>
+  <data name="ActionRegisterStep2String2" xml:space="preserve">
+    <value>New member registration</value>
+  </data>
+  <data name="ConfirmPayment_ConfirmPaymentBank" xml:space="preserve">
+    <value>Bank</value>
+    <comment>ConfirmPayment - ConfirmPaymentBank</comment>
+  </data>
+  <data name="ConfirmPayment_Date" xml:space="preserve">
+    <value>Date</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="ConfirmPayment_file" xml:space="preserve">
+    <value>File</value>
+    <comment>ConfirmPayment - file</comment>
+  </data>
+  <data name="ConfirmPayment_Fullname" xml:space="preserve">
+    <value>Fullname</value>
+    <comment>ConfirmPayment - name</comment>
+  </data>
+  <data name="ConfirmPayment_Other" xml:space="preserve">
+    <value>Etc.</value>
+    <comment>ConfirmPayment - Other</comment>
+  </data>
+  <data name="ConfirmPayment_PayId" xml:space="preserve">
+    <value>Payment number</value>
+    <comment>ConfirmPayment - PayId</comment>
+  </data>
+  <data name="ConfirmPayment_Tel" xml:space="preserve">
+    <value>Tel</value>
+    <comment>ConfirmPayment - Tel</comment>
+  </data>
+  <data name="ConfirmPayment_Total" xml:space="preserve">
+    <value>Price</value>
+    <comment>ConfirmPayment - Total</comment>
+  </data>
+  <data name="Course_Title" xml:space="preserve">
+    <value>Traning</value>
+    <comment>Couse name</comment>
+  </data>
+  <data name="LayoutFrontend_String0" xml:space="preserve">
+    <value>Help</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String1" xml:space="preserve">
+    <value>Course</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String10" xml:space="preserve">
+    <value>Copyright © 2013 The Gem and Jewelry Institute of Thailand (Public Organization). All rights reserved.</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String11" xml:space="preserve">
+    <value>140, 140/1-3, 140/5 ITF - Tower Building. 1st - 4th and 6th Floor, Silom Road, Suriyawong,
+Bangrak, Bangkok 10500, Thailand</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String12" xml:space="preserve">
+    <value>Tel: +66 2634 4999  Fax: +66 2634 4970  Email: jewelry@git.or.th</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String2" xml:space="preserve">
+    <value>MyCart</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String3" xml:space="preserve">
+    <value>Profile</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String4" xml:space="preserve">
+    <value>Logout</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String5" xml:space="preserve">
+    <value>Register</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String6" xml:space="preserve">
+    <value>Login</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String7" xml:space="preserve">
+    <value>Membership</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String8" xml:space="preserve">
+    <value>Privacy Policy</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String9" xml:space="preserve">
+    <value>Site Map</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="Membership_Address" xml:space="preserve">
+    <value>Address</value>
+    <comment>Membership - Address</comment>
+  </data>
+  <data name="Membership_Company" xml:space="preserve">
+    <value>Place of work</value>
+    <comment>Membership - Company</comment>
+  </data>
+  <data name="Membership_Country" xml:space="preserve">
+    <value>Country</value>
+    <comment>Membership - Country</comment>
+  </data>
+  <data name="Membership_Email" xml:space="preserve">
+    <value>Email</value>
+    <comment>Membership - Email</comment>
+  </data>
+  <data name="Membership_Email_Re" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
+  <data name="Membership_Fax" xml:space="preserve">
+    <value>Fax.no.</value>
+    <comment>Membership - Fax</comment>
+  </data>
+  <data name="Membership_FirstnameEN" xml:space="preserve">
+    <value>First name</value>
+    <comment>Membership - FirstnameEN</comment>
+  </data>
+  <data name="Membership_FirstnameTH" xml:space="preserve">
+    <value>First name</value>
+    <comment>Membership - FirstnameTH</comment>
+  </data>
+  <data name="Membership_Id" xml:space="preserve">
+    <value>Membership Id</value>
+    <comment>Membership - Id</comment>
+  </data>
+  <data name="Membership_JobTitle" xml:space="preserve">
+    <value>Job Title</value>
+    <comment>Membership - JobTitle</comment>
+  </data>
+  <data name="Membership_LastnameEN" xml:space="preserve">
+    <value>Last name</value>
+    <comment>Membership - LastnameEN</comment>
+  </data>
+  <data name="Membership_LastnameTH" xml:space="preserve">
+    <value>Last name</value>
+    <comment>Membership - LastnameTH</comment>
+  </data>
+  <data name="Membership_MembershipNumber" xml:space="preserve">
+    <value>Membership Number</value>
+  </data>
+  <data name="Membership_MembershipRegisterType" xml:space="preserve">
+    <value>Membership Type</value>
+    <comment>Membership - MembershipRegisterType</comment>
+  </data>
+  <data name="Membership_Password" xml:space="preserve">
+    <value>Password</value>
+    <comment>Membership - Password</comment>
+  </data>
+  <data name="Membership_Postcode" xml:space="preserve">
+    <value>Zip code</value>
+    <comment>Membership - Postcode</comment>
+  </data>
+  <data name="Membership_Province" xml:space="preserve">
+    <value>Province</value>
+    <comment>Membership - Province</comment>
+  </data>
+  <data name="Membership_RegisterDate" xml:space="preserve">
+    <value>Register date</value>
+    <comment>Membership - RegisterDate</comment>
+  </data>
+  <data name="Membership_RegisterDateExp" xml:space="preserve">
+    <value>Register Exp date</value>
+    <comment>Membership - RegisterDateExp</comment>
+  </data>
+  <data name="Membership_Tel" xml:space="preserve">
+    <value>Tel.no.</value>
+    <comment>Membership - Tel</comment>
+  </data>
+  <data name="Pay_Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Pay_Quantity" xml:space="preserve">
+    <value>Quantity</value>
+    <comment>Quantity</comment>
+  </data>
+  <data name="Product_Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Product_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Product_Price" xml:space="preserve">
+    <value>Price per unit</value>
+    <comment>Unit Price</comment>
+  </data>
+  <data name="Product_Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="Product_Title" xml:space="preserve">
+    <value>Course</value>
+    <comment>Product name</comment>
+  </data>
+  <data name="_Button_BackToHome" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="_Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>_Button - Cancel</comment>
+  </data>
+  <data name="_Button_Checkout" xml:space="preserve">
+    <value>Checkout</value>
+    <comment>Checkout</comment>
+  </data>
+  <data name="_Button_confirm" xml:space="preserve">
+    <value>Confirm</value>
+    <comment>_Button - confirm</comment>
+  </data>
+  <data name="_Button_confirmPayment" xml:space="preserve">
+    <value>Confirm payment</value>
+    <comment>_Button - confirmPayment</comment>
+  </data>
+  <data name="_Button_ForgetPassword" xml:space="preserve">
+    <value>Forget password</value>
+  </data>
+  <data name="_Button_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="_Button_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="_Button_Prev" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="_Button_Register" xml:space="preserve">
+    <value>Register</value>
+    <comment>Register</comment>
+  </data>
+  <data name="_Button_SendResetPasswordLink" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="_HomeString1" xml:space="preserve">
+    <value>Purchase Orders</value>
+  </data>
+  <data name="_HomeString10" xml:space="preserve">
+    <value>There is no purchase order.</value>
+  </data>
+  <data name="_HomeString2" xml:space="preserve">
+    <value>Apply membership to Get training discount.</value>
+  </data>
+  <data name="_HomeString3" xml:space="preserve">
+    <value>Personal Member</value>
+  </data>
+  <data name="_HomeString4" xml:space="preserve">
+    <value>Your membership has been expired.</value>
+  </data>
+  <data name="_HomeString5" xml:space="preserve">
+    <value>Expire</value>
+    <comment>exp</comment>
+  </data>
+  <data name="_HomeString6" xml:space="preserve">
+    <value>Coporate Member</value>
+  </data>
+  <data name="_HomeString7" xml:space="preserve">
+    <value>Unpaid Purchase Order</value>
+  </data>
+  <data name="_HomeString8" xml:space="preserve">
+    <value>Purchase Date</value>
+  </data>
+  <data name="_HomeString9" xml:space="preserve">
+    <value>Purchase Price</value>
+  </data>
+  <data name="_HomeString_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="_HomeString_Prev" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="_IndexString_Head_Title" xml:space="preserve">
+    <value>Login (E-SERVICE)</value>
+  </data>
+  <data name="_MembershipRegisterString1" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="_MembershipRegisterString10" xml:space="preserve">
+    <value>Accept the terms and conditions to proceed a payment process.</value>
+  </data>
+  <data name="_MembershipRegisterString11" xml:space="preserve">
+    <value>Terms and Conditions of Payment. Please click </value>
+  </data>
+  <data name="_MembershipRegisterString2" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="_MembershipRegisterString3" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="_MembershipRegisterString4" xml:space="preserve">
+    <value>Pay type</value>
+  </data>
+  <data name="_MembershipRegisterString5" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="_MembershipRegisterString6" xml:space="preserve">
+    <value>Credit card</value>
+  </data>
+  <data name="_MembershipRegisterString7" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="_MembershipRegisterString8" xml:space="preserve">
+    <value>Sale</value>
+  </data>
+  <data name="_MembershipRegisterString9" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="_MembershipRegisterString_legal" xml:space="preserve">
+    <value>here.</value>
+  </data>
+  <data name="_RegisterMembership" xml:space="preserve">
+    <value>Membership</value>
+  </data>
+  <data name="_RegisterMembershipString1" xml:space="preserve">
+    <value>Membership Form</value>
+  </data>
+  <data name="_RegisterStep3String1" xml:space="preserve">
+    <value>You have successfully applied.</value>
+  </data>
+  <data name="_RegisterStep3String2" xml:space="preserve">
+    <value>You will be sent an e-mail to confirm the application.</value>
+  </data>
+  <data name="_SendResetPasswordString1" xml:space="preserve">
+    <value>Forget password?</value>
+  </data>
+  <data name="_SendResetPasswordString2" xml:space="preserve">
+    <value>Enter your e-mail address for sending a password reset e-mail below.</value>
+  </data>
+  <data name="_TitlePage_Head_ConfirmPayment" xml:space="preserve">
+    <value>Confirm Payment</value>
+    <comment>ConfirmPayment - Head</comment>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep1" xml:space="preserve">
+    <value>Registration Form</value>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep2" xml:space="preserve">
+    <value>Registration Form</value>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep3" xml:space="preserve">
+    <value>Registration Form</value>
+  </data>
+  <data name="_TitleWeb_ConfirmPayment" xml:space="preserve">
+    <value>Confirm Payment</value>
+    <comment>_TitleWeb - ConfirmPayment</comment>
+  </data>
+  <data name="_TitleWeb_Edit_Profile" xml:space="preserve">
+    <value>Edit Profile</value>
+    <comment>_TitleWeb - Edit_Profile</comment>
+  </data>
+  <data name="_TitleWeb_Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="_TitleWeb_Index" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="_TitleWeb_MembershipRegister" xml:space="preserve">
+    <value>Membership</value>
+  </data>
+  <data name="_TitleWeb_Payment" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="_TitleWeb_Product" xml:space="preserve">
+    <value>Courses</value>
+    <comment>Training</comment>
+  </data>
+  <data name="_TitleWeb_RegisterStep" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="_TitleWeb_SendResetPassword" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="__LanguageType" xml:space="preserve">
+    <value>EN</value>
+    <comment>__LanguageType</comment>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageBody" xml:space="preserve">
+    <value>Your purchase order have been confirmed.</value>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageHead" xml:space="preserve">
+    <value>Thank you for using our service.</value>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageTitle" xml:space="preserve">
+    <value>Confirm payment.</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageBody" xml:space="preserve">
+    <value>Detail of the payment will be sent to the e-mail you registered with our system.</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageHead" xml:space="preserve">
+    <value>Thank you for using our service.</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageTitle" xml:space="preserve">
+    <value>Member Registration</value>
+  </data>
+  <data name="ActionPaymentShowMessageBody" xml:space="preserve">
+    <value>Detail of the payment will be sent to the e-mail you registered with our system.</value>
+  </data>
+  <data name="ActionPaymentShowMessageHead" xml:space="preserve">
+    <value>Thank you for using our service.</value>
+  </data>
+  <data name="ActionPaymentShowMessageTitle" xml:space="preserve">
+    <value>Online Membership application.</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageBody" xml:space="preserve">
+    <value>Your password has been changed.</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageHead" xml:space="preserve">
+    <value>Reset Password.</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageTitle" xml:space="preserve">
+    <value>Reset Password.</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageBody" xml:space="preserve">
+    <value>Please check your email for resetting your password within one hour.</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageHead" xml:space="preserve">
+    <value>Your personal information is correct.</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageTitle" xml:space="preserve">
+    <value>Reset Password.</value>
+  </data>
+  <data name="_IndexString1" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="_IndexString2" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="_HomePaymentHistory" xml:space="preserve">
+    <value>Payment history</value>
+  </data>
+  <data name="_HomePaymentStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="_HomeString11" xml:space="preserve">
+    <value>There is no purchase order.</value>
+  </data>
+  <data name="Membership_Password_Re" xml:space="preserve">
+    <value>Confirm Password</value>
+    <comment>Membership - Password</comment>
+  </data>
+  <data name="Validation_Email" xml:space="preserve">
+    <value>The email field is required.</value>
+  </data>
+  <data name="Validation_EmailConfirm" xml:space="preserve">
+    <value>Email and confirmation does not match.</value>
+    <comment>Email and confirmation does not match.</comment>
+  </data>
+  <data name="Validation_EmailCorrect" xml:space="preserve">
+    <value>Please enter correct email address.</value>
+    <comment>Please enter correct email address.</comment>
+  </data>
+  <data name="Validation_Firstname" xml:space="preserve">
+    <value>The firstname field is required.</value>
+  </data>
+  <data name="Validation_Lastname" xml:space="preserve">
+    <value>The lastname field is required.</value>
+  </data>
+  <data name="Validation_Password" xml:space="preserve">
+    <value>The password field is required.</value>
+  </data>
+  <data name="Validation_PasswordConfirm" xml:space="preserve">
+    <value>Password and confirmation does not match.</value>
+    <comment>Password and confirmation does not match.</comment>
+  </data>
+  <data name="Membership_Mobile" xml:space="preserve">
+    <value>Mobile.no.</value>
+  </data>
+  <data name="Membership_Road" xml:space="preserve">
+    <value>Road</value>
+  </data>
+  <data name="Membership_Amphur" xml:space="preserve">
+    <value>Amphur</value>
+    <comment>อำเภอ/เขต</comment>
+  </data>
+  <data name="Membership_City" xml:space="preserve">
+    <value>City</value>
+    <comment>City</comment>
+  </data>
+  <data name="Membership_District" xml:space="preserve">
+    <value>District</value>
+    <comment>ตำบล/แขวง</comment>
+  </data>
+  <data name="Membership_State" xml:space="preserve">
+    <value>State</value>
+    <comment>State</comment>
+  </data>
+  <data name="Membership_Answer" xml:space="preserve">
+    <value>Answer</value>
+    <comment>Answer</comment>
+  </data>
+  <data name="Membership_BirthDay" xml:space="preserve">
+    <value>BirthDay</value>
+    <comment>BirthDay</comment>
+  </data>
+  <data name="Membership_Question" xml:space="preserve">
+    <value>Question</value>
+    <comment>Question</comment>
+  </data>
+  <data name="Membership_Religion" xml:space="preserve">
+    <value>Religion</value>
+    <comment>Religion</comment>
+  </data>
+  <data name="LayoutFrontend_String13" xml:space="preserve">
+    <value>Membership</value>
+  </data>
+  <data name="Validation_InformationIncorrect" xml:space="preserve">
+    <value>Information is incorrect.</value>
+  </data>
+  <data name="Validation_FaxNoCorrect" xml:space="preserve">
+    <value>Please enter correct fax number.</value>
+  </data>
+  <data name="Validation_MobileNoCorrect" xml:space="preserve">
+    <value>Please enter correct mobile number.</value>
+  </data>
+  <data name="Validation_TelNoCorrect" xml:space="preserve">
+    <value>Please enter correct telephone number.</value>
+  </data>
+  <data name="Validation_ZipcodeCorrect" xml:space="preserve">
+    <value>Please enter correct zipcode</value>
+  </data>
+  <data name="MembershipConfirm" xml:space="preserve">
+    <value>Confirm membership.</value>
+  </data>
+  <data name="CheckEmailOrPassword" xml:space="preserve">
+    <value>Email or password is not correct.</value>
+  </data>
+  <data name="CheckMembershipActive" xml:space="preserve">
+    <value>Email is't active. {0}</value>
+  </data>
+  <data name="RequiredAnswer" xml:space="preserve">
+    <value>The answer field is required.</value>
+  </data>
+  <data name="RequiredQuestion" xml:space="preserve">
+    <value>The question field is required.</value>
+  </data>
+  <data name="Email_Is_Using" xml:space="preserve">
+    <value>The Email field is using.</value>
+  </data>
+  <data name="RequiredFile" xml:space="preserve">
+    <value>The File field is required.</value>
+  </data>
+  <data name="Membership_Firstname" xml:space="preserve">
+    <value>Firstname</value>
+    <comment>Membership - FirstnameTH</comment>
+  </data>
+  <data name="Membership_Lastname" xml:space="preserve">
+    <value>Lastname</value>
+    <comment>Membership - LastnameTH</comment>
+  </data>
+  <data name="RequiredFirstname" xml:space="preserve">
+    <value>The firstname field is required.</value>
+  </data>
+  <data name="RequiredLastname" xml:space="preserve">
+    <value>The lastname field is required.</value>
+  </data>
+  <data name="Change_password" xml:space="preserve">
+    <value>Change password</value>
+  </data>
+  <data name="Fill_in_the_form" xml:space="preserve">
+    <value>Fill in the form</value>
+  </data>
+  <data name="Password_Resetting" xml:space="preserve">
+    <value>Password Resetting</value>
+  </data>
+  <data name="Timeout_resetpasswordMessage" xml:space="preserve">
+    <value>You didn’t reset your password within one hour.
+Please fill in your personal information for resetting your password again.</value>
+  </data>
+  <data name="IdNumber" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Complete_change_password" xml:space="preserve">
+    <value>Complete change password.</value>
+  </data>
+  <data name="ConfirmPayment_DateDate" xml:space="preserve">
+    <value>Date</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="ConfirmPayment_DateTime" xml:space="preserve">
+    <value>Time</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="Resend" xml:space="preserve">
+    <value>Resend</value>
+  </data>
+  <data name="ExpiryDayCRM" xml:space="preserve">
+    <value>CRM expiry day</value>
+  </data>
+  <data name="THB" xml:space="preserve">
+    <value>THB</value>
+  </data>
+  <data name="USD" xml:space="preserve">
+    <value>USD</value>
+  </data>
+  <data name="MembershipCRM" xml:space="preserve">
+    <value>Membership CRM</value>
+  </data>
+  <data name="credentials" xml:space="preserve">
+    <value>Credentials</value>
+  </data>
+  <data name="Payment_Proof" xml:space="preserve">
+    <value>Payment Proof</value>
+  </data>
+  <data name="A_photocopy_of_ID_card" xml:space="preserve">
+    <value>A photocopy of ID card</value>
+  </data>
+  <data name="A_photocopy_of_VAT_registration_VAT20" xml:space="preserve">
+    <value>A photocopy of VAT registration (VAT20)</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+    <value>Legal</value>
+  </data>
+  <data name="DoyouhavestudyorworkexperienceinGemandJewelryField" xml:space="preserve">
+    <value>Do you have experience in Gem Field?</value>
+    <comment>Do you have study/work experience in Gem and Jewelry Field?</comment>
+  </data>
+  <data name="HighestLevelofEducation" xml:space="preserve">
+    <value>Highest Level of Education</value>
+    <comment>Highest Level of Education</comment>
+  </data>
+  <data name="IdentificationCardNo" xml:space="preserve">
+    <value>Identification Card No</value>
+    <comment>Identification Card No</comment>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>Occupation</value>
+    <comment>Occupation</comment>
+  </data>
+  <data name="longTerm" xml:space="preserve">
+    <value>Long term</value>
+  </data>
+  <data name="shortTerm" xml:space="preserve">
+    <value>Short term</value>
+  </data>
+  <data name="PasswordMustBeLongerThan8Characters" xml:space="preserve">
+    <value>Password must be longer than eight characters.</value>
+    <comment>The password must be longer than eight characters.</comment>
+  </data>
+  <data name="CaptchaImage" xml:space="preserve">
+    <value>Captcha Image</value>
+    <comment>Captcha Image?</comment>
+  </data>
+  <data name="Image_code_is_not_valid" xml:space="preserve">
+    <value>Image code is not valid.</value>
+    <comment>image code is not valid.</comment>
+  </data>
+  <data name="Identification_no_field_is_required" xml:space="preserve">
+    <value>Identification no. field is required.</value>
+  </data>
+  <data name="Identification_no_must_be_numeric" xml:space="preserve">
+    <value>Identification no. must be numeric.</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+    <comment>Location</comment>
+  </data>
+  <data name="SizeMustNotMoreThan10MB" xml:space="preserve">
+    <value>Size must not more than 10 MB</value>
+    <comment>Size must not more than 10 MB</comment>
+  </data>
+  <data name="UpTo10MbPerImage" xml:space="preserve">
+    <value>Up to 10 MB per image.</value>
+  </data>
+  <data name="ReceiptInfo" xml:space="preserve">
+    <value>Receipt info.</value>
+  </data>
+  <data name="Benefit" xml:space="preserve">
+    <value>Benefit</value>
+  </data>
+  <data name="_MembershipRegisterStringLegal" xml:space="preserve">
+    <value>Terms and Conditions of Payment. Please click</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>Free</value>
+  </data>
+  <data name="_Payment_string1" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Add_to_cart" xml:space="preserve">
+    <value>Add to cart</value>
+  </data>
+  <data name="Total_price" xml:space="preserve">
+    <value>Total price</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Vat" xml:space="preserve">
+    <value>Vat</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Choose_category" xml:space="preserve">
+    <value>Choose category</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Deliver_status" xml:space="preserve">
+    <value>Deliver status</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="Miscellaneous_items" xml:space="preserve">
+    <value>Miscellaneous items</value>
+  </data>
+  <data name="No_data" xml:space="preserve">
+    <value>No data.</value>
+  </data>
+  <data name="Order_number" xml:space="preserve">
+    <value>Order number</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Price_Per_Unit" xml:space="preserve">
+    <value>Price per unit</value>
+  </data>
+  <data name="Product_id" xml:space="preserve">
+    <value>Product id</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="Remove_in_cart" xml:space="preserve">
+    <value>Remove in cart</value>
+  </data>
+  <data name="Shopping_cart" xml:space="preserve">
+    <value>Shopping cart</value>
+  </data>
+  <data name="Shopping_in_cart" xml:space="preserve">
+    <value>Shopping cart</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="View_More" xml:space="preserve">
+    <value>View more</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Address_for_receipt" xml:space="preserve">
+    <value>Address for receipt</value>
+  </data>
+  <data name="Address_is_based_on_registration_data" xml:space="preserve">
+    <value>Address is based on registration data.</value>
+  </data>
+  <data name="Address_is_based_on_The_address_of_delivery" xml:space="preserve">
+    <value>Address is based on The address of delivery.</value>
+  </data>
+  <data name="Confirm_ordering" xml:space="preserve">
+    <value>Confirm ordering</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Delivery_address_and_payment" xml:space="preserve">
+    <value>Delivery address and payment</value>
+  </data>
+  <data name="Delivery_cost" xml:space="preserve">
+    <value>Delivery cost</value>
+  </data>
+  <data name="Delivery_payment" xml:space="preserve">
+    <value>Delivery payment</value>
+  </data>
+  <data name="Deliver_type" xml:space="preserve">
+    <value>Deliver type</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Fullname" xml:space="preserve">
+    <value>Fullname</value>
+  </data>
+  <data name="Money_transfer" xml:space="preserve">
+    <value>Money transfer</value>
+  </data>
+  <data name="ordering_name__delivery_authority" xml:space="preserve">
+    <value>Ordering name / Delivery authority</value>
+  </data>
+  <data name="Order_list" xml:space="preserve">
+    <value>Order list</value>
+  </data>
+  <data name="Payment_type" xml:space="preserve">
+    <value>Payment type</value>
+  </data>
+  <data name="Phonenumber" xml:space="preserve">
+    <value>Phonenumber</value>
+  </data>
+  <data name="Please_accept_the_terms_and_conditions_to_continue_payment" xml:space="preserve">
+    <value>Please accept the terms and conditions to continue payment.</value>
+  </data>
+  <data name="Please_check_this_box_for_confirm_that_you_have_already_read_and_accepted_into" xml:space="preserve">
+    <value>Please check this box for confirm, that you have already read and accepted into.</value>
+  </data>
+  <data name="Postcode" xml:space="preserve">
+    <value>Postcode</value>
+  </data>
+  <data name="Product_name" xml:space="preserve">
+    <value>Product name</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="The_term_and_conditions_to_receiving_the_money" xml:space="preserve">
+    <value>The term and conditions to receiving the money.</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="Normal_Price" xml:space="preserve">
+    <value>Normal Price</value>
+  </data>
+  <data name="GemInstituteName" xml:space="preserve">
+    <value>The Gem and Jewelry Institute of Thailand (Public Organization)</value>
+  </data>
+  <data name="Information_of_membership" xml:space="preserve">
+    <value>Information of membership</value>
+  </data>
+  <data name="not_defined" xml:space="preserve">
+    <value>Not defined</value>
+  </data>
+  <data name="RequiredTotalPrice" xml:space="preserve">
+    <value>The Total field is required.</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>Required field</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Receipts_issued_in_the_name" xml:space="preserve">
+    <value>Issued in the name</value>
+  </data>
+  <data name="ShipmentNumber" xml:space="preserve">
+    <value>Number of shipment</value>
+  </data>
+  <data name="Demo_file" xml:space="preserve">
+    <value>Demo file</value>
+  </data>
+  <data name="Notes_file" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Out_of_stock" xml:space="preserve">
+    <value>Out of stock</value>
+  </data>
+  <data name="Select_more" xml:space="preserve">
+    <value>Select more</value>
+  </data>
+  <data name="The_shipment_of_you" xml:space="preserve">
+    <value>The shipment of you</value>
+  </data>
+  <data name="Download_file" xml:space="preserve">
+    <value>Download file</value>
+  </data>
+  <data name="OnlineService" xml:space="preserve">
+    <value>Online service</value>
+  </data>
+  <data name="menu" xml:space="preserve">
+    <value>menu</value>
+  </data>
+  <data name="Datetime_send" xml:space="preserve">
+    <value>Datetime send</value>
+    <comment>datetime send</comment>
+  </data>
+  <data name="Name_send" xml:space="preserve">
+    <value>Name send</value>
+    <comment>name send</comment>
+  </data>
+  <data name="Shipment_number" xml:space="preserve">
+    <value>Shipment number</value>
+    <comment>shipment number</comment>
+  </data>
+  <data name="Shipment_send_success" xml:space="preserve">
+    <value>Shipment send success</value>
+    <comment>shipment send success</comment>
+  </data>
+  <data name="Payment_Completed" xml:space="preserve">
+    <value>Payment completed</value>
+  </data>
+  <data name="Failure_in_payment" xml:space="preserve">
+    <value>Failure in payment</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="Order_your_payment_successful" xml:space="preserve">
+    <value>Order your payment successful</value>
+    <comment>Order your payment successful</comment>
+  </data>
+  <data name="choose_file" xml:space="preserve">
+    <value>Choose file</value>
+  </data>
+  <data name="transaction_declined" xml:space="preserve">
+    <value>Transaction Declined</value>
+  </data>
+  <data name="type_of_training" xml:space="preserve">
+    <value>Type of training</value>
+  </data>
+  <data name="has" xml:space="preserve">
+    <value>has</value>
+  </data>
+  <data name="none" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="Office_Fax" xml:space="preserve">
+    <value>Office Fax</value>
+  </data>
+  <data name="Office_Phone" xml:space="preserve">
+    <value>Office Phone</value>
+  </data>
+  <data name="Ext" xml:space="preserve">
+    <value>Ext.</value>
+  </data>
+</root>

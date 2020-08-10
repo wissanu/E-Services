@@ -1,0 +1,200 @@
+﻿@model Git_system.Models.ConfirmPayment
+@using Git_system.MultiResources
+@{
+    //Config
+    ViewBag.Title = Multi._TitleWeb_ConfirmPayment;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+}
+@section BodySection_Core_styles {
+
+    <link href="~/Content/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+}
+<div class="row">
+    <div class="col-sm-20 col-sm-offset-2 col-md-12 col-md-offset-6">
+        <div class="row">
+            @using (Html.BeginForm("ConfirmPayment", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal col-sm-24">
+                    <div class="text-center ">
+                        <h2>@Multi._TitlePage_Head_ConfirmPayment</h2>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_PayId</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.TextBoxFor(model => model.PayId, new { @class = "form-control input-sm", @readonly = "true" })
+                            @Html.ValidationMessageFor(model => model.PayId, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_Fullname</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control input-sm", @readonly = "true" })
+                            @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_ConfirmPaymentBank</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.DropDownList("ConfirmPaymentBankTypeId", null, null, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPaymentBankTypeId, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group hidden">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_Date</label>
+                        <div class="col-sm-18 col-md-16">
+                            <div class='input-group date'>
+                                @Html.TextBoxFor(model => model.Date, "{0:dd/MM/yyyy hh:mm tt}", new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.Date)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_DateDate</label>
+                        <div class="col-sm-18 col-md-16">
+                            <div class='input-group date'>
+                                @if (Multi.__LanguageType == "TH")
+                                {<input id="DateDatePicker" type="text" class="form-control" data-date-format="dd/mm/yyyy" data-provide="datepicker" data-date-language="th-th" value="@Convert.ToDateTime(Model.Date).ToString("dd/MM/yyyy")" onchange="ChangeDatepicker(this.value)"> }
+                                else
+                                { <input id="DateDatePicker" type="text" class="form-control" data-date-format="mm/dd/yyyy" data-provide="datepicker" value="@Convert.ToDateTime(Model.Date).ToString("MM/dd/yyyy")" onchange="ChangeDatepicker(this.value)">}
+                                <span class=" input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_DateTime</label>
+                        <div class="col-sm-18 col-md-16">
+                            <div class='input-group date'>
+                                <input id="DateTimePicker" type="text" class="form-control bootstrap_datetimepicker_Time" data-date-format="hh:mm A" value="@Convert.ToDateTime(Model.Date).ToString("hh:mm tt")" onchange="ChangeDatetimepicker(this.value)">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_Total</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.TextBoxFor(model => model.Total, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Total, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_Tel</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.TextBoxFor(model => model.Tel, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Tel, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.ConfirmPayment_Other</label>
+                        <div class="col-sm-18 col-md-16">
+                            @Html.TextAreaFor(model => model.Other, new { @class = "form-control input-sm" })
+                            @Html.ValidationMessageFor(model => model.Other, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-md-8">@Multi.Payment_Proof</label>
+                        <div class="col-sm-18 col-md-16">
+                            <input type="file" name="file" class="form-control input-sm" />
+                            @Html.ValidationMessage("UploadFile", new { @class = "text-danger" })
+                            <p class="text-danger">* @Multi.UpTo10MbPerImage</p>
+                        </div>
+                    </div>
+
+                    @if (Model.Pay.Type == 1)
+                    {
+                        <div class="form-group">
+                            @if (Model.Pay.PayItems.FirstOrDefault().Course.ProductId == 1 || Model.Pay.PayItems.FirstOrDefault().Course.ProductId == 3)
+                            {
+                                <label class="form-label col-sm-6 col-md-8">@Multi.A_photocopy_of_ID_card</label>
+                            }
+                            else
+                            {
+                                <label class="form-label col-sm-6 col-md-8">@Multi.A_photocopy_of_VAT_registration_VAT20</label>
+                            }
+                            <div class="col-sm-18 col-md-16">
+                                <input type="file" name="filePersonal" class="form-control input-sm" />
+                                @Html.ValidationMessage("UploadFilePersonal", new { @class = "text-danger" })
+                                <p class="text-danger">* @Multi.UpTo10MbPerImage</p>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <div class="col-sm-18 col-md-16 col-sm-offset-6 col-md-offset-8">
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <input class="btn btn-git-default btn-block" type="submit" value="@Multi._Button_confirmPayment" />
+                                </div>
+                                <div class="col-sm-12 col-xs-12">
+                                    @Html.ActionLink(Multi._Button_Cancel, "Home", "Home", null, new { @class = "btn btn-git-default btn-block" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section BodySection_Core_scripts {
+
+}
+@section BodySection_Page_level_scripts {
+    <script src="~/Scripts/bootstrap-datetimepicker-Script.min.js"></script>
+
+    @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+}
+@section BodySection_Template_scripts {
+    <script type="text/javascript">
+
+        $(function () {
+            $('.bootstrap_datetimepicker_Time').datetimepicker({
+                pickDate: false
+            });
+        });
+        $(function () {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+        var datetime;
+        var dateOfDatepicker = "@Convert.ToDateTime(Model.Date).ToString("dd/MM/yyyy")";
+        var timeofDatetimepicker = "@Convert.ToDateTime(Model.Date).ToString("hh:mm tt")";
+        $(function () {
+            datetime = dateOfDatepicker + " " + timeofDatetimepicker;
+        });
+        function ChangeDatetimepicker(date) {
+            timeofDatetimepicker = date;
+            datetime = dateOfDatepicker + " " + timeofDatetimepicker;
+            var DateConfirm = document.getElementById("Date");
+            DateConfirm.value = datetime;
+        }
+        function ChangeDatepicker(date) {
+            dateOfDatepicker = date;
+            datetime = dateOfDatepicker + " " + timeofDatetimepicker;
+            var DateConfirm = document.getElementById("Date");
+            DateConfirm.value = datetime;
+        }
+        //Not work for datetimepicker
+        //$("#DateTimePicker").bind("focus", function () {
+        //    $(this).blur();
+        //});
+        $("#DateDatePicker").bind("focus", function () {
+            $(this).blur();
+        });
+    </script>
+}

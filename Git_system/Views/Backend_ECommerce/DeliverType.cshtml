@@ -1,0 +1,81 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComDeliverType>
+
+    //Config
+    ViewBag.Title = "การจัดส่ง";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.DeliverType = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>การจัดส่ง</span>
+            @Html.ActionLink("Create", "DeliverType_Create", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            @if (Model.Count() > 0)
+            {
+                <div class="no-more-tables">
+                    <table class="table table-bordered table-striped table-condensed dataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    หมายเลข
+                                </th>
+                                <th>
+                                    ชื่อ
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td data-title="หมายเลข">
+                                        @Html.DisplayFor(showitem => item.Id)
+                                    </td>
+                                    <td data-title="ชื่อ">
+                                        @Html.DisplayFor(showitem => item.NameTH)
+                                    </td>
+                                    <td data-title="" class="text-center">
+                                        @Html.ActionLink("รายละเอียด", "DeliverType_Detail", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <span>ไม่พบข้อมูล</span>
+            }
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

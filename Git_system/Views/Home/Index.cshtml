@@ -1,0 +1,69 @@
+﻿@using Git_system.MultiResources
+@model Git_system.Models.Form.Frontend_LoginModel
+@{
+    //Config
+    ViewBag.Title = Multi._TitleWeb_Index;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    @section BodySection_Core_styles {
+        <meta name="robots" content="index, nofollow" />
+    }
+    //End Config
+    <div class="row">
+        <div class="col-sm-16 col-sm-offset-4 col-md-12 col-md-offset-6">
+            <div class="row">
+                @using (Html.BeginForm(new { }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal col-sm-24">
+
+                        <div class="form-group">
+                            <label class="form-label col-sm-6 col-lg-4">@Multi._IndexString1</label>
+                            <div class="col-sm-18 col-lg-20">
+                                @Html.TextBoxFor(item => Model.Email, new { @class = "form-control input-sm", @placeholder = "Email", @autofocus = true })
+                                @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label col-sm-6 col-lg-4">@Multi._IndexString2</label>
+                            <div class="col-sm-18 col-lg-20">
+                                @Html.PasswordFor(item => Model.Password, new { @class = "form-control input-sm", @placeholder = "Password", @autofocus = true, @autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                                <span>
+                                    @if (IsPost)
+                                    {
+                                        string email = Model.Email;
+                                        @Html.Raw(string.Format(Html.ValidationSummary(true, null, new { @class = "text-danger" }).ToString(), Html.ActionLink(Multi.Resend, "ResendActiveEmail", "Home", new { @email = email }, null)));
+                                    }
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-18 col-md-16 col-sm-offset-6 col-md-offset-6">
+                                <div class="row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <input class="btn btn-git-default btn-block" type="submit" value="@Multi._Button_Login" />
+                                    </div>
+                                    @if (IsPost)
+                                    {
+                                        <div class="col-sm-12 col-xs-12">
+                                            @Html.ActionLink(Multi._Button_ForgetPassword, "SendResetPassword", "Home", null, new { @class = "btn btn-git-default btn-block" })
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-12 col-xs-12">
+                                            @Html.ActionLink(Multi._Button_Register, "RegisterStep1", "Home", null, new { @class = "btn btn-git-default btn-block" })
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+}

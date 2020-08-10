@@ -1,0 +1,108 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.UserAdmin>
+
+    //Config
+    ViewBag.Title = "ผู้ดูแลระบบ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.AdminAndSecurityMain = "active";
+    BackendMenuLayout.AdminAndSecurity.AdminManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>ผู้ดูแลระบบ</span>
+            @Html.ActionLink("Create", "Create", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>ชื่อผู้ใช้</th>
+                            <th>ชื่อ</th>
+                            <th>อีเมล</th>
+                            <th>สิทธิ์</th>
+                            <th>การใช้งานล่าสุด</th>
+                            <th>สถานะ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ชื่อผู้ใช้">
+                                    @Html.DisplayFor(showitem => item.userName)
+                                </td>
+                                <td data-title="ชื่อ">
+                                    @Html.DisplayFor(showitem => item.Firstname) @Html.DisplayFor(showitem => item.Lastname)
+                                </td>
+                                <td data-title="อีเมล">
+                                    @Html.DisplayFor(showitem => item.Email)
+                                </td>
+                                <td data-title="สิทธิ์">
+                                    @Html.DisplayFor(showitem => item.Permission.Name)
+                                </td>
+                                <td data-title="การใช้งานล่าสุด">
+                                    @Html.DisplayFor(showitem => item.LastSignIn)
+                                </td>
+                                <td data-title="สถานะ" class="text-center">
+                                    @if (item.Active)
+                                    { <span class="text-success">Active</span> }
+                                    else
+                                    { <span class="text-danger">Inactive</span> }
+                                </td>
+                                <td data-title="" class="text-center">
+                                    @Html.ActionLink("แก้ไข", "Edit", new { id = item.Id })
+                                    <a href="#" data-toggle="modal" data-target=".bs-modal-sm" onclick="$('#sendMailTo').val('@item.Id');">ส่งลิงค์รีเซ็ตรหัสผ่าน</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการส่งลิ๊งค์</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะส่งลิงค์รีเซ็ตรหัสผ่าน?</span>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <input id="sendMailTo" name="sendMailTo" type="hidden" />
+                        <button type="submit" class="btn btn-git-default btn-sm">Send</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿[
+  {
+    "outputFileName": "Scripts/angular/eComApp/eComBundle.js",
+    "inputFiles": [
+      "Scripts/angular/eComApp/app.js",
+      "Scripts/angular/eComApp/controllers.js",
+      "Scripts/angular/eComApp/directives.js",
+      "Scripts/angular/eComApp/filters.js",
+      "Scripts/angular/eComApp/helperServices.js",
+      "Scripts/angular/eComApp/services.js",
+      "Scripts/angular/eComApp/PromiseWithFunctionAndTimeout.js",
+      "Scripts/angular/eComApp/eComAPI.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/angular/libsBundle.js",
+    "inputFiles": [
+      "Scripts/angular/libs/angular.js",
+      "Scripts/angular/libs/angular-cookies.js",
+      "Scripts/angular/libs/angular-resource.js",
+      "Scripts/angular/libs/angular-route.js",
+      "Scripts/angular/libs/angular-animate.js",
+      "Scripts/angular/ngTable/ng-table.js",
+      "Scripts/angular/uiBootstrap/ui-bootstrap-1.1.0.js"
+    ]
+  }
+]

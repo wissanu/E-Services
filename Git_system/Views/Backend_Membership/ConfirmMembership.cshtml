@@ -1,0 +1,153 @@
+﻿@using Git_system.MultiResources
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.Pay
+
+    //Config
+    ViewBag.Title = "การสั่งซื้อ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.MembershipMain = "active";
+    BackendMenuLayout.Membership.ConfirmPayment = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+    }
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading clearfix">
+                <span>การสั่งซื้อ</span>
+                <span>
+                    <button class="btn btn-git-default pull-right" onclick="return PrintPanel();">Print</button>
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal">
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">Pay id</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (Model.Id), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        <label class="col-sm-3 col-md-2 control-label">Pay id</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (Model.MembershipId), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">เวลาทำรายการ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.TextBoxFor(model => (Model.Date), new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">ราคา</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.HiddenFor(model => (Model.Price))
+                            <input id="" name="" class="form-control" readonly value="@Git_system.Models.Helper.PriceAndCurrency(Model.Price,Model.Currency)" />
+                        </div>
+                    </div>
+
+                    @foreach (var item in Model.PayItems)
+                    {
+                        <div class="form-group">
+                            <label class="col-sm-3 col-md-2 control-label">ประเภทการสมัคร</label>
+                            <div class="col-sm-9 col-md-10">
+                                @Html.TextBoxFor(model => (item.Course.TitleTH), new { @class = "form-control", @readonly = "true" })
+                            </div>
+                        </div>
+                    }
+
+                    <div class="form-group">
+                        <label class="col-sm-3 col-md-2 control-label">สถานะ</label>
+                        <div class="col-sm-9 col-md-10">
+                            @Html.DropDownList("ProcessStatusTypeId", null, null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <p>
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default center-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        </section>
+    }
+
+    //<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <p><span>คุณต้องการที่จะบันทึก?</span></p>
+                    <p>
+                        การเปลี่ยน Process Status<br />
+                        จาก Waiting เป็น Finished<br />
+                        จะทำการเพิ่มอายุสมาชิกให้ 1 ปีโดยอัตโนมัติ
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+
+        <script type="text/javascript">
+            function PrintPanel() {
+
+                var printWindow = window.open('', '', 'height=400,width=800');
+                printWindow.document.write('<html><head><title></title>');
+                printWindow.document.write('<style>  body{font-size: 13px; font-family: "Open Sans", Arial, sans-serif;} </style>')
+                printWindow.document.write('<style>  table{font-size: 13px; border: 2px solid #ddd; border-collapse: collapse;  padding: 5px; width:100%;} </style>')
+                printWindow.document.write('<style>  table>thead{background-color: #efefef; color: #2b3c94;} </style>')
+                printWindow.document.write('<style>  table th,td{border: 2px solid #ddd; border-collapse: collapse; padding: 5px;} </style>')
+
+                printWindow.document.write('</head><body>');
+
+                printWindow.document.write("<p><span>เลขที่การสั่งซื้อ : </span>" + document.getElementById("Id").value) + "</p>";
+                printWindow.document.write("<p><span>วันเวลา : </span>" + document.getElementById("Date").value + "</p>");
+                printWindow.document.write("<p><span>สถานะ : </span>" + document.getElementById('ProcessStatusTypeId').options[document.getElementById('ProcessStatusTypeId').selectedIndex].innerHTML + "</p>")
+                printWindow.document.write("<p><span>ราคา : </span>@Git_system.Models.Helper.PriceAndCurrency(Model.Price,Model.Currency)</p>");
+                printWindow.document.write("<p><span>ประเภทการสมัคร : </span>" + document.getElementById("item_Course_TitleTH").value + "</p>");
+
+                printWindow.document.write("<br />");
+
+                var legal = "<div><p><label>@Multi._MembershipRegisterString10</label></p><p><input checked type='checkbox' /> @Multi._MembershipRegisterString11 @Multi._MembershipRegisterString_legal</p></div>";
+
+                printWindow.document.write(legal);
+
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                setTimeout(function () {
+                    printWindow.print();
+                }, 500);
+                return false;
+            }
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

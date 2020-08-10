@@ -1,0 +1,185 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PaymentListViewTest</title>
+    <style>
+        html {
+            font-size: 10px;
+        }
+
+        body {
+            font-size: 1.3em;
+            font-family: "Helvetica Neue",Helvetica,Roboto,'Helvetica normal',tahoma;
+        }
+
+        table th, td {
+            vertical-align: middle;
+            text-align: center;
+            border: #73f7b2;
+            border-style: solid;
+            border-width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>PaymentListViewTest</h2>
+        <p>@ViewBag.Message</p>
+        @using Git_system.Models;
+
+        <h3>Payment</h3>
+        @{
+            List<PayItem> pays = new List<PayItem>();
+            pays = ViewBag.Pays;
+        }
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Quantity</th>
+                    <th>PayId</th>
+                    <th>CourseId</th>
+                    <th>ProductSKUActive</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in pays)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.PayId</td>
+                        <td>@item.CourseId</td>
+                        <td>@item.Course.ProductSKUActive</td>
+                        <td>@item.Course.Product.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>ProductSKU all</h3>
+        @{
+            List<ProductSKU> productSKUs = new List<ProductSKU>();
+            productSKUs = ViewBag.ProductSKUs;
+        }
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>NameTH</th>
+                    <th>NameEN</th>
+                    <th>Type</th>
+                    <th>Operator</th>
+                    <th>Percent</th>
+
+                    <th>isGuest</th>
+                    <th>isGuest_Inter</th>
+                    <th>isIndividual</th>
+                    <th>isIndividual_Inter</th>
+                    <th>isCorporate</th>
+                    <th>isCorporate_Inter</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in productSKUs)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.NameTH</td>
+                        <td>@item.NameEN</td>
+                        <td>@item.Type</td>
+                        <td>@item.Operator</td>
+                        <td>@item.Percent</td>
+
+                        <td>@item.isGuest</td>
+                        <td>@item.isGuest_Inter</td>
+                        <td>@item.isIndividual</td>
+                        <td>@item.isIndividual_Inter</td>
+                        <td>@item.isCorporate</td>
+                        <td>@item.isCorporate_Inter</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>ProductSKU of membership</h3>
+        @{
+            List<ProductSKU> ProductSKUsOfMemberships = new List<ProductSKU>();
+            ProductSKUsOfMemberships = ViewBag.ProductSKUsOfMemberships;
+        }
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>NameTH</th>
+                    <th>NameEN</th>
+                    <th>Type</th>
+                    <th>Operator</th>
+                    <th>Percent</th>
+
+                    <th>isGuest</th>
+                    <th>isGuest_Inter</th>
+                    <th>isIndividual</th>
+                    <th>isIndividual_Inter</th>
+                    <th>isCorporate</th>
+                    <th>isCorporate_Inter</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ProductSKUsOfMemberships)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.NameTH</td>
+                        <td>@item.NameEN</td>
+                        <td>@item.Type</td>
+                        <td>@item.Operator</td>
+                        <td>@item.Percent</td>
+
+                        <td>@item.isGuest</td>
+                        <td>@item.isGuest_Inter</td>
+                        <td>@item.isIndividual</td>
+                        <td>@item.isIndividual_Inter</td>
+                        <td>@item.isCorporate</td>
+                        <td>@item.isCorporate_Inter</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>ProductSKU of membership</h3>
+        @{
+            List<Git_system.Models.Form.ProductSKUOut> ProductSKUOuts = new List<Git_system.Models.Form.ProductSKUOut>();
+            ProductSKUOuts = ViewBag.ProductSKUOuts;
+        }
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>NameTH</th>
+                    <th>NameEN</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ProductSKUOuts)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.NameTH</td>
+                        <td>@item.NameEN</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

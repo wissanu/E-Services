@@ -1,0 +1,187 @@
+﻿@model Dictionary<string, dynamic>
+
+@{
+    //new { Header = "", Model = Model, Button = "" }
+    String Header = Model["Header"];
+    Git_system.Models.EComDeliverPromotion eComDeliverPromotion = Model["Model"];
+    String Button = Model["Button"];
+    String ModalHeader = Model["ModalHeader"];
+    String ModalText = Model["ModalText"];
+    String ModalButton = Model["ModalButton"];
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <section class="panel">
+            <header class="panel-heading clearfix">
+                <span>@Header</span>
+                <div class="pull-right">
+                    <span>Active </span><span>@Html.CheckBoxFor(model => eComDeliverPromotion.ActiveStatus, new { @class = "js-switch-GreenSwitchery07" })</span>
+                </div>
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal bordered-group">
+
+                    @Html.HiddenFor(item => eComDeliverPromotion.Id)
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => eComDeliverPromotion.NameTh, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.NameTh, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => eComDeliverPromotion.NameEn, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.NameEn, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ประเภท</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownList("Type", null, null, new { @class = "form-control", @onchange = "TypeChange(this.value)" })
+                                @Html.ValidationMessageFor(model => eComDeliverPromotion.Type, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => eComDeliverPromotion.Operator, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.Operator, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา (USD)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => eComDeliverPromotion.Operator2, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.Operator2, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        <label class="col-sm-2 control-label">สินค้า</label>
+                        <div class="col-sm-10">
+                            @*การใช้ multiple select ต้องใช้ ListBox*@
+                            @Html.ListBox("PromotionProductMap", null, new { @class = "form-control" })
+                            @Html.ValidationMessage("PromotionProductMap", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2  control-label">ส่วนลด (เปอร์เซ็น)</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => eComDeliverPromotion.Percent, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => eComDeliverPromotion.Percent, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">สมาชิกออนไลน์</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isGuest, new { @class = "js-switch-GreenSwitchery01" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isGuest)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">สมาชิกออนไลน์ (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isGuestInter, new { @class = "js-switch-GreenSwitchery02" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isGuestInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">บุคคลธรรมดา</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isIndividual, new { @class = "js-switch-GreenSwitchery03" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isIndividual)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">บุคคลธรรมดา (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isIndividualInter, new { @class = "js-switch-GreenSwitchery04" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isGuestInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">นิติบุคคล</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isCorporate, new { @class = "js-switch-GreenSwitchery05" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isCorporate)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">นิติบุคคล (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => eComDeliverPromotion.isCorparateInter, new { @class = "js-switch-GreenSwitchery06" })
+                                    @Html.ValidationMessageFor(model => eComDeliverPromotion.isCorparateInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "DeliverPromotion", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">@Button</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">@Button</button>
+                </p>
+            </footer>
+        </section>
+
+    }
+
+    //<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">@ModalHeader</h5>
+                </div>
+                <div class="modal-body">
+                    <span>@ModalText</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">@ModalButton</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,220 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComOrder
+
+    //Config
+    ViewBag.Title = "การสั่งซื้อ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Order = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">การสั่งซื้อ</header>
+        <div class="panel-body">
+            <div class="form-horizontal bordered-group" role="form">
+                <fieldset>
+                    <div class="form-group" id="FileDownload">
+                        <label class="col-sm-2  control-label">หมายเลขการสั่งซื้อ</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => Model.Id, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group" id="FileDownload">
+                        <label class="col-sm-2  control-label">วัน เวลา</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => Model.Datetime, new { @class = "form-control", @disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group" id="FileDownload">
+                        <label class="col-sm-2  control-label">ชื่อสมาชิก</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" disabled type="text" value="@String.Format("{0} {1}", Model.Membership.Firstname, Model.Membership.Lastname)" />
+                        </div>
+                    </div>
+                    <div class="form-group" id="FileDownload">
+                        <label class="col-sm-2  control-label">ราคา</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" disabled type="text" value="@Helper.PriceAndCurrency(Model.Price,Model.Currency,true)" />
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend></legend>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h5><label>ที่อยู่ในการจัดส่ง</label></h5>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendFullname, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">ที่อยู่</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendAddress, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">จังหวัด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendProvince, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">ประเทศ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendCountry, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รหัสไปรษณีย์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendPostcode, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">เบอร์โทรศัพท์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendPhonenumber, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">อีเมล์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.SendEmail, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5><label>ที่อยู่ในการออกใบเสร็จ</label></h5>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptFullname, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">ที่อยู่</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptAddress, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">จังหวัด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptProvince, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">ประเทศ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptCountry, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รหัสไปรษณีย์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptPostcode, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class=" col-sm-4 control-label">เบอร์โทรศัพท์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptPhonenumber, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">อีเมล์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.ReceiptEmail, new { @class = "form-control", @disabled = "true" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <footer class="panel-footer text-center">
+            @Html.ActionLink("การชำระเงิน", "Payment", new { @id = Model.Id }, new { @class = "btn btn-git-default" })
+            @Html.ActionLink("การจัดส่ง", "Deliver", new { @id = Model.Id }, new { @class = "btn btn-git-default" })
+        </footer>
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            <span>รายการสั่งซื้อ</span>
+        </header>
+        <div class="panel-body">
+            <div id="tableDetailPaymentList" class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                สินค้า
+                            </th>
+                            <th>ประเภท</th>
+                            <th>
+                                จำนวน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EComOrderItems)
+                        {
+                            <tr>
+                                <td data-title="สินค้า">
+                                    @Html.ActionLink(item.EComProduct.NameTH, "Product_Detail", new { id = item.EComProduct.Id })
+                                </td>
+                                <td data-title="กลุ่มสินค้า">
+                                    @{
+                            List<string> CategoryMapName = new List<string>();
+                            foreach (var EComCategoryMap in item.EComProduct.EComCategoryMaps)
+                            {
+                                CategoryMapName.Add(EComCategoryMap.EComCategory.NameTH);
+                            }
+                            @Html.Raw(string.Join(" , ", CategoryMapName.ToArray()));
+                                    }
+                                </td>
+                                <td data-title="จำนวน">
+                                    @Html.DisplayFor(showitem => item.Quantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    @*<p class="pull-right">ราคา : @Pays.Price</p>*@
+                </div>
+            </div>
+        </footer>
+    </section>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

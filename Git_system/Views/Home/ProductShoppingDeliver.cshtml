@@ -1,0 +1,301 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+
+    }
+
+    <div class="row" ng-app="eComApp" ng-controller="DeliverCtrl">
+        <div ng-if="loadObject.status" class="text-center">
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+                <div class="sk-cube sk-cube5"></div>
+                <div class="sk-cube sk-cube6"></div>
+                <div class="sk-cube sk-cube7"></div>
+                <div class="sk-cube sk-cube8"></div>
+                <div class="sk-cube sk-cube9"></div>
+            </div>
+            <span ng-bind="loadObject.message"></span>
+        </div>
+        <div ng-show="NotLogin" ng-init="NotLogin = false" class="ng-hide">
+            <div class="col-sm-16 col-sm-offset-4 col-md-12 col-md-offset-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-lg-4">@Multi._IndexString1</label>
+                        <div class="col-sm-18 col-lg-20">
+                            <input autofocus class="form-control input-sm" name="Email" placeholder="Email" ng-model="loginEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label col-sm-6 col-lg-4">@Multi._IndexString2</label>
+                        <div class="col-sm-18 col-lg-20">
+                            <input class="form-control input-sm" name="Password" placeholder="Password" ng-model="loginPassword" type="password" required>
+                            <span class="text-danger">
+                                {{loginValidationMessage}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-8 col-xs-8 pull-right">
+                            <button class="btn btn-git-default btn-block pull-right" ng-click="logInFn()">@Multi._Button_Login</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!loadObject.status && !NotLogin" class="ng-hide">
+            <div class="col-md-24 col-sm-24 col-xs-24">
+                <div class="row">
+                    <!--name header tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-4 col-sm-4 text-right">
+                            <div class="row">
+                                <br /><br /><label class="purple-text font-size-20">GIT E-Store</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-1"></div>
+                    </div>
+                    <!--name header phone-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <div class="row text-center">
+                                &nbsp;
+                                <label class="purple-text font-size-12">GIT E-Store</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-12 col-sm-14">
+                            <img src="~/Images/register-step-2.png" class="col-md-24 col-sm-24 img-responsive" />
+                            <div class="col-md-7 col-sm-7 text-center">@Multi.Shopping_cart</div>
+                            <div class="col-md-10 col-sm-10 text-center purple-text">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-md-7 col-sm-7 text-center">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for mobile-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <img src="~/Images/register-step-2.png" class="col-xs-24 img-responsive" />
+                            <div class="col-xs-7 text-center" style="font-size:8px;">@Multi.Shopping_cart</div>
+                            <div class="col-xs-10 text-center purple-text" style="font-size:8px;">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-xs-7 text-center" style="font-size:8px;">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-24 col-sm-24 col-xs-24 height-minnest"></div>
+
+            <!--table-->
+            <div class="col-md-24 col-sm-24 col-xs-24 height-minnest"></div>
+            <div id="no-more-tables">
+                <table class="col-md-24 col-sm-24 col-xs-24 table-bordered table-condensed cf">
+                    <!--use class="table-striped" for anothor style-->
+                    <thead class="cf">
+                        <tr style="background-color:#EFEDED;">
+                            <th class="purple-text text-center">@Multi.Product_id</th>
+                            <th class="purple-text text-center">@Multi.Product_name</th>
+                            <th class="purple-text text-center">@Multi.Quantity</th>
+                            <th class="numeric purple-text text-center">@Multi.Price_Per_Unit</th>
+                            <th class="numeric purple-text text-center">@Multi.Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in Cart.Cart.Items">
+                            <td data-title="@Multi.Product_id" class="text-center">
+                                <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{item.Id}}" ng-bind="item.Id"></a>
+                            </td>
+                            <td data-title="@Multi.Product_name" class="text-center">
+                                <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{item.Id}}" ng-bind="item.Name"></a>
+                            </td>
+                            <td data-title="@Multi.Quantity" class="text-center">{{item.Quantity}}</td>
+                            <td data-title="@Multi.Price_Per_Unit" class="numeric text-center">
+                                <span ng-bind-html="item.PricePerUnit | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </td>
+                            <td data-title="@Multi.Total" class="numeric text-center">
+                                <span ng-bind-html="item.getPriceTotal() | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-22 col-sm-offset-2">
+                    <span ng-repeat="payType in paymentTypes">
+                        <input type="radio" value={{payType.Id}} ng-model="Cart.Cart.PaymentType">
+                        <span ng-bind="payType.Name"></span>
+                    </span>
+                </div>
+            </div>
+
+            <!--detail paragraph 2-->
+            <section class="col-md-22 col-md-offset-1">
+                <div class="">
+                    <div class="col-sm-offset-7 col-md-offset-11">
+                        <dl class="dl-horizontal">
+                            <dt ng-if="orderDetail.deliverPrice > 0">@Multi.Delivery_cost :</dt>
+                            <dd ng-if="orderDetail.deliverPrice > 0" class="text-right">
+                                <span ng-bind-html="orderDetail.deliverPrice | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <dt>@Multi.Total :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.price | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <dt>@Multi.Vat :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.vat | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <div ng-repeat="item in orderDetail.promotionList">
+                                <dt ng-bind="@(Multi.__LanguageType.Equals("TH") ? "item.NameTH" : "item.NameEN") + ' :' "></dt>
+                                <dd class="text-right">
+                                    <span ng-bind-html="item.Price | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </dd>
+                            </div>
+
+                            <dt>@Multi.Total_price :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.totalPrice | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+            <!--detail paragraph 3-->
+            @*
+                <div class="col-md-24 col-sm-24 col-xs-24 height-min"></div>
+                <div class="col-md-1 col-sm-1"></div>
+                <div class="col-md-23 col-sm-23 col-xs-24">@Multi.Please_accept_the_terms_and_conditions_to_continue_payment</div>
+                <div class="col-md-1 col-sm-1"></div>
+                <div class="col-md-23 col-sm-23 col-xs-24">
+                    <input type="checkbox" ng-model="termsCheck">@Multi.Please_check_this_box_for_confirm_that_you_have_already_read_and_accepted_into <a id="legalClick" data-toggle="modal" data-target="#myModal"><u>@Multi.The_term_and_conditions_to_receiving_the_money</u></a>
+                </div>
+            *@
+            <!--detail paragraph 4-->
+            <div class="col-md-24 col-sm-24 col-xs-24 height-biggest"></div>
+            <!--pharse 1-->
+            <div class="col-md-12 col-sm-12 col-xs-24 form-horizontal formMin" ng-init="editDeliverAddress = false">
+                <label class="height-minnest">@Multi.Delivery_payment</label><br />
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Fullname</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Fullname" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Address</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Address" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Province</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Province" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Country</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Country" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Postcode</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Postcode" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Phonenumber</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Phonenumber" ng-disabled="!editDeliverAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Email</label>
+                    <div class="col-md-16">
+                        <input type="text" class="form-control input-sm" ng-model="Cart.Cart.SenderAddress.Email" ng-disabled="!editDeliverAddress" ng-change="fnValidSenderEmail()">
+                        <span ng-if="!validSenderEmail" class="text-danger">@Multi.Validation_EmailCorrect</span>
+                    </div>
+                </div>
+                <div class="">
+                    <button class="btn btn-git-default pull-right" ng-click="editDeliverAddress = true">@Multi.Edit</button>
+                </div>
+            </div>
+            <!--pharse 2-->
+            <div class="col-md-12 col-sm-12 col-xs-24 form-horizontal formMin" ng-init="editReceiptAddress = false">
+                <label class="height-minnest">@Multi.Address_for_receipt</label><br />
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Receipts_issued_in_the_name</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Fullname" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Address</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Address" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Province</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Province" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Country</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Country" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Postcode</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Postcode" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Phonenumber</label>
+                    <div class="col-md-16"><input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Phonenumber" ng-disabled="!editReceiptAddress"></div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-md-8">@Multi.Email</label>
+                    <div class="col-md-16">
+                        <input type="text" class="form-control input-sm" ng-model="Cart.Cart.ReceiptAddress.Email" ng-disabled="!editReceiptAddress" ng-change="fnValidReceiptEmail()">
+                        <span ng-if="!validReceiptEmail" class="text-danger">@Multi.Validation_EmailCorrect</span>
+                    </div>
+                </div>
+                <div class="">
+                    <button class="btn btn-git-default pull-right" ng-click="editReceiptAddress = true">@Multi.Edit</button>
+                </div>
+            </div>
+            <!--button-->
+            <div class="col-md-12 col-sm-12 col-xs-24 pagination-right paragraph-extra">
+                <div class="col-md-12 col-sm-12 col-xs-24">
+                    @Html.ActionLink(Multi.Back, "ProductShoppingCart", null, new { @class = "btn btn-git-default btn-block" })
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-24">
+                    <button class="btn btn-git-default btn-block" ng-click="save()" ng-disabled="Cart.Cart.Items.length == 0 || (!validReceiptEmail || !validSenderEmail)">@Multi.Continue</button>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <section class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">@Multi.Legal</h4>
+                        </div>
+                        <div class="modal-body" id="PrintElementLegal" ng-bind-html="legal | sanitize">
+                        </div>
+                    </div>
+            </section>
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

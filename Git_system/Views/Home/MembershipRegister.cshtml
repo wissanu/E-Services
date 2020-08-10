@@ -1,0 +1,185 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    @model IEnumerable<Git_system.Models.Course>
+
+    //Config
+    ViewBag.Title = Multi._TitleWeb_MembershipRegister;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+
+        <style>
+            /*Custom*/
+            table.paytable th {
+                vertical-align: middle !important;
+                text-align: center;
+            }
+
+            table.paytable td, th, tr {
+                vertical-align: middle !important;
+                border: 2px solid #ddd;
+            }
+
+            table.paytable thead {
+                background-color: #efefef;
+                color: #2b3c94;
+            }
+
+            .table-responsive {
+                border: 1px none #ddd !important;
+            }
+        </style>
+    }
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="col-sm-24 table-responsive">
+                <table class="table paytable">
+                    <thead>
+                        <tr>
+                            <th>@Multi._MembershipRegisterString1</th>
+                            <th>@Multi._MembershipRegisterString3</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{double sumprice = 0;
+                        Git_system.Models.Membership membershipView = new Git_system.Models.Membership();
+                        membershipView = ViewBag.membershipView;
+                        membershipView = membershipView.CheckMembershipType();
+                        bool membershipEXP = (membershipView.RegisterDateExp <= System.DateTime.Now);
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (Multi.__LanguageType == "TH")
+                                    { @String.Format("{0} {1} {2}", item.Product.TitleTH, Multi._MembershipRegisterString2, item.TitleTH) }
+                                    else
+                                    { @String.Format("{0} {1} {2}", item.Product.TitleEN, Multi._MembershipRegisterString2, item.TitleEN) }
+                                </td>
+                                <td align="center">
+                                    @{sumprice = item.Product.toPriceForMembership(membershipView);}
+                                    @Html.Raw(Helper.PriceAndCurrency(item.Product.toTotalPriceForMembership(membershipView),Helper.getCurrency(membership:membershipView)).Trim().Replace(" ","&nbsp;"))
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-20 col-sm-offset-2">
+                <p>
+                    <label>@Multi._MembershipRegisterString4</label>
+                    @foreach (SelectListItem radioitem in ViewBag.PaymentTypes)
+                    {
+                        <span>
+                            @Html.RadioButton("payType", radioitem.Value, radioitem.Selected) @radioitem.Text
+                        </span>
+                    }
+                </p>
+
+                <div class="col-sm-offset-8 col-md-offset-11">
+                    <dl class="dl-horizontal text-right">
+                        <dt>@Multi._MembershipRegisterString7</dt>
+                        <dd>
+                            @Html.Raw(Helper.PriceAndCurrency(sumprice,Helper.getCurrency(membership:membershipView)).Trim().Replace(" ","&nbsp;"))
+                        </dd>
+
+                        <dt>@Multi.Vat</dt>
+                        <dd>
+                            @Html.Raw(Helper.PriceAndCurrency(
+                                sumprice * Git_system.Models.Form.ExtensionMethod.getBackendVatSetting() / 100
+                                ,Helper.getCurrency(membership:membershipView)
+                            ).Trim().Replace(" ","&nbsp;"))
+                        </dd>
+                        <dt>@Multi.Total_price</dt>
+                        <dd>
+                            @Html.Raw(Helper.PriceAndCurrency(
+                                sumprice * (1 + Git_system.Models.Form.ExtensionMethod.getBackendVatSetting() / 100)
+                                ,Helper.getCurrency(membership:membershipView)
+                            ).Trim().Replace(" ","&nbsp;"))
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-sm-20 col-sm-offset-2">
+                <p><label>@Multi.Benefit</label></p>
+                <p>@Html.Raw(ViewBag.Benefit)</p>
+            </div>
+            <div class="col-sm-20 col-sm-offset-2">
+                <p><label>@Multi._MembershipRegisterString10</label></p>
+                <p><input id="checkbox_confirm" type="checkbox" onchange="confirmcheckbox()" /> @Multi._MembershipRegisterStringLegal <a id="legalClick" data-toggle="modal" data-target="#myModal"><u>@Multi._MembershipRegisterString_legal</u></a></p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-20">
+                <button id="btn_submit" class="btn btn-git-default btn-block" type="submit" disabled>@Multi._Button_Register</button>
+            </div>
+        }
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@Multi.Legal</h4>
+                </div>
+                <div class="modal-body" id="PrintElementLegal">
+                    @{
+                        WebSettingConfig webSettingConfig = new WebSettingConfig();
+                    }
+                    @if (Multi.__LanguageType == "TH")
+                    {
+                        @Html.Raw(webSettingConfig.legalMembershipTH)
+                    }
+                    else
+                    {
+                        @Html.Raw(webSettingConfig.legalMembershipEN)
+                    }
+                </div>
+                @*<div class="modal-footer">
+                        <button class="btn btn-git-default" onclick="printelement('#PrintElementLegal')">Print</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+
+        <script src="~/Scripts/jQuery.print.js"></script>
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            $("#legalClick").on("click", function () {
+                var height = $(window).height();
+                height = height - 60;
+                $('.modal-content').attr('style', 'height:' + height + 'px; overflow:auto;');
+            });
+        </script>
+
+        <script type='text/javascript'>
+            function printelement(printpage) {
+                $.print(printpage);
+            }
+        </script>
+
+        <script>
+            function confirmcheckbox() {
+                if ($("#checkbox_confirm").is(':checked')) {
+                    $("#btn_submit").removeAttr("disabled");
+                }
+                else {
+                    $('#btn_submit').attr('disabled', 'disabled');
+                }
+            }
+        </script>
+    }
+}

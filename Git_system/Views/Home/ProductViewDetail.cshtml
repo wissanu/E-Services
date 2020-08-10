@@ -1,0 +1,403 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+        <link href="~/Content/lightbox.min.css" rel="stylesheet" />
+    }
+    <div class="row" ng-app="eComApp" ng-controller="ProductCtrl">
+
+        <div ng-if="loadObject.status" class="text-center">
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+                <div class="sk-cube sk-cube5"></div>
+                <div class="sk-cube sk-cube6"></div>
+                <div class="sk-cube sk-cube7"></div>
+                <div class="sk-cube sk-cube8"></div>
+                <div class="sk-cube sk-cube9"></div>
+            </div>
+            <span ng-bind="loadObject.message"></span>
+        </div>
+        <div ng-show="!loadObject.status" class="ng-hide">
+            <!--box content for mobile-->
+            <div class="visible-xs-block">
+                <div class="paragraph-bt-large pagination-right white-text" style="width: 100%; background-color: #2B3C96; -moz-border-radius: 62px 62px 62px 62px; -webkit-border-radius: 62px 62px 62px 62px; border-radius: 62px 62px 62px 62px; border: 5px solid #404D98; text-align: center;">
+                    <img src="~/Images/cart.png" />&nbsp;<label>@Multi.Shopping_in_cart @Multi.Quantity {{totalItems}} @Multi.Unit</label>
+                </div>
+            </div>
+            <!--box content fix right-->
+            <div class="hidden-xs">
+                <a class="cartCount" href="@Url.Action("ProductShoppingCart", "Home", null)">
+                    <div class="inner-block" style="z-index:5"></div>
+                    <div class="outer-block" style="z-index:5">
+                        <div class="margin-category">
+                            <label class="white-text font-size-16">@Multi.Shopping_in_cart</label>&nbsp;<label class="white-text font-size-14">@Multi.Quantity</label><br><label class="white-text inner-part-number font-size-30">{{totalItems}}</label>&nbsp;<label class="white-text font-size-16">@Multi.Unit</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!--nav sidebar -->
+            <div class="col-sm-6 col-md-5">
+                <div class="row">
+                    <div class="sidebar-nav">
+                        <div class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header col-xs-24">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse" style="float:left;">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <span class=" visible-xs navbar-brand" style="text-transform:capitalize" ;>@Multi.menu </span>
+                            </div>
+                            <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <label class="purple-text font-size-20">GIT E-Store</label>
+
+                                    <li ng-repeat="category in Categories">
+                                        <a href="@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{category.Id}}">
+                                            <span class="purple-text glyphicon glyphicon-play"></span>
+                                            <span class="font-size-16 purple-text"> {{category.Name}}</span>
+                                        </a>
+                                    </li>
+                                    <hr class="fix-divider" />
+                                    <li>
+                                        <a href="@Url.Action("ProductTrackShipment", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.Deliver_status</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("ProductOrderHistory", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.History</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("ProductShoppingCart", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.Shopping_cart</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("ProductElectronic", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.Download_file</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="input-group input-group-sm col-sm-22 col-sm-offset-1">
+                                            <input type="text" class="form-control" ng-model="searchValue" onkeypress="if (event.which == 13) document.getElementById('searchButton').click()" autofocus>
+                                            <span class="input-group-btn">
+                                                <a id="searchButton" class="btn btn-git-default" ng-href="/Home/ProductViewMore#?Search={{searchValue}}">Go!</a>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--main header upper slider carousel-->
+            <div class="col-sm-18 col-md-19">
+                <div class=" row">
+                    <div class="col-xs-24">
+                        <div class="white-text font-size-20" style="width:100%;background-color:#999898;padding:5px 5px 5px 10px;">{{product.Name}}</div>
+                    </div>
+
+                    <div class="paragraph-min"></div>
+                    <!-- main slider carousel -->
+                    <section class="col-md-8 col-sm-9 col-xs-24" id="slider">
+                        <div class="row">
+                            <div class="col-md-24 col-sm-24 col-xs-20" id="carousel-bounding-box">
+                                <div class="paragraph-min"></div>
+                                <div class="">
+                                    <div id="myCarousel" class="carousel slide">
+                                        <!-- main slider carousel items -->
+                                        <div class="carousel-inner">
+                                            <div class="item text-center" ng-class="{'active':$first}" data-slide-number="{{$index}}" ng-repeat="images in product.ImageFiles">
+                                                <a class="example-image-link" href="images/image-1.jpg" ng-href="{{images.FilePath.replace('~','')}}" data-lightbox="example{{$index}}">
+                                                    <img ng-src="{{images.FilePath.replace('~','')}}" class="img-responsive">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-24 col-sm-24 col-xs-4" id="slider-thumbs">
+                                <div class="paragraph-min"></div>
+                                <div class="">
+                                    <!-- thumb navigation carousel items -->
+                                    <ul class="list-inline">
+                                        <div class="col-md-6 col-sm-6 col-xs-24" ng-repeat="images in product.ImageFiles">
+                                            <div class="row">
+                                                <li>
+                                                    <a id="carousel-selector-{{$index}}" ng-class="{'selected':$first}" onclick="changePicture(this)" style="padding:1px;" class="col-xs-24">
+                                                        <img ng-src="{{images.FilePath.replace('~','')}}" class="thumbnail img-responsive" style="border-radius:unset; margin-bottom:0;">
+                                                    </a>
+                                                </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- thumb navigation carousel -->
+                        </div>
+
+                        <!-- Demo file -->
+                        <div class="paragraph-min col-md-24" ng-if="product.OtherFiles.length > 0">
+                            <p class="font-style-nav" style="font-weight:bolder;">@Multi.Notes_file</p>
+                            <p><a ng-href="{{product.OtherFiles[0].FilePath}}" ng-bind="product.OtherFiles[0].Filename">filename</a></p>
+                        </div>
+
+                        <!-- Demo file -->
+                        <div class="paragraph-min col-md-24" ng-if="product.DemoFile.length > 0">
+                            <p class="font-style-nav" style="font-weight:bolder;">@Multi.Demo_file</p>
+                            <p><a ng-href="{{product.DemoFile[0].FilePath}}" ng-bind="product.DemoFile[0].Filename">filename</a></p>
+                        </div>
+                    </section>
+                    <!--/main slider carousel-->
+                    <!--detail about picture-->
+                    <section class="col-md-15 col-sm-14 col-xs-24">
+                        <div class="paragraph"></div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="purple-text font-size-13 ">@Multi.Category</label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="gray-text font-size-13 ">
+                                <span ng-repeat="product_Category in product.Category">
+                                    <a href="@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{product_Category.Id}}" style="color:#B0B0AF; padding-right:5px;">{{product_Category.Name}}</a>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="col-md-24 col-sm-24 col-xs-24">
+                            <div class="paragraph-min"></div>
+                            <hr class="fix-divider" style="border-top: dotted 1px;">
+                            <div class="paragraph-min"></div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="purple-text font-size-13 ">@Multi.Product_id</label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="gray-text font-size-13 ">{{product.Id}}</label>
+                        </div>
+                        <div class="col-md-24 col-sm-24 col-xs-24">
+                            <div class="paragraph-min"></div>
+                            <hr class="fix-divider" style="border-top: dotted 1px;">
+                            <div class="paragraph-min"></div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="purple-text font-size-13 ">@Multi.Price_Per_Unit</label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="gray-text font-size-13 ">
+                                <span ng-bind-html="product.PricePerUnit | eComCurrency:{Currency:product.Currency, isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </label>
+                        </div>
+                        <div class="col-md-24 col-sm-24 col-xs-24">
+                            <div class="paragraph-min"></div>
+                            <hr class="fix-divider" style="border-top: dotted 1px;">
+                            <div class="paragraph-min"></div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="purple-text font-size-13 ">@Multi.Detail</label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <label class="gray-text font-size-13 ">{{product.Detail}}</label>
+                        </div>
+                        <div class="col-md-24 col-sm-24 col-xs-24">
+                            <div class="paragraph-min"></div>
+                            <hr class="fix-divider" style="border-top: dotted 1px;">
+                            <div class="paragraph-min"></div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" ng-if="product.Stock.CheckStatus()">
+                            <label class="purple-text font-size-13 ">@Multi.Quantity</label>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" ng-if="product.Stock.CheckStatus()">
+                            <div class="input-group" style="width:70px;">
+                                <input type="text" class="form-control" ng-model="product.Quantity">
+                                <div class="input-group-btn-vertical">
+                                    <button class="btn btn-default " type="button" ng-click="upQuantity()"><i class="fa fa-caret-up"></i></button>
+                                    <button class="btn btn-default" type="button" ng-click="downQuantity()"><i class="fa fa-caret-down"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add to cart -->
+                        <div class="col-md-20 col-sm-24 col-xs-24">
+                            <div class="row">
+                                <div style="margin-top:50px;"></div>
+                                <div class="col-md-18 col-sm-24 col-xs-24 pagination-right">
+                                    <div class="row">
+                                        <div ng-if="product.Stock.CheckStatus()">
+
+                                            <p class="col-sm-12">
+                                                @Html.ActionLink(Multi.Select_more, "ProductView", null, new { @class = "btn btn-git-default btn-block" })
+                                            </p>
+                                            <p ng-if='!Cart.getItemById(product.Id)' class="col-sm-12 ">
+                                                <button type=" button" class="btn btn-git-default btn-block" ng-click="addToCart(product)" ng-disabled="product.Quantity <= 0 || (product.Quantity==null)">
+                                                    @Multi.Add_to_cart
+                                                </button>
+                                            </p>
+                                            <p ng-if='Cart.getItemById(product.Id)' class="col-sm-12 ">
+                                                <a href="@Url.Action("ProductShoppingCart", "Home", null)" class="btn btn-git-default btn-block">
+                                                    @Multi.Continue
+                                                </a>
+                                            </p>
+
+                                            @*<p class="col-xs-24" ng-if='Cart.getItemById(product.Id)' style="">
+                                                    <button class="btn btn-git-default btn-block" ng-click="removeInCart()">@Multi.Remove_in_cart</button>
+                                                </p>*@
+                                        </div>
+                                        <div class="col-xs-24" ng-if="(product.Stock.getInStock() && (product.Stock.getQuantity() < product.Quantity)) || !product.Stock.CheckStatus()">
+                                            <p class="text-danger"><labl>@Multi.Out_of_stock</labl></p>
+                                        </div>
+
+                                        @* Social *@
+                                        <div class="col-xs-24">
+                                            <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4 hidden">
+                                                <div class="row">
+                                                    <img src="~/Images/twister-icon.png" class=" img-responsive" />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4">
+                                                <div class="row">
+                                                    <a onclick="genShareBox(this);" href="">
+                                                        <img src="~/Images/facebook-icon.png" class=" img-responsive" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-md-4 col-xs-4 col-lg-4 hidden">
+                                                <div class="row">
+                                                    <img src="~/Images/instagram-icon.png" class=" img-responsive" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="col-sm-24 col-xs-24">
+                        <div ng-bind-html="product.Description | sanitize"></div>
+                    </div>
+                </div>
+            </div>
+            <!--section latest-->
+            <!--define tabs start-->
+            <div class="col-sm-24 col-md-24">
+                <div class="row">
+                    <ul class="nav nav-tabs width-nav">
+                        <li class="optical-background"><label class="font-style-nav"><span>Related Item</span></label></li>
+                    </ul>
+                    <!--define tabs end-->
+                    <!--content tabs-->
+                    <div class="col-md-24">
+                        <div class="row">
+                            <div class="col-xs-24 col-sm-12 col-md-6" ng-repeat="product in relatedItem_Products | limitTo:4">
+                                <div class="text-center">
+                                    <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{product.Id}}" ng-click="changeProduct(product.Id)">
+                                        <img class="img-thumbnail" ng-src="{{product.ImageFiles[0].FilePath.replace('~','')}}" />
+                                    </a>
+                                </div>
+                                <div class="caption"><p>{{ product.Name }}</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--content tabs end-->
+            <!--section 2 end-->
+        </div>
+    </div>
+    @section BodySection_Core_scripts {
+        <div id="fb-root"></div>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1943896575835552', status: true, cookie: true,
+                    xfbml: true
+                });
+            };
+            (function () {
+                var e = document.createElement('script'); e.async = true;
+                e.src = document.location.protocol +
+                '//connect.facebook.net/en_US/all.js';
+                document.getElementById('fb-root').appendChild(e);
+            }());
+        </script>
+
+        <script type="text/javascript">
+
+            function FBGenUi(name, picture, caption, description) {
+                if (name == void 0) name = "";
+                if (picture == void 0) picture = ""; else picture = window.location.origin + picture;
+                if (caption == void 0) caption = "";
+                if (description == void 0) description = "";
+                FB.ui(
+                {
+                    method: 'feed',
+                    name: name,
+                    link: window.location.href,
+                    picture: picture,
+                    caption: caption,
+                    description: description,
+                    message: ""
+                });
+            }
+
+            function genShareBox(el) {
+                var $scope = angular.element(el).scope();
+                $scope.$apply(); //tell angular to check dirty bindings again
+
+                var product = $scope.product;
+                FBGenUi(product.Name, product.ImageFiles[0].FilePath.replace('~', ''), product.Name, product.Detail)
+            }
+        </script>
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+
+            $('#myCarousel').carousel({
+                interval: 300000
+            });
+
+            // when the carousel slides, auto update
+            $('#myCarousel').on('slid', function (e) {
+                var id = $('.item.active').data('slide-number');
+                id = parseInt(id);
+                $('[id^=carousel-selector-]').removeClass('selected');
+                $('[id=carousel-selector-' + id + ']').addClass('selected');
+            });
+
+            function changePicture(elmnt) {
+                var id_selector = elmnt.id;
+                var id = id_selector.substr(id_selector.length - 1);
+                id = parseInt(id);
+                $('#myCarousel').carousel(id);
+                $('[id^=carousel-selector-]').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        </script>
+        <script src="~/Scripts/lightbox.min.js"></script>
+    }
+}

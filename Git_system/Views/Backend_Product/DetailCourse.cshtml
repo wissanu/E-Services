@@ -1,0 +1,90 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.Course
+
+    //Config
+    ViewBag.Title = "หลักสูตร";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.Product = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/Flag-icon-css/flags/flag-icon")
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>หลักสูตร</span>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                ชื่อสมาชิก
+                            </th>
+                            <th>
+                                หลักสูตร
+                            </th>
+                            <th>
+                                รุ่น
+                            </th>
+                            <th>
+                                จำนวน
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.PayItems)
+                        {
+                            <tr>
+                                <td data-title="ชื่อสมาชิก">
+                                    @Html.ActionLink(String.Format("{0} {1}", item.Pay.Membership.Firstname, item.Pay.Membership.Lastname), "DetailUser", "Backend_Product", new { id = item.Pay.MembershipId }, null)
+                                </td>
+                                <td data-title="หลักสูตร">
+                                    @Html.DisplayFor(showitem => item.Course.Product.TitleTH)
+                                </td>
+                                <td data-title="รุ่น">
+                                    @Html.DisplayFor(showitem => item.Course.TitleTH)
+                                </td>
+                                <td data-title="จำนวน">
+                                    @Html.DisplayFor(showitem => item.Quantity)
+                                </td>
+                                <td data-title="สถานะ">
+                                    @Html.DisplayFor(showitem => item.Pay.ProcessStatusType.Name)
+                                </td>
+                                <td data-title="">
+                                    @Html.ActionLink("การสั่งซื้อ", "Detail", "Backend_PaymentProcess", new { id = item.Id }, null)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

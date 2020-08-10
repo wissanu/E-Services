@@ -1,0 +1,198 @@
+﻿@using Git_system.MultiResources
+@{
+    @model Git_system.Models.Form.Frontend_RegisterStep1
+
+    //Config
+    ViewBag.Title = Multi._TitleWeb_RegisterStep;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+    @section BodySection_Core_styles {
+
+        <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+    }
+    <div class="row">
+        <div class="col-md-12 col-md-offset-6 text-center">
+            <h4>@Multi._TitlePage_Head_RegisterStep1</h4>
+            <img src="~/Images/register-step-1.png" class="img-responsive display-inline stepImage">
+        </div>
+        <div class="col-md-22 col-md-offset-1">
+            <div class="row">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        <fieldset>
+                            <div class="row">
+
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-md-6 col-sm-8 text-right">@Multi.Membership_Firstname</label>
+                                        <div class="col-md-18 col-sm-16">
+                                            @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control input-sm", @required = true })
+                                            @Html.ValidationMessageFor(model => model.Firstname, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="form-label col-md-6 col-sm-8 text-right">@Multi.Membership_Lastname</label>
+                                        <div class="col-md-18 col-sm-16">
+                                            @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control input-sm", @required = true })
+                                            @Html.ValidationMessageFor(model => model.Lastname, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Multi.__LanguageType == "TH")
+                            {
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label col-md-6 col-sm-8 text-right">@Multi.Membership_FirstnameEN</label>
+                                            <div class="col-md-18 col-sm-16">
+                                                @Html.TextBoxFor(model => model.FirstnameEN, new { @class = "form-control input-sm", @required = true })
+                                                @Html.ValidationMessageFor(model => model.FirstnameEN, null, new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label class="form-label col-md-6 col-sm-8 text-right">@Multi.Membership_LastnameEN</label>
+                                            <div class="col-md-18 col-sm-16">
+                                                @Html.TextBoxFor(model => model.LastnameEN, new { @class = "form-control input-sm", @required = true })
+                                                @Html.ValidationMessageFor(model => model.LastnameEN, null, new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.Membership_Email</label>
+                                <div class="col-sm-20 col-md-21">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control input-sm", @required = true })
+                                    @Html.ValidationMessageFor(model => model.Email, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.Membership_Email_Re</label>
+                                <div class="col-sm-20 col-md-21">
+                                    @Html.TextBoxFor(model => model.Confirm_Email, new { @class = "form-control input-sm", @required = true })
+                                    @Html.ValidationMessageFor(model => model.Confirm_Email, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.Membership_Password</label>
+                                <div class="col-sm-20 col-md-21">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control input-sm", @required = true, @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Password, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.Membership_Password_Re</label>
+                                <div class="col-sm-20 col-md-21">
+                                    @Html.PasswordFor(model => model.Confirm_Password, new { @class = "form-control input-sm", @required = true, @autocomplete = "off" })
+                                    @Html.ValidationMessageFor(model => model.Confirm_Password, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.CaptchaImage</label>
+                                <div class="col-sm-20 col-md-21">
+                                    <div class="text-center">
+                                        <img class="" src="@Url.Action("Index", "GenerateImage", null)" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-24">
+                                            @Html.TextBoxFor(model => model.CaptchaImage, new { @class = "form-control input-sm", @required = true })
+                                            @Html.ValidationMessageFor(model => model.CaptchaImage, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <legend></legend>
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4 col-md-3 text-right">@Multi.MembershipCRM</label>
+                                <div class="col-sm-20 col-md-21">
+                                    <label class="checkbox-inline" for="checkboxes-0">
+                                        <input id="checkbox_confirm" type="checkbox" onchange="confirmcheckbox()">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="MembershipNumberForm" style="display: none;">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.Membership_MembershipNumber</label>
+                                <div class="col-sm-20 col-md-21">
+                                    @Html.TextBoxFor(model => model.MembershipNumber, new { @class = "form-control input-sm" })
+                                    @Html.ValidationMessageFor(model => model.MembershipNumber, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="ExpiryDayCRMForm" style="display: none;">
+                                <label class="form-label col-sm-4 col-md-3 text-right">@Multi.ExpiryDayCRM</label>
+                                <div class="col-sm-20 col-md-21">
+                                    <div class='input-group date'>
+                                        @if (Multi.__LanguageType == "TH")
+                                        {@Html.TextBoxFor(model => model.ExpCRM, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker", @data_date_language = "th-th" }) }
+                                        else
+                                        {@Html.TextBoxFor(model => model.ExpCRM, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm", @data_date_format = "dd/mm/yyyy", @data_provide = "datepicker" }) }
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.ExpCRM, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-20">
+                                    <div class="row">
+                                        <div class="col-sm-24">
+                                            <button class="btn btn-git-default btn-block" type="submit">@Multi._Button_Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+}
+@section BodySection_Page_level_scripts {
+    @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+}
+@section BodySection_Template_scripts {
+    <script>
+        $(function () {
+            $('.datepicker').datepicker({
+                autoclose: true,
+                todayHighlight: true
+            });
+        });
+        $("#ExpCRM").bind("focus", function () {
+            $(this).blur();
+        });
+    </script>
+    <script>
+        function confirmcheckbox() {
+            if ($("#checkbox_confirm").is(':checked')) {
+                $('#MembershipNumberForm').slideDown("slow");
+                $('#ExpiryDayCRMForm').slideDown("slow");
+            }
+            else {
+                $('#MembershipNumberForm').slideUp("slow");
+                $('#ExpiryDayCRMForm').slideUp("slow");
+            }
+        }
+    </script>
+    @* add asterisk to request field *@
+    <script>
+        $("input[required]").parent().append('<span class="fa fa-asterisk form-control-frontend-feedback-v1" aria-hidden="true" style="color: #a94442;"></span>');
+    </script>
+}

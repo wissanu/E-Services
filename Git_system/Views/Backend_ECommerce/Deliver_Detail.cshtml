@@ -1,0 +1,341 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComOrder
+
+    //Config
+    ViewBag.Title = "การจัดส่ง";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Deliver = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        <link href="~/Content/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+        <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        @using (Html.BeginForm("Deliver_Detail", "Backend_ECommerce", FormMethod.Post, null))
+        {
+            @Html.AntiForgeryToken()
+            <header class="panel-heading">การจัดส่ง</header>
+            <div class="panel-body">
+                <div class="form-horizontal bordered-group" role="form">
+                    <fieldset>
+                        <div class="form-group" id="FileDownload">
+                            <label class="col-sm-2  control-label">หมายเลขการสั่งซื้อ</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => Model.Id, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="FileDownload">
+                            <label class="col-sm-2  control-label">วัน เวลา</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => Model.Datetime, new { @class = "form-control", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="FileDownload">
+                            <label class="col-sm-2  control-label">ชื่อสมาชิก</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" disabled type="text" value="@String.Format("{0} {1}", Model.Membership.Firstname, Model.Membership.Lastname)" />
+                            </div>
+                        </div>
+                        <div class="form-group" id="FileDownload">
+                            <label class="col-sm-2  control-label">ราคา</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" disabled type="text" value="@Helper.PriceAndCurrency(Model.Price, Model.Currency, true)" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend></legend>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h5><label>ที่อยู่ในการจัดส่ง</label></h5>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">ชื่อ</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendFullname, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">ที่อยู่</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendAddress, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">จังหวัด</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendProvince, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">ประเทศ</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendCountry, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">รหัสไปรษณีย์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendPostcode, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">เบอร์โทรศัพท์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendPhonenumber, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">อีเมล์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.SendEmail, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h5><label>ที่อยู่ในการออกใบเสร็จ</label></h5>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">ชื่อ</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptFullname, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">ที่อยู่</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptAddress, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">จังหวัด</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptProvince, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">ประเทศ</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptCountry, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">รหัสไปรษณีย์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptPostcode, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class=" col-sm-4 control-label">เบอร์โทรศัพท์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptPhonenumber, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4  control-label">อีเมล์</label>
+                                    <div class="col-sm-8">
+                                        @Html.TextBoxFor(model => model.ReceiptEmail, new { @class = "form-control", @disabled = "true" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="form-horizontal bordered-group">
+                        <legend></legend>
+                        <div class="form-group">
+                            <label class="col-sm-2  control-label">สถานะการส่งสินค้า</label>
+                            <div class="col-sm-10">
+                                @Html.DropDownList(Html.NameFor(n => Model.DeliverProcessStatusId).ToString().Replace(".", "_"), null, null, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="divDeliverNumber">
+                            <label class="col-sm-2  control-label">เลขที่การจัดส่ง</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.DeliverNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DeliverNumber, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group" id="divDeliverSendName">
+                            <label class="col-sm-2  control-label">ชื่อผู้จัดส่ง</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(model => model.DeliverSendName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DeliverSendName, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="divDeliverSendDate">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">วัน จัดส่ง</label>
+                                    <div class="col-sm-8">
+                                        <div class='input-group date'>
+                                            <input name="DeliverSendDate_Day" class="form-control" data-date-format="dd/mm/yyyy" data-provide="datepicker" data-date-language="th-th" value="@string.Format("{0:dd/MM/yyyy}", Model.DeliverSendDate)" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        @Html.ValidationMessage("DeliverSendDate_Day", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">เวลา จัดส่ง</label>
+                                    <div class="col-sm-8">
+                                        <div class='input-group date bootstrap_datetimepicker_Time'>
+
+                                            <input name="DeliverSendDate_Time" class="form-control" data-date-format="HH:mm" value="@string.Format("{0:HH:mm}", Model.DeliverSendDate)" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                            </span>
+                                        </div>
+                                        @Html.ValidationMessage("DeliverSendDate_Time", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <footer class="panel-footer text-center">
+                <a class="btn btn-git-default" href="@Url.Action("Order_Detail", new{id = @Model.Id})">การสั่งซื้อ</a>
+                <button id="ButtonSubmit" class="hidden" type="submit">บันทึก</button>
+                <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">บันทึก</button>
+            </footer>
+        }
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading">
+            <span>รายการสั่งซื้อ</span>
+        </header>
+        <div class="panel-body">
+            <div id="tableDetailPaymentList" class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                สินค้า
+                            </th>
+                            <th>ประเภท</th>
+                            <th>
+                                จำนวน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.EComOrderItems)
+                        {
+                            <tr>
+                                <td data-title="สินค้า">
+                                    @Html.DisplayFor(showitem => item.EComProduct.NameTH)
+                                </td>
+                                <td data-title="กลุ่มสินค้า">
+                                    @{
+                            List<string> CategoryMapName = new List<string>();
+                            foreach (var EComCategoryMap in item.EComProduct.EComCategoryMaps)
+                            {
+                                CategoryMapName.Add(EComCategoryMap.EComCategory.NameTH);
+                            }
+                            @Html.Raw(string.Join(" , ", CategoryMapName.ToArray()));
+                                    }
+                                </td>
+                                <td data-title="จำนวน">
+                                    @Html.DisplayFor(showitem => item.Quantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-12">
+                    @*<p class="pull-right">ราคา : @Pays.Price</p>*@
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" id="modal_content_01" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <span>คุณต้องการที่จะบันทึก?</span>
+                    </p>
+                    <p>
+                        <span class="text-danger">โปรระวังการเปลี่ยนสถานะเป็นจัดส่งเรียบร้อย จะทำการนำสินค้าออกจากคลังอย่างอัตโมมัติ โปรดตรวจสอบให้แน่ใจว่ามีสินค้าเพียงพอ</span>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">บันทึก</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+        <script src="~/Scripts/bootstrap-datetimepicker-Script.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('.bootstrap_datetimepicker_Date').datetimepicker({
+                    pickTime: false
+                });
+            });
+            $(function () {
+                $('.bootstrap_datetimepicker_Time').datetimepicker({
+                    pickDate: false
+                });
+            });
+            $(function () {
+                $('.datepicker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            });
+        </script>
+
+    }
+
+    @section BodySection_Template_scripts {
+        <script>
+            var htmlFormLoadCount = 0;
+            $("#@Html.NameFor(n => Model.DeliverProcessStatusId).ToString().Replace(".", "_")").change(function () {
+                var $input = $(this);
+                if ($input.val() == 2) {
+                    $("#divDeliverNumber, #divDeliverSendName, #divDeliverSendDate").show(1000);
+                } else {
+                    $("#divDeliverNumber, #divDeliverSendName, #divDeliverSendDate").hide(1000);
+                }
+            }).change();
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

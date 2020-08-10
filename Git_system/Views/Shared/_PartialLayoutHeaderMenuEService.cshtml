@@ -1,0 +1,21 @@
+﻿@using Git_system.MultiResources;
+
+<a href="@Url.Action("Home","Home",null)">
+    <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+</a>
+@if (Request.Cookies[".FOENAUTH"] != null)
+{
+    <a href="@Url.Action("RegisterMembership","Home",null)" class="text-nowrap">@Multi.LayoutFrontend_String13</a>
+    <a href="@Url.Action("Product","Home",null)" class="text-nowrap">@Multi.LayoutFrontend_String1</a>
+    <a href="@Url.Action("Edit_Profile", "Home", null)" class="text-nowrap">@Multi.LayoutFrontend_String3</a>
+    if (Multi.__LanguageType == "TH")
+    { <a href="~/Content/Help.pdf" class="text-nowrap">@Multi.LayoutFrontend_String0</a> }
+    <a href="@Url.Action("Logout","Home",null)" class="text-nowrap">@Multi.LayoutFrontend_String4</a>
+}
+else
+{
+    if (Multi.__LanguageType == "TH")
+    { <a href="~/Content/Help.pdf" class="text-nowrap">@Multi.LayoutFrontend_String0</a> }
+    <a href="@Url.Action("RegisterStep1", "Home", null)" class="text-nowrap">@Multi.LayoutFrontend_String5</a>
+    <a href="@Url.Action("Index","Home",null)" class="text-nowrap">@Multi.LayoutFrontend_String6</a>
+}

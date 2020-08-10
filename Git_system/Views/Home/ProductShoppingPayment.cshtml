@@ -1,0 +1,280 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+    }
+
+    <div class="row" ng-app="eComApp" ng-controller="PaymentCtrl">
+        <div ng-if="loadObject.status" class="text-center">
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+                <div class="sk-cube sk-cube5"></div>
+                <div class="sk-cube sk-cube6"></div>
+                <div class="sk-cube sk-cube7"></div>
+                <div class="sk-cube sk-cube8"></div>
+                <div class="sk-cube sk-cube9"></div>
+            </div>
+            <span ng-bind="loadObject.message"></span>
+        </div>
+        <div ng-show="!loadObject.status" class="ng-hide">
+            <section class="col-md-24">
+                <div class="">
+                    <!--name header tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-4 col-sm-4 text-right">
+                            <div class="row">
+                                <br /><br /><label class="purple-text font-size-20">GIT E-Store</label>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-1"></div>
+                    </div>
+                    <!--name header phone-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <div class="row text-center">
+                                &nbsp;
+                                <label class="purple-text font-size-12">GIT E-Store</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for tablet and desktop-->
+                    <div class="hidden-xs">
+                        <div class="col-md-12 col-sm-14">
+                            <img src="~/Images/register-step-3.png" class="col-md-24 col-sm-24 img-responsive" />
+                            <div class="col-md-7 col-sm-7 text-center">@Multi.Shopping_cart</div>
+                            <div class="col-md-10 col-sm-10 text-center">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-md-7 col-sm-7 text-center purple-text">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                    <!--img shopping cart for mobile-->
+                    <div class="visible-xs-block">
+                        <div class="col-xs-24">
+                            <img src="~/Images/register-step-3.png" class="col-xs-24 img-responsive" />
+                            <div class="col-xs-7 text-center" style="font-size:8px;">@Multi.Shopping_cart</div>
+                            <div class="col-xs-10 text-center" style="font-size:8px;">@Multi.Delivery_address_and_payment</div>
+                            <div class="col-xs-7 text-center purple-text" style="font-size:8px;">@Multi.Confirm_ordering</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--header order number-->
+            @*<div class="col-md-24 col-sm-24 col-xs-24 height-minnest"></div>
+                <div class="col-md-21 col-sm-21 col-xs-24 text-right height-minner">
+                    เลขที่รายการสั่งซื้อ :
+                </div>
+                <div class="col-md-3 col-sm-3"></div>
+                <div class="col-md-21 col-sm-21 col-xs-24 text-right height-minner">
+                    วันที่ :
+                </div>
+                <div class="col-md-3 col-sm-3"></div>
+                <div class="col-md-21 col-sm-21 col-xs-24 text-right height-minner">
+                    เวลา :
+                </div>
+                <div class="col-md-3 col-sm-3"></div>
+                <div class="col-md-24 col-sm-24 col-xs-24 height-min"></div>*@
+
+            <!--detail customer-->
+            <section class="col-md-24">
+                <div class="row">
+
+                    <div class="col-md-24 text-center paragraph-bt">
+                        <label class="font-size-18">@Multi.Order_list</label>
+                    </div>
+                    <!--pharse 1-->
+                    <div class="col-md-12 col-sm-12 col-xs-24">
+                        <div class="">
+                            <div class="formMin form-horizontal">
+                                <label class="text-center font-size-20 full-width" style="background-color:#D7D7D7">@Multi.ordering_name__delivery_authority</label><br />
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Fullname</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Fullname}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Address</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Address}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Province</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Province}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Country</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Country}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Postcode</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Postcode}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Phonenumber</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Phonenumber}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Email</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.SenderAddress.Email}}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--pharse 2-->
+                    <div class="col-md-12 col-sm-12 col-xs-24">
+                        <div class="">
+                            <div class="formMin form-horizontal">
+                                <label class="text-center font-size-20 full-width" style="background-color:#D7D7D7">@Multi.Address_for_receipt</label><br />
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Receipts_issued_in_the_name</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.ReceiptAddress.Fullname}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Address</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.ReceiptAddress.Address}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Province</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.ReceiptAddress.Province}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Country</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.ReceiptAddress.Country}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Postcode</label>
+                                    <div class="col-xs-16"><sapn>{{Cart.Cart.ReceiptAddress.Postcode}}</sapn></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Phonenumber</label>
+                                    <div class="col-xs-16"><span>{{Cart.Cart.ReceiptAddress.Phonenumber}}</span></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-xs-8">@Multi.Email</label>
+                                    <div class="col-xs-16">
+                                        <span class="">{{Cart.Cart.ReceiptAddress.Email}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--table-->
+            <section class="col-md-24">
+                <div class="">
+                    <table class="table table-striped table-bordered" id="no-more-tables">
+                        <!--use class="table-striped" for anothor style-->
+                        <thead>
+                            <tr style="background-color:#EFEDED;">
+                                <th class="purple-text text-center">ID</th>
+                                <th class="purple-text text-center">@Multi.Product_name</th>
+                                <th class="purple-text text-center">@Multi.Quantity</th>
+                                <th class="numeric purple-text text-center">@Multi.Price_Per_Unit</th>
+                                <th class="numeric purple-text text-center">@Multi.Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in Cart.Cart.Items">
+                                <td data-title="ID" class="text-center">
+                                    <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{item.Id}}" ng-bind="item.Id"></a>
+                                </td>
+                                <td data-title="@Multi.Product_name" class="text-center">
+                                    <a href="@Url.Action("ProductViewDetail", "Home", null)#/?ProductId={{item.Id}}" ng-bind="item.Name"></a>
+                                </td>
+                                <td data-title="@Multi.Quantity" class="text-center">{{item.Quantity}}</td>
+                                <td data-title="@Multi.Price_Per_Unit" class="numeric text-center">
+                                    <span ng-bind-html="item.PricePerUnit | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </td>
+                                <td data-title="@Multi.Total" class="numeric text-center">
+                                    <span ng-bind-html="item.getPriceTotal() | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- detail summary -->
+            <section class="col-md-22 col-md-offset-1">
+                <div class="">
+                    <div class="col-sm-offset-7 col-md-offset-11">
+                        <dl class="dl-horizontal">
+                            <dt ng-if="orderDetail.deliverPrice > 0">@Multi.Delivery_cost :</dt>
+                            <dd ng-if="orderDetail.deliverPrice > 0" class="text-right">
+                                <span ng-bind-html="orderDetail.deliverPrice | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <dt>@Multi.Total :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.price | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <dt>@Multi.Vat :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.vat | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                            <div ng-repeat="item in orderDetail.promotionList">
+                                <dt ng-bind="@(Multi.__LanguageType.Equals("TH") ? "item.NameTH" : "item.NameEN") + ' :' "></dt>
+                                <dd class="text-right">
+                                    <span ng-bind-html="item.Price | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                                </dd>
+                            </div>
+
+                            <dt>@Multi.Total_price :</dt>
+                            <dd class="text-right">
+                                <span ng-bind-html="orderDetail.totalPrice | eComCurrency:{Currency:Cart.getCurrency(), isLocal:@Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())}"></span>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
+            <!-- detail type sending -->
+            <section class="col-md-22 col-md-offset-1">
+                <div class="">
+                    <div class="col-sm-offset-7 col-md-offset-11">
+                        <dl class="dl-horizontal">
+                            <dt>@Multi.Payment_type :</dt>
+                            <dd ng-bind="paymentName" class="text-right">@Multi.Money_transfer</dd>
+                            <dt ng-if="!Cart.checkEletronicOrder()">@Multi.Deliver_type :</dt>
+                            <dd ng-if="!Cart.checkEletronicOrder()" ng-bind="Cart.Cart.Deliver.Name" class="text-right"></dd>
+                        </dl>
+                    </div>
+                </div>
+            </section>
+
+            <!--button-->
+            <section class="col-sm-12 col-xs-24 col-sm-offset-12">
+                <div class="row">
+                    <div class="col-xs-12">
+                        @Html.ActionLink(Multi.Back, "ProductShoppingDeliver", null, new { @class = "btn btn-git-default btn-block" })
+                    </div>
+                    <div class="col-xs-12">
+                        @*@Html.ActionLink("ดำเนินการต่อ", "ProductShoppingPayment", null, new { @class = "btn btn-git-default btn-block", @ng_click = "changeloadStatus()" })*@
+                        <a href="#!" title="" class="btn btn-git-default btn-block" ng-click="save()">@Multi.Continue</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

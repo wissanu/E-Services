@@ -1,0 +1,15 @@
+﻿<div class="text-center col-xs-18 col-xs-offset-3">
+    <a ng-href="{{mainUrl}}/Home/ProductViewDetail#/?ProductId={{product.Id}}" ng-class="{'not-active' : !product.Stock.CheckStatus()}">
+        <img class="img-thumbnail" ng-src="{{product.ImageFiles[0].FilePath.replace('~','')}}">
+    </a>
+</div>
+<div class="caption col-xs-24" style="font-weight:bold; text-align:center; line-height:1.05em; margin-top:10px;">
+    <p>
+        <span style="color:#0079a1;" ng-bind="product.Name"></span>
+        <br />
+        <br />
+        <span class="" style="text-decoration:line-through;" ng-bind-html="product.PriceNormal | eComCurrency:{Currency:product.Currency, isLocal:isLocation}" ng-if="!((((product.Price - product.PriceNormal) | abs) / product.PriceNormal) < 0.0000000000001) && (product.PriceNormal > product.Price)"></span>
+        <span class="text-danger" ng-bind-html="product.Price | eComCurrency:{Currency:product.Currency, isLocal:isLocation}"></span>
+    </p>
+    <p ng-if="!product.Stock.CheckStatus()"><span class="text-danger">Out of stock</span></p>
+</div>

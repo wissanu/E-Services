@@ -1,0 +1,39 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComDeliverPromotion
+
+    ViewBag.Title = "โปรโมชั่นการจัดส่ง";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.DeliverPromotion = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/bootstrap_select")
+    }
+
+    var ModelSend = new Dictionary<string, dynamic>();
+    ModelSend.Add("Header", "โปรโมชั่นการจัดส่ง");
+    ModelSend.Add("Model", Model);
+    ModelSend.Add("Button", "Create");
+    ModelSend.Add("ModalHeader", "ยืนยันการบันทึก?");
+    ModelSend.Add("ModalText", "คุณต้องการที่จะบันทึก?");
+    ModelSend.Add("ModalButton", "Save");
+    @Html.Partial("partial/_PartialDeliverPromotion", ModelSend)
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/bootstrap_select")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

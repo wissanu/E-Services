@@ -1,0 +1,303 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    //Config
+    ViewBag.Title = "สถิติ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Statistic = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+        <style>
+            .data-chart .data-table-chart {
+                background-color: #2b3c94;
+                height: 10px;
+                float: left;
+            }
+
+            .data-chart span {
+                width: 100%;
+                float: left;
+            }
+
+            .dataTable td.data-chart {
+                overflow: hidden;
+                clear: both;
+            }
+        </style>
+
+    }
+
+    <section class="panel panel-git-default">
+        <header class="panel-heading">
+            <span>การค้นหา</span>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['s','D7'])">7 Day</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['s','M1'])">1 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['s','M3'])">3 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['s','Y1'])">1 Year</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['s','AL'])">All</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                คำค้น
+                            </th>
+                            <th>
+                                จำนวน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (IGrouping<String, Git_system.Models.EComKeyword> item in ViewBag.Keyword)
+                        {
+                            <tr>
+                                <td data-title="คำค้น" style="vertical-align:middle">
+                                    @Html.DisplayFor(showitem => item.Key)
+                                </td>
+                                <td data-title="จำนวน" class="data-chart" data-chart-category="search">
+                                    @item.Count()
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-git-default">
+        <header class="panel-heading">
+            <span>การเข้าชมสินค้า</span>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pv','D7'])">7 Day</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pv','M1'])">1 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pv','M3'])">3 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pv','Y1'])">1 Year</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pv','AL'])">All</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                สินค้า
+                            </th>
+                            <th>
+                                จำนวน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (IGrouping<Int32, Git_system.Models.EComLogView> item in ViewBag.Product)
+                        {
+                            <tr>
+                                <td data-title="สินค้า" style="vertical-align:middle">
+                                    @Html.ActionLink(item.FirstOrDefault().EComProduct.NameTH, "Product_Detail", new { id = item.Key })
+                                </td>
+                                <td data-title="จำนวน" class="data-chart" data-chart-category="productView">
+                                    @item.Count()
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel panel-git-default">
+        <header class="panel-heading">
+            <span>การสั่งซื้อสินค้า</span>
+            <div class="pull-right">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pm','D7'])">7 Day</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pm','M1'])">1 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pm','M3'])">3 Month</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pm','Y1'])">1 Year</button>
+                    <button type="button" class="btn btn-white btn-sm no-border" onclick="changeTime(['pm','AL'])">All</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                สินค้า
+                            </th>
+                            <th>
+                                ยังไม่ได้ชำระ
+                            </th>
+                            <th>
+                                ชำระแล้ว
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (IGrouping<Int32, Git_system.Models.EComOrderItem> item in ViewBag.Order)
+                        {
+                            <tr>
+                                <td data-title="สินค้า" style="vertical-align:middle">
+                                    @Html.ActionLink(item.FirstOrDefault().EComProduct.NameTH, "Product_Detail", new { id = item.Key })
+                                </td>
+                                <td data-title="ยังไม่ได้ชำระ" class="data-chart" data-chart-category="paymentNotPay">
+                                    @item.Sum(p => p.Quantity)
+                                </td>
+                                <td data-title="ชำระแล้ว" class="data-chart" data-chart-category="paymentWitPay">
+                                    @item.Where(p => p.EComOrder.PaymentProcessStatusId == 3).Sum(p => p.Quantity)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+
+        <script>
+            $.urlParam = function (name) {
+                var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+                return results == null ? null : results[1] || 0;
+            }
+
+            function changeTime(data) {
+                setUrl(data);
+            }
+
+            function setUrl(data) {
+                var allParam = [];
+
+                var addToAllParam = function (param, value) {
+                    allParam.push(param + '=' + value);
+                }
+
+                var checkParam = function (search) {
+                    var param = $.urlParam(search);
+                    if (param != null)
+                        addToAllParam(search, param);
+                }
+
+                var defParam = ['s', 'pv', 'pm'];
+                $.each(defParam, function (index, value) {
+                    if (data[0] != value)
+                        checkParam(value);
+                    else
+                        addToAllParam(data[0], data[1]);
+
+                });
+
+                if (allParam.length > 0) {
+                    var allParamString = allParam.join("&");
+                    allParamString = "?" + allParamString;
+
+                    var currentUrl = window.location.origin + window.location.pathname;
+                    window.location = currentUrl + allParamString;
+                }
+            }
+        </script>
+        <script>
+            $(document).ready(function () {
+                var categories = {},
+                    category;
+                $(".data-chart").each(function (i, el) {
+                    category = $(el).data('chart-category')
+                    if (categories.hasOwnProperty(category)) {
+                        if (el.innerHTML > categories[category])
+                            categories[category] = Number(el.innerHTML);
+                    }
+                    else {
+                        categories[category] = Number(el.innerHTML);
+                    }
+                });
+
+                for (var key in categories) {
+                    $(".data-chart" + "[data-chart-category=" + key + "]").each(function (i, el) {
+                        var originalElement = el.innerHTML;
+                        var percent = 100 * Number(el.innerHTML) / categories[key];
+                        el.innerHTML = "";
+                        var valueElement = document.createElement("span")
+                        valueElement.innerHTML = originalElement;
+                        el.appendChild(valueElement);
+                        el.appendChild(getNodeChart(percent, "text"));
+                    });
+                }
+
+                function getNodeChart(percent, text) {
+                    var chartElement = document.createElement("div");
+                    console.log(chartElement);
+                    chartElement.setAttribute("class", "data-table-chart")
+                    chartElement.setAttribute("style", "width: " + percent + "%;");
+                    return chartElement;
+                }
+
+            });
+        </script>
+    }
+
+    @section BodySection_Template_scripts {
+        @Scripts.Render("~/Scripts/DataTable_exprot_Custom")
+
+        <script>
+            $.extend($.fn.dataTable.defaults, {
+                "displayLength": 50,//number entity in table
+                "ordering": false,
+                "info": false
+            });
+
+            $(document).ready(function () {
+                $('.dataTable').DataTable({
+                    "dom": '<"row"<"col-sm-6" T><"col-sm-6" f>>rtip',//l is entity
+                    "tableTools": {
+                        "sSwfPath": "/Scripts/DataTable/TableTool/swf/copy_csv_xls_pdf.swf",
+                        "aButtons": [
+                            {
+                                "sExtends": "copy",
+                                "sButtonClass": "hidden"
+                            },
+                            {
+                                "sExtends": "xls",
+                                "oSelectorOpts": { filter: 'applied', order: 'current' }
+                            },
+                            {
+                                "sExtends": "pdf",
+                                "sButtonClass": "hidden"
+                            },
+                            "print"
+                        ]
+                    }
+                });
+            });
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

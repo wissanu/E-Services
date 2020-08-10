@@ -1,0 +1,24 @@
+﻿@using Git_system.MultiResources;
+@using Git_system.Models.Form;
+
+@{
+    //Config
+    ViewBag.Title = "Receipt";
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+}
+
+<div class="row">
+    <div class="col-md-24">
+        <div class="row text-center">
+            <h2 class="text-git-style text-git-style-bold">Receipt</h2>
+            <h3 class="text-git-style-bold">Receipt</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.setTimeout(function () {
+        window.location.href = "@string.Format("{0}?Title={1}", Url.Action("ShowMessage", null, null), Multi.ActionPaymentShowMessageTitle)&@string.Format("Header={0}", Multi.ActionPaymentShowMessageHead)&@string.Format("Message={0}", Multi.ActionPaymentShowMessageBody)";
+    }, 5000);
+</script>

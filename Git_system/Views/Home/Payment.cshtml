@@ -1,0 +1,482 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    @model IEnumerable<Git_system.Models.PayItem>
+
+    double sumprice = 0;
+    Git_system.Models.Membership membershipView = new Git_system.Models.Membership();
+    membershipView = ViewBag.membershipView;
+    membershipView = membershipView.CheckMembershipType();
+    //Config
+    ViewBag.Title = Multi._TitleWeb_Payment;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+        <link href="~/Content/bootstrap/bootstrap-theme.min.css" rel="stylesheet" />
+        <style>
+            /*Custom*/
+            table.paytable th {
+                vertical-align: middle !important;
+                text-align: center;
+            }
+
+            table.paytable td, table.paytable th, table.paytable tr {
+                vertical-align: middle !important;
+                /*border: 2px solid #ddd;*/
+            }
+
+            table.paytable thead {
+                background-color: #efefef;
+                color: #2b3c94;
+            }
+
+            .table-responsive {
+                border: 1px none #ddd !important;
+            }
+
+            /*Custom*/
+            table.productGroup th {
+                vertical-align: middle !important;
+                text-align: center;
+            }
+
+            table.productGroup td, th {
+                vertical-align: middle !important;
+            }
+
+            table.productGroup thead {
+                background-color: #efefef;
+                color: #2b3c94;
+            }
+
+            table.productGroup thead, tbody, thead > tr > th {
+                /*border: 2px solid #ddd;*/
+                border-bottom: 2px none #ddd !important;
+            }
+
+            table.productGroup tbody tr > td {
+                border: 2px none #ddd;
+                /*border-left: 2px solid #ddd;
+                border-right: 2px solid #ddd;*/
+            }
+
+            table.productGroup tbody tr.group {
+                /*border-top: 2px solid #ddd;*/
+            }
+
+            table.productGroup tbody tr.old {
+                background-color: #fff;
+            }
+
+            table.productGroup tbody tr.even {
+                background-color: #BFE2FF;
+            }
+        </style>
+    }
+
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="visible-xs">
+                @foreach (var item in Model)
+                {
+                    <div class="panel panel-default">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">
+                            @if (Multi.__LanguageType == "TH")
+                            {@item.Course.Product.TitleTH}
+                            else
+                            {@item.Course.Product.TitleEN}
+                        </div>
+
+                        <div>
+                            <dl class="dl-horizontal dl-horizontal-short">
+                                <dt>@Multi.Course_Title :</dt>
+                                <dd>
+                                    @if (Multi.__LanguageType == "TH")
+                                    {@item.Course.TitleTH}
+                                    else
+                                    {@item.Course.TitleEN}
+                                </dd>
+                                <dt>@Multi.Duration :</dt>
+                                <dd>@Helper.DateToSting(Convert.ToDateTime(item.Course.DateStart), Convert.ToDateTime(item.Course.DateEnd))</dd>
+                                <dt>@Multi.Product_Time :</dt>
+                                <dd>
+                                    @if (Multi.__LanguageType == "TH")
+                                    {
+                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("HH:mm"), Convert.ToDateTime(item.Course.DateEnd).ToString("HH:mm"));
+                                    }
+                                    else
+                                    {
+                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("hh:mm tt"), Convert.ToDateTime(item.Course.DateEnd).ToString("hh:mm tt"));
+                                    }
+                                </dd>
+                                <dt>@Multi.Pay_Quantity :</dt>
+                                <dd>
+                                    <div class="input-group input-group-sm" style="max-width:70px;">
+                                        <input class="form-control" style="background-color:transparent;" type="text" value="@item.Quantity">
+                                        <div class="btn-group-sm input-group-btn-vertical input-group-btn-vertical-sm">
+                                            <button class="btn btn-default " type="button" onclick="changeQuantityBy(@item.CourseId, 1)"><i class="fa fa-caret-up"></i></button>
+                                            <button class="btn btn-default" type="button" onclick="changeQuantityBy(@item.CourseId, -1)"><i class="fa fa-caret-down"></i></button>
+                                        </div>
+                                    </div>
+                                </dd>
+                                <dt>@Multi.Product_Price :</dt>
+                                <dd>
+                                    @Helper.PriceAndCurrency(item.Course.Product.toTotalPriceForMembership(membershipView), Helper.getCurrency(membershipView))
+                                </dd>
+                                <dt>@Multi.Pay_Price :</dt>
+                                <dd>
+                                    @Helper.PriceAndCurrency(item.Course.Product.toTotalPriceForMembership(membershipView) * item.Quantity, Helper.getCurrency(membershipView))
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-sm-24 table-responsive hidden-xs">
+                <table class="table productGroup">
+                    <thead>
+                        <tr>
+                            <th>@Multi.Product_Title</th>
+                            <th>@Multi.Duration</th>
+                            <th>@Multi.Product_Time</th>
+                            <th>@Multi.Pay_Quantity</th>
+                            <th>@Multi.Product_Price</th>
+                            <th>@Multi.Pay_Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                int table_group_count = 0;
+                int productId_previous = 0;
+                        }
+                        @foreach (PayItem item in Model)
+                        {
+                            if (item.Course.ProductId != productId_previous)
+                            {
+                                table_group_count++;
+                                productId_previous = item.Course.ProductId;
+
+                                <tr class="group @(table_group_count % 2 == 1 ? "old" : "even")">
+                                    <td>
+                                        <b>
+                                            @if (Multi.__LanguageType == "TH")
+                                            {
+                                                @item.Course.Product.TitleTH
+                                            }
+                                            else
+                                            {
+                                                @item.Course.Product.TitleEN
+                                            }
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            }
+                            double price = 0;
+                            price = item.Course.Product.toTotalPriceForMembership(membershipView);
+                            <tr class="@(table_group_count % 2 == 1 ? "old" : "even")">
+                                <td>
+                                    @if (Multi.__LanguageType == "TH")
+                                    {
+                                        @item.Course.TitleTH
+                                    }
+                                    else
+                                    {
+                                        @item.Course.TitleEN
+                                    }
+                                </td>
+                                <td class="text-center text-nowrap">
+                                    @Helper.DateToSting(Convert.ToDateTime(item.Course.DateStart), Convert.ToDateTime(item.Course.DateEnd))
+                                </td>
+                                <td class="text-center text-nowrap">
+                                    @if (Multi.__LanguageType == "TH")
+                                    {
+                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("HH:mm"), Convert.ToDateTime(item.Course.DateEnd).ToString("HH:mm"));
+                                    }
+                                    else
+                                    {
+                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("hh:mm tt"), Convert.ToDateTime(item.Course.DateEnd).ToString("hh:mm tt"));
+                                    }
+                                </td>
+                                <td align="center" class="text-nowrap">
+                                    <div class="input-group input-group-sm" style="max-width:70px;">
+                                        <input class="form-control" style="background-color:transparent;" id="QuantityCourseId_@item.CourseId" type="text" value="@item.Quantity">
+                                        <div class="btn-group-sm input-group-btn-vertical input-group-btn-vertical-sm">
+                                            <button class="btn btn-default " type="button" onclick="changeQuantityBy(@item.CourseId, 1)"><i class="fa fa-caret-up"></i></button>
+                                            <button class="btn btn-default" type="button" onclick="changeQuantityBy(@item.CourseId, -1)"><i class="fa fa-caret-down"></i></button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td align="center" class="text-nowrap">
+                                    <label id="PriceCourseId_@item.CourseId" class="hidden">@Helper.PriceAndCurrency(price, Helper.getCurrency(membershipView), true)</label>
+                                    <label>@Helper.PriceAndCurrency(price, Helper.getCurrency(membershipView))</label>
+                                </td>
+                                <td align="center" class="text-nowrap">
+                                    @{sumprice += item.Course.Product.toPriceForMembership(membershipView) * item.Quantity;}
+                                    <label id="TotalCourseId_@item.CourseId" class="hidden">@Helper.PriceAndCurrency(price * item.Quantity, Helper.getCurrency(membershipView), true)</label>
+                                    <label>@Helper.PriceAndCurrency(price * item.Quantity, Helper.getCurrency(membershipView))</label>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-20 col-sm-offset-2">
+
+                <p><label>@Multi.ReceiptInfo</label></p>
+                <div class="form-horizontal col-sm-12">
+                    <div class="form-group">
+                        <label for="inputFullname" class="col-sm-7 control-label">@Multi.ConfirmPayment_Fullname</label>
+                        <div class="col-sm-17">
+                            <input type="text" class="form-control input-sm" id="inputFullname" placeholder="Fullname" value='@String.Format("{0} {1}",membershipView.Firstname , membershipView.Lastname)' name="payFullname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress" class="col-sm-7 control-label">@Multi.Membership_Address</label>
+                        <div class="col-sm-17">
+                            <input type="text" class="form-control input-sm" id="inputAddress" placeholder="Address" name="payAddress" value="@membershipView.getFullAddress()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-20 col-sm-offset-2">
+                <p>
+                    <label>@Multi._MembershipRegisterString4</label>
+                    @foreach (SelectListItem radioitem in ViewBag.PaymentTypes)
+                    {
+                        <span>
+                            @Html.RadioButton("payType", radioitem.Value, radioitem.Selected) @radioitem.Text
+                        </span>
+                    }
+                </p>
+
+                <div class="col-sm-offset-8 col-md-offset-11">
+                    <dl class="dl-horizontal text-right" id="ShowPriceReport">
+                        <dt>@Multi._Payment_string1</dt>
+                        <dd>@sumprice</dd>
+                        <dt>@Multi._MembershipRegisterString8</dt>
+                        <dd>0</dd>
+                        <dt>@Multi._MembershipRegisterString9</dt>
+                        <dd>@sumprice</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="col-sm-20 col-sm-offset-2">
+                <p><label>@Multi._MembershipRegisterString10</label></p>
+                <p><input id="checkbox_confirm" type="checkbox" onchange="confirmcheckbox()" /> @Multi._MembershipRegisterString11 <a id="legalClick" data-toggle="modal" data-target="#myModal"><u>@Multi._MembershipRegisterString_legal</u></a></p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-20">
+                <button id="btn_submit" class="btn btn-git-default btn-block" type="submit" disabled>@Multi._Button_Checkout</button>
+            </div>
+        }
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@Multi.Legal</h4>
+                </div>
+                <div class="modal-body" id="PrintElementLegal">
+                    @{
+                        WebSettingConfig webSettingConfig = new WebSettingConfig();
+                    }
+                    @if (Multi.__LanguageType == "TH")
+                    {
+                        @Html.Raw(webSettingConfig.legalCourseTH)
+                    }
+                    else
+                    {
+                        @Html.Raw(webSettingConfig.legalCourseEN)
+                    }
+                </div>
+                @*<div class="modal-footer">
+                        <button class="btn btn-git-default" onclick="printelement('#PrintElementLegal')">Print</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+        <script src="~/Scripts/jquery.cookie.min.js"></script>
+        <script src="~/Scripts/jQuery.print.js"></script>
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            $("#legalClick").on("click", function()
+            {
+                var height = $(window).height();
+                height = height - 60;
+                $('.modal-content').attr('style', 'height:'+height+'px; overflow:auto;');
+            });
+        </script>
+        <script type='text/javascript'>
+            function printelement(printpage){
+                $.print(printpage);
+            }
+        </script>
+
+        <script>
+            function confirmcheckbox() {
+                if ($("#checkbox_confirm").is(':checked')) {
+                    $("#btn_submit").removeAttr("disabled");
+                }
+                else {
+                    $('#btn_submit').attr('disabled', 'disabled');
+                }
+            }
+        </script>
+        <script>
+
+            // Create Base64 Object
+            var Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (e) { var t = ""; var n, r, i, s, o, u, a; var f = 0; e = Base64._utf8_encode(e); while (f < e.length) { n = e.charCodeAt(f++); r = e.charCodeAt(f++); i = e.charCodeAt(f++); s = n >> 2; o = (n & 3) << 4 | r >> 4; u = (r & 15) << 2 | i >> 6; a = i & 63; if (isNaN(r)) { u = a = 64 } else if (isNaN(i)) { a = 64 } t = t + this._keyStr.charAt(s) + this._keyStr.charAt(o) + this._keyStr.charAt(u) + this._keyStr.charAt(a) } return t }, decode: function (e) { var t = ""; var n, r, i; var s, o, u, a; var f = 0; e = e.replace(/[^A-Za-z0-9\+\/\=]/g, ""); while (f < e.length) { s = this._keyStr.indexOf(e.charAt(f++)); o = this._keyStr.indexOf(e.charAt(f++)); u = this._keyStr.indexOf(e.charAt(f++)); a = this._keyStr.indexOf(e.charAt(f++)); n = s << 2 | o >> 4; r = (o & 15) << 4 | u >> 2; i = (u & 3) << 6 | a; t = t + String.fromCharCode(n); if (u != 64) { t = t + String.fromCharCode(r) } if (a != 64) { t = t + String.fromCharCode(i) } } t = Base64._utf8_decode(t); return t }, _utf8_encode: function (e) { e = e.replace(/\r\n/g, "\n"); var t = ""; for (var n = 0; n < e.length; n++) { var r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r) } else if (r > 127 && r < 2048) { t += String.fromCharCode(r >> 6 | 192); t += String.fromCharCode(r & 63 | 128) } else { t += String.fromCharCode(r >> 12 | 224); t += String.fromCharCode(r >> 6 & 63 | 128); t += String.fromCharCode(r & 63 | 128) } } return t }, _utf8_decode: function (e) { var t = ""; var n = 0; var r = c1 = c2 = 0; while (n < e.length) { r = e.charCodeAt(n); if (r < 128) { t += String.fromCharCode(r); n++ } else if (r > 191 && r < 224) { c2 = e.charCodeAt(n + 1); t += String.fromCharCode((r & 31) << 6 | c2 & 63); n += 2 } else { c2 = e.charCodeAt(n + 1); c3 = e.charCodeAt(n + 2); t += String.fromCharCode((r & 15) << 12 | (c2 & 63) << 6 | c3 & 63); n += 3 } } return t } }
+
+            // Define the string
+            //var string = 'Hello World!';
+
+            // Encode the String
+            //var encodedString = Base64.encode(string);
+            //console.log(encodedString); // Outputs: "SGVsbG8gV29ybGQh"
+
+            // Decode the String
+            //var decodedString = Base64.decode(encodedString);
+            //console.log(decodedString); // Outputs: "Hello World!"
+        </script>
+        @if (membershipView.isLocal())
+        {
+            <script>
+                var symbol = "&nbsp;@Multi.THB";
+            </script>
+        }
+        else
+        {
+            <script>
+                var symbol = "&nbsp;@Multi.USD";
+            </script>
+        }
+        <script>
+
+            Number.prototype.format = function(n, x) {
+                var re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\.' : '$') + ')';
+                return this.toFixed(Math.max(0, ~~n)).replace(new RegExp(re, 'g'), '$&,');
+            };
+
+            $(document).ready(function () {
+                calculatorPrice(@sumprice);
+            });
+
+            function calculatorPrice(TotalPrice) {
+                var membershipType, parameter;
+                membershipType = @membershipView.MembershipRegisterTypeId;
+                parameter = Base64.encode(getCookie('PIM'));
+                var url = 'APICheckPromotion?M=' + membershipType + '&P=' + parameter;
+                $.getJSON(url, function (json) {
+                    console.log(json);
+                    var getPrice = function(price){
+                        if(price == 0){
+                            return "@Multi.Free";
+                        }
+                        else{
+                            return price.format(0) + symbol;
+                        }
+                    };
+                    var getListHtml = function(label, price, bold){
+                        if (bold === void 0) { bold = false; }
+                        var head = "<dt>" + label + "</dt>";
+                        var body = bold ? "<dd><b>" + getPrice(price)  + "</b></dd>" : "<dd>" + getPrice(price)  + "</dd>";
+                        return head + body;
+                    };
+
+                    var ShowPriceReportOut = "";
+                    if(json.TotalPrice == 0){
+                        ShowPriceReportOut += getListHtml("@Multi.Total_price", json.TotalPrice);
+                    }else{
+                        if(json.PriceWithOutPromotion == json.price){
+                            ShowPriceReportOut += getListHtml("@Multi._Payment_string1", json.PriceWithOutPromotion);
+                        }
+                        else{
+                            ShowPriceReportOut += getListHtml("@Multi._Payment_string1", json.PriceWithOutPromotion);
+
+                            json.ProductSKUOuts.forEach(function (entry) {
+                                var _LanguageType = "@Multi.__LanguageType";
+                                var _Name = "";
+                                if(_LanguageType=="TH")
+                                    _Name = entry.NameTH
+                                else
+                                    _Name = entry.NameEN
+                                ShowPriceReportOut += "<dt>" + _Name + "</dt>" + "<dd>" + entry.Price.format(0) + symbol + "</dd>";
+                            });
+                            ShowPriceReportOut += getListHtml("@Multi._MembershipRegisterString9", json.Price);
+                        }
+                        ShowPriceReportOut += getListHtml("@Multi.Vat", json.Vat);
+                        ShowPriceReportOut += getListHtml("@Multi.Total_price", json.TotalPrice, true);
+                    }
+
+                    var ShowPriceReport = document.getElementById("ShowPriceReport");
+                    ShowPriceReport.innerHTML = ShowPriceReportOut;
+                });
+
+            }
+
+            function changeQuantityBy(itemId, number){
+                var quantityById = document.getElementById("QuantityCourseId_" + itemId);
+                var setQuantity = parseInt(quantityById.value) + number;
+                if(setQuantity < 1){
+                    setQuantity = 1;
+                }
+                quantityById.value = setQuantity;
+                changeQuantity(itemId);
+            }
+
+            function changeQuantityById(id, element){
+                var quantityById = document.getElementById("QuantityCourseId_" + id);
+                quantityById.value = element.value;
+                changeQuantity(id);
+            }
+
+            function changeQuantity(number) {
+                var QuantityCourse = document.getElementById("QuantityCourseId_" + number).value;
+                var PriceCourse = document.getElementById("PriceCourseId_" + number).innerHTML;
+                var TotalCourse = document.getElementById("TotalCourseId_" + number);
+                TotalCourse.innerHTML = QuantityCourse * PriceCourse;
+
+                var PIM = $.parseJSON(getCookie('PIM'));
+                //var PIM = jQuery.parseJSON(docCookies.getItem("PIM"));
+
+                var price = 0;
+                PIM.forEach(function (entry) {
+                    if (entry.CourseId == number) {
+                        entry.Quantity = parseInt(QuantityCourse);
+                    }
+                });
+
+                $.cookie.raw = true;
+                //$.cookie.json = true;
+
+                var jsonstring = JSON.stringify(PIM);
+                var jc = $.cookie('PIM', JSON.stringify(PIM), { path: '/' });
+
+                location.reload();
+                window.location.reload();
+            }
+        </script>
+    }
+}

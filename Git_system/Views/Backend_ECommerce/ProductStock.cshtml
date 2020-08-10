@@ -1,0 +1,169 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComProduct>
+
+    //Config
+    ViewBag.Title = "คลังสินค้า";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Stock = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>คลังสินค้า</span>
+        </header>
+        <div class="panel-body">
+            <div class="panel-body">
+                @if (Model.Count() > 0)
+                {
+                    <div class="no-more-tables">
+                        <table class="table table-bordered table-striped table-condensed dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ชื่อ
+                                    </th>
+                                    <th>
+                                        ราคา
+                                    </th>
+                                    <th>
+                                        กลุ่มสินค้า
+                                    </th>
+                                    <th>
+                                        สถานะการใช้งาน
+                                    </th>
+                                    <th>
+                                        จำนวนสินค้าในคลังสินค้า
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td data-title="ชื่อ">
+                                            @Html.ActionLink(item.NameTH, "Product_Detail", new { id = item.Id })
+                                        </td>
+                                        <td data-title="ราคา" class="text-nowrap text-right">
+                                            @Helper.PriceAndCurrency(item.Price, "thb", true)
+                                        </td>
+                                        <td data-title="กลุ่มสินค้า">
+                                            @{
+                                    List<string> CategoryMapName = new List<string>();
+                                    foreach (var EComCategoryMap in item.EComCategoryMaps)
+                                    {
+                                        CategoryMapName.Add(EComCategoryMap.EComCategory.NameTH);
+                                    }
+                                    @Html.Raw(string.Join(" , ", CategoryMapName.ToArray()));
+                                            }
+                                        </td>
+                                        <td data-title="สถานะการใช้งาน" class="text-center">
+                                            @if (item.ActiveStatus)
+                                            { <span class="text-success">Active</span> }
+                                            else
+                                            { <span class="text-danger">Inactive</span> }
+                                        </td>
+                                        <td data-title="จำนวนสินค้าในคลังสินค้า" class="text-center">
+                                            @Html.DisplayFor(showitem => item.Quantity)
+                                        </td>
+                                        <td data-title="" class="text-center">
+                                            <a href="#" data-toggle="modal" data-target="#StockModal" onclick="ClickToStock(@item.Id)"><span class="text-success">แก้ไขคลังสินค้า</span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <span>ไม่พบข้อมูล</span>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- /.modal-content deleteFile -->
+    <div class="modal fade" id="StockModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    Git_system.Models.EComProduct eComProduct = new Git_system.Models.EComProduct();
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center">การปักหมุด</h5>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset class="form-horizontal bordered-group" role="form">
+                            @Html.HiddenFor(pin => eComProduct.Id)
+                            <div class="form-group">
+                                <label class="col-sm-7  control-label">สต๊อกสินค้า</label>
+                                <div class="col-sm-5">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="stockParameter" value="1" checked>
+                                            เพิ่มจำนวนสินค้า
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="stockParameter" value="2">
+                                            ลดจำนวนสินค้า
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-7  control-label">จำนวน</label>
+                                <div class="col-sm-5">
+                                    <input type="number" name="stockQuantity" class="form-control input-sm">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="pin_button">Save</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            function ClickToStock(id) {
+                document.getElementById("eComProduct_Id").value = id;
+                //$("#PinModal").modal("show");
+            }
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,148 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComCategoryMap>
+
+    //Config
+    ViewBag.Title = "สินค้า";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Category = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            @if (Model.Count() > 0)
+            {
+                @Model.FirstOrDefault().EComCategory.NameTH
+            }
+            else
+            {
+                <span>หมวดหมู่</span>
+            }
+        </header>
+        <div class="panel-body">
+            <div class="panel-body">
+                @if (Model.Count() > 0)
+                {
+                    <div class="no-more-tables">
+                        <table class="table table-bordered table-striped table-condensed dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ชื่อ
+                                    </th>
+                                    <th>
+                                        ราคา
+                                    </th>
+                                    <th>
+                                        สินค้ามีการจัดส่ง
+                                    </th>
+                                    <th>
+                                        สินค้าดาวน์โหลด
+                                    </th>
+                                    <th>
+                                        สถานะการใช้งาน
+                                    </th>
+                                    <th>
+                                        เรียงลำดับ
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td data-title="ชื่อ">
+                                            @Html.ActionLink(item.EComProduct.NameTH, "Product_Detail", new { id = item.EComProduct.Id })
+                                        </td>
+                                        <td data-title="ราคา">
+                                            @Html.DisplayFor(showitem => item.EComProduct.Price)
+                                        </td>
+                                        <td data-title="สินค้ามีการจัดส่ง" class="text-center">
+                                            @if (item.EComProduct.DeliverStatus)
+                                            { <span class="text-success">Active</span> }
+                                            else
+                                            { <span class="text-danger">Inactive</span> }
+                                        </td>
+                                        <td data-title="สินค้าดาวน์โหลด" class="text-center">
+                                            @if (item.EComProduct.ElectronicFileStatus)
+                                            { <span class="text-success">Active</span> }
+                                            else
+                                            { <span class="text-danger">Inactive</span> }
+                                        </td>
+                                        <td data-title="สถานะการใช้งาน" class="text-center">
+                                            @if (item.EComProduct.ActiveStatus)
+                                            { <span class="text-success">Active</span> }
+                                            else
+                                            { <span class="text-danger">Inactive</span> }
+                                        </td>
+                                        <td data-title="เรียงลำดับ" class="text-center">
+                                            <a onclick="SortUp(@item.Id)">Up</a>
+                                            <a onclick="SortDown(@item.Id)">Down</a>
+                                        </td>
+                                        <td data-title="" class="text-center">
+                                            @Html.ActionLink("แก้ไข", "Product_Detail", new { id = item.EComProduct.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <span>ไม่พบข้อมูล</span>
+                }
+            </div>
+        </div>
+    </section>
+
+                //Chage sort From
+                <section class="hidden">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        Git_system.Models.EComCategoryMap eComCategoryMap = new Git_system.Models.EComCategoryMap();
+                        @Html.HiddenFor(pin => eComCategoryMap.Id)
+                        <button id="EComCategoryMapsortUp" type="submit" name="Command" value="sortUp"></button>
+                        <button id="EComCategoryMapsortDown" type="submit" name="Command" value="sortDown"></button>
+                    }
+                </section>
+
+                @section BodySection_Page_level_scripts {
+                    @Scripts.Render("~/Scripts/responsive-tables")
+                    @Scripts.Render("~/Scripts/switchery")
+                    @Scripts.Render("~/Scripts/DataTable_exprot")
+
+                }
+                @section BodySection_Template_scripts {
+                    <script>
+                        function SortUp(id) {
+                            document.getElementById("eComCategoryMap_Id").value = id;
+                            $("#EComCategoryMapsortUp").click();
+                        }
+                        function SortDown(id) {
+                            document.getElementById("eComCategoryMap_Id").value = id;
+                            $("#EComCategoryMapsortDown").click();
+                        }
+                    </script>
+                }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,155 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.Slideshow>
+
+    //Config
+    ViewBag.Title = "สไลด์";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Slide = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>Product</span>
+            @Html.ActionLink("Create", "SlideShow_Add", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            <div class="panel-body">
+                @if (true)
+                {
+                    <div class="no-more-tables">
+                        <table class="table table-bordered table-striped table-condensed dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ลำดับ
+                                    </th>
+                                    <th>
+                                        รูป
+                                    </th>
+                                    <th>
+                                        ชื่อ
+                                    </th>
+                                    <th>
+                                        คำบรรยาย
+                                    </th>
+                                    <th>
+                                        สถานะ
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{var indexItem = 0;}
+                                @foreach (var item in Model.OrderByDescending(s => s.OrderBy).AsParallel())
+                                {
+                                    indexItem++;
+                                    var imageUrl = item.getImageUrl();
+                                    <tr>
+                                        <td data-title="ลำดับ">@indexItem</td>
+                                        <td data-title="รูป" class="text-center" align="center">
+
+                                            @if (imageUrl != "")
+                                            {
+                                                <img style="max-width:400px; max-height:200px;" class="" src="@imageUrl" alt="">
+                                            }
+                                        </td>
+                                        <td data-title="ชื่อ">@item.getSlideshowTranslate("th").Title</td>
+                                        <td data-title="คำบรรยาย">@item.getSlideshowTranslate("th").Description</td>
+                                        <td data-title="สถานะ">
+                                            @if (item.Status)
+                                            {
+                                                <i class="fa fa-check text-success"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa fa-minus text-danger"></i>
+                                            }
+                                        </td>
+                                        <td>@Html.ActionLink("Edit", "SlideShow_Detail", "Backend_ECommerce", new { id = item.Id }, null)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <span>ไม่พบข้อมูล</span>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- /.modal-content deleteFile -->
+    <div class="modal fade" id="PinModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    Git_system.Models.EComProduct eComProduct = new Git_system.Models.EComProduct();
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center">การปักหมุด</h5>
+                    </div>
+                    <div class="modal-body">
+                        <fieldset class="form-horizontal bordered-group" role="form">
+                            @Html.HiddenFor(pin => eComProduct.Id)
+                            <div class="form-group">
+                                <label class="col-sm-7  control-label">สถานะการปักหมุด</label>
+                                <div class="col-sm-5">
+                                    @Html.CheckBoxFor(pin => eComProduct.PinStatus, new { @class = "js-switch-GreenSwitchery01" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-7  control-label">น้ำหนักการปักหมุด</label>
+                                <div class="col-sm-5">
+                                    @Html.TextBoxFor(pin => eComProduct.PinWeight, new { @class = "form-control", @type = "number" })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="pin_button">Save</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            function ClickToPin(id, pinStatus, pinWeight) {
+                document.getElementById("eComProduct_Id").value = id;
+                document.getElementById("eComProduct_PinStatus").checked = pinStatus;
+                document.getElementById("eComProduct_PinWeight").value = pinWeight;
+                //$("#PinModal").modal("show");
+            }
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

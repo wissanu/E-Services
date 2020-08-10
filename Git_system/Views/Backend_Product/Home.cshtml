@@ -1,0 +1,115 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.Product>
+
+    //Config
+    ViewBag.Title = "หลักสูตร";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.Product = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/Flag-icon-css/flags/flag-icon")
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>หลักสูตร</span>
+            @Html.ActionLink("Create", "Create", null, new { @class = "pull-right" })
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                หลักสูตร
+                            </th>
+                            <th>
+                                สถานที่
+                            </th>
+                            <th>
+                                ราคา (ปกติ)
+                            </th>
+                            <th>
+                                ภาษา
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="หลักสูตร">
+                                    @Html.DisplayFor(showitem => item.TitleTH)
+                                </td>
+                                <td data-title="สถานที่">
+                                    @Html.DisplayFor(showitem => item.LocationTH)
+                                </td>
+                                <td data-title="ราคา (ปกติ)" class="text-center">
+                                    @Git_system.Models.Helper.PriceAndCurrency(item.Price, "")
+                                </td>
+                                <td data-title="ภาษา" class="text-center">
+                                    <div class="visible-xs">
+                                        @if (item.SupportEN == true)
+                                        {
+                                            <span class="flag-icon flag-icon-us"></span>
+                                        }
+
+                                        @if (item.SupportTH == true)
+                                        {
+                                            <span class="flag-icon flag-icon-th"></span>
+                                        }
+                                    </div>
+                                    <div class="text-center hidden-xs">
+                                        @if (item.SupportEN == true)
+                                        {
+                                            <span class="flag-icon flag-icon-us"></span>
+                                        }
+
+                                        @if (item.SupportTH == true)
+                                        {
+                                            <span class="flag-icon flag-icon-th"></span>
+                                        }
+                                    </div>
+                                </td>
+                                <td data-title="สถานะ" class="text-center">
+                                    @if (item.Active)
+                                    { <span class="text-success">Active</span> }
+                                    else
+                                    { <span class="text-danger">Inactive</span> }
+                                </td>
+                                <td data-title="" class="text-center">
+                                    @Html.ActionLink("แก้ไข", "Edit", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

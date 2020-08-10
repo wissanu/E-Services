@@ -1,0 +1,107 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComOrder>
+
+    //Config
+    ViewBag.Title = "การสั่งซื้อ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Order = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">การสั่งซื้อ</header>
+        <div class="panel-body">
+            <div class="panel-body">
+                @if (Model.Count() > 0)
+                {
+                    <div class="no-more-tables">
+                        <table class="table table-bordered table-striped table-condensed dataTable">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        หมายเลขการสั่งซื้อ
+                                    </th>
+                                    <th>
+                                        ชื่อลูกค้า
+                                    </th>
+                                    <th>
+                                        ราคา
+                                    </th>
+                                    <th>
+                                        ประเภทการสั่งซื้อ
+                                    </th>
+                                    <th>
+                                        สถานะการส่งสินค้า
+                                    </th>
+                                    <th>
+                                        สถานะการชำระเงิน
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td data-title="หมายเลขการสั่งซื้อ">
+                                            @Html.DisplayFor(showitem => item.Id)
+                                        </td>
+                                        <td data-title="ชื่อลูกค้า">
+                                            @String.Format("{0} {1}", item.Membership.Firstname, item.Membership.Lastname)
+                                        </td>
+                                        <td data-title="ราคา" class="text-nowrap text-right">
+                                            @Helper.PriceAndCurrency(item.Price, item.Currency, true)
+                                        </td>
+                                        <td data-title="ประเภทการสั่งซื้อ" class="text-center">
+                                            @String.Format("{0}", item.PaymentType == 1 ? "Bank" : "Credit card")
+                                        </td>
+                                        <td data-title="สถานะการส่งสินค้า" class="text-center">
+                                            @Html.DisplayFor(showitem => item.DeliverProcessStatu.NameTH)
+                                        </td>
+                                        <td data-title="สถานะการชำระเงิน" class="text-center">
+                                            @Html.DisplayFor(showitem => item.PaymentProcessStatu.NameTH)
+                                        </td>
+
+                                        <td data-title="" class="text-center">
+                                            @Html.ActionLink("รายละเอียด", "Order_Detail", new { id = item.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <span>ไม่พบข้อมูล</span>
+                }
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

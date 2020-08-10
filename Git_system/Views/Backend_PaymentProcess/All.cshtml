@@ -1,0 +1,92 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.Pay>
+
+    //Config
+    ViewBag.Title = "การสั่งซื้อ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.PaymentProcess = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+    }
+    foreach (var Pays in Model)
+    {
+        <section class="panel">
+            <header class="panel-heading">
+                <span>
+                    @String.Format("{0} {1} : {2} - {3}", Pays.Membership.Firstname, Pays.Membership.Lastname, Pays.Date, Pays.PayType.Name)
+                </span>
+            </header>
+            <div class="panel-body">
+                <div class="no-more-tables">
+                    <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Product name
+                                </th>
+                                <th>
+                                    Couse name
+                                </th>
+                                <th>
+                                    Quantity
+                                </th>
+                                <th>
+                                    Unit pricce
+                                </th>
+                                <th>
+                                    Total
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Pays.PayItems)
+                            {
+                                <tr>
+                                    <td data-title="PayId">
+                                        @Html.DisplayFor(showitem => item.Course.Product.TitleTH)
+                                    </td>
+                                    <td data-title="Membership">
+                                        @Html.DisplayFor(showitem => item.Course.TitleTH)
+                                    </td>
+                                    <td data-title="Date">
+                                        @Html.DisplayFor(showitem => item.Quantity)
+                                    </td>
+                                    <td data-title="Pay type">
+                                        @Html.DisplayFor(showitem => item.Course.Product.Price)
+                                    </td>
+                                    <td data-title="Process">
+                                        @(item.Quantity * item.Course.Product.Price)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="pull-right">Total : @Pays.Price</p>
+                    </div>
+                </div>
+            </footer>
+        </section>
+    }
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

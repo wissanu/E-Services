@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Git_system", "Git_system\Git_system.csproj", "{ED8B9CB8-BDC8-4EF0-86B2-A4B6054AEECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest-Git_system", "UnitTest-Git_system\UnitTest-Git_system.csproj", "{1BD1FF17-2037-42A9-A021-104BB66DB197}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4EE17BA3-2AC4-4FFF-B7CA-AFFB1A24FED6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp-easy-RSA-PEM", "..\..\CSharp-easy-RSA-PEM\CSharp-easy-RSA-PEM\CSharp-easy-RSA-PEM\CSharp-easy-RSA-PEM.csproj", "{056A5520-3311-4558-B4E4-AC2711F334AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED8B9CB8-BDC8-4EF0-86B2-A4B6054AEECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8B9CB8-BDC8-4EF0-86B2-A4B6054AEECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8B9CB8-BDC8-4EF0-86B2-A4B6054AEECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8B9CB8-BDC8-4EF0-86B2-A4B6054AEECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD1FF17-2037-42A9-A021-104BB66DB197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD1FF17-2037-42A9-A021-104BB66DB197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD1FF17-2037-42A9-A021-104BB66DB197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD1FF17-2037-42A9-A021-104BB66DB197}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056A5520-3311-4558-B4E4-AC2711F334AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056A5520-3311-4558-B4E4-AC2711F334AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056A5520-3311-4558-B4E4-AC2711F334AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056A5520-3311-4558-B4E4-AC2711F334AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

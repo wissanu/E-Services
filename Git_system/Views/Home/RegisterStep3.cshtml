@@ -1,0 +1,25 @@
+﻿@using Git_system.MultiResources
+@{
+    @model Git_system.Models.Membership
+
+    //Config
+    ViewBag.Title = Multi._TitleWeb_RegisterStep;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+
+    <div class="row">
+        <div class="col-md-12 col-md-offset-6 text-center">
+            <h5 class="text-git-style"><label>@Multi._TitlePage_Head_RegisterStep3</label></h5>
+            <img src="~/Images/register-step-3.png" class="img-responsive display-inline stepImage">
+        </div>
+        <div class="col-md-24">
+            <div class="row text-center">
+                <h2>@Multi._RegisterStep3String1</h2>
+                <h3>@Multi._RegisterStep3String2</h3>
+                <div class="col-sm-4 col-sm-offset-10">
+                    @Html.ActionLink(Multi._Button_BackToHome, "Index", "Home", null, new { @class = "btn btn-git-default btn-block" })
+                </div>
+            </div>
+        </div>
+    </div>
+}

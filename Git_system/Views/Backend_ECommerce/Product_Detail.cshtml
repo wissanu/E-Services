@@ -1,0 +1,500 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComProduct
+
+    //Config
+    ViewBag.Title = "สินค้า";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Product = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/krajee_fileinput")
+        @Styles.Render("~/Content/bootstrap_select")
+        <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+        <style>
+            .git-link a {
+                color: #2b3c94;
+                font-weight: bold;
+            }
+
+            .file-list {
+                padding-top: 10px;
+            }
+        </style>
+    }
+    <section class="panel">
+        @using (Html.BeginForm("Product_Detail", "Backend_ECommerce", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <header class="panel-heading clearfix">
+                <span>Product Detail</span>
+                <div class="pull-right">
+                    <span>Active </span><span>@Html.CheckBoxFor(model => model.ActiveStatus, new { @class = "js-switch-GreenSwitchery03" })</span>
+                </div>
+            </header>
+
+            <div class="panel-body">
+                <fieldset class="form-horizontal bordered-group" role="form">
+                    @Html.TextBoxFor(model => model.PinWeight, new { @class = "hidden" })
+                    @Html.TextBoxFor(model => model.PinStatus, new { @class = "hidden" })
+                    @Html.TextBoxFor(model => model.Id, new { @class = "hidden" })
+                    @Html.TextBoxFor(model => model.VatTypeId, new { @class = "hidden" })
+                    @Html.TextBoxFor(model => model.Quantity, new { @class = "hidden" })
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.NameTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NameTH, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.NameEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NameEN, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailTH, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailEN, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">ราคา ปกติ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceNormal, new { @class = "form-control", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.PriceNormal, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา ปกติ (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceNormalInter, new { @class = "form-control", @type = "number" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceNormalInter, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">ราคา สมาชิกออนไลน์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.Price, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา สมาชิกออนไลน์ (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceInter, new { @class = "form-control", @type = "number" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceInter, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา บุคคลธรรมดา</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceIndividual, new { @class = "form-control", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.PriceIndividual, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา บุคคลธรรมดา (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceIndividualInter, new { @class = "form-control", @type = "number" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceIndividualInter, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา นิติบุคคล</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceCorporate, new { @class = "form-control", @type = "number" })
+                                    @Html.ValidationMessageFor(model => model.PriceCorporate, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา นิติบุคคล (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceCorporateInter, new { @class = "form-control", @type = "number" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceCorporateInter, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        @{
+            List<Git_system.Models.ECom.FileLink> imageFiles = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.ImageFiles ?? "[]") ?? new List<Git_system.Models.ECom.FileLink>();
+            if (imageFiles.Count > 0)
+            {
+                <div class="col-lg-12" style="margin-bottom:10px;">
+                    <h5><label>รูปสินค้า</label></h5>
+                    <div class="row no-margin">
+                        <div class="col-lg-12 ">
+                            <div class="row gallery hide no-margin">
+                                @foreach (Git_system.Models.ECom.FileLink imageFile in imageFiles)
+                                {
+                                    <div class="col-sm-3 col-xs-12 item">
+                                        @*@Url.Action("PaymentHistory", "Home", new { @show = 1 })*@
+                                        <a class="preloader" href="#" data-toggle="modal" data-target="#deleteFileModal" onclick="ClickToDeleteFile('@imageFile.FileId')">
+                                            <img src="@imageFile.FilePath.Replace("~", string.Empty)" alt="">
+                                            <div class="overlay">
+                                                <div class="overlay-text animated">
+                                                    <span class="title">REMOVE</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+                        }
+
+                        <label class="col-sm-2  control-label">อัพโหลดรูป</label>
+                        <div class="col-sm-10">
+                            <input id="ImageFiles" name="ImageFiles" class="file" type="file" multiple>
+                            @Html.ValidationMessageFor(model => model.ImageFiles, null, new { @class = "text-danger" })
+                            <span class="text-danger">300px x 400px</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2  control-label">ไฟล์ประกอบ</label>
+                        <div class="col-sm-10">
+                            <input id="OtherFiles" name="OtherFiles" class="file" type="file">
+                            @Html.ValidationMessageFor(model => model.OtherFiles, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10 file-list git-link">
+                            @foreach (Git_system.Models.ECom.FileLink File in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.OtherFiles ?? "[]") ?? new List<Git_system.Models.ECom.FileLink>()))
+                            {
+                                <a href="@File.FilePath.Replace("~", string.Empty)">@File.Filename</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2  control-label">กลุ่มสินค้า</label>
+                        <div class="col-sm-10">
+                            @*การใช้ multiple select ต้องใช้ ListBox*@
+                            @Html.ListBox("EComCategoryMapsValue", null, new { @class = "form-control" })
+                            @Html.ValidationMessage("EComCategoryMapsValue", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">จำกัดจำนวนสินค้า</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.InStock, new { @class = "js-switch-GreenSwitchery04" })
+                                    @Html.ValidationMessageFor(model => model.InStock, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ภาษีมูลค่าเพิ่ม</label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownList("EComProduct_VatTypeId", null, new { @class = "form-control" })
+                                    @Html.ValidationMessage("EComProduct_VatTypeId", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @Html.HiddenFor(model => model.EComProductDeliver.Id)
+                    <div class="form-group">
+                        <label class="col-sm-2  control-label">ค่าขนส่ง</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("EComProductDeliver_DeliverTypeId", null, new { @class = "form-control" })
+                            @Html.ValidationMessage("EComProductDeliver_DeliverTypeId", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคาขนส่ง</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.EComProductDeliver.Price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EComProductDeliver.Price, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคาขนส่ง (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.EComProductDeliver.PriceInter, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.EComProductDeliver.PriceInter, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">สินค้าที่มีการดาวน์โหลด</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.ElectronicFileStatus, new { @class = "js-switch-GreenSwitchery01" })
+                                    @Html.ValidationMessageFor(model => model.ElectronicFileStatus, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">สินค้าที่มีการจัดส่ง</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.DeliverStatus, new { @class = "js-switch-GreenSwitchery02" })
+                                    @Html.ValidationMessageFor(model => model.DeliverStatus, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="DemoFileDownload">
+                        <label class="col-sm-2  control-label">ตัวอย่างไฟล์</label>
+                        <div class="col-sm-10">
+                            <input id="DemoElectronicFiles" name="DemoElectronicFiles" class="file" type="file">
+                            @Html.ValidationMessageFor(model => model.DemoElectronicFiles, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10  file-list git-link">
+                            @foreach (Git_system.Models.ECom.FileLink File in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.DemoElectronicFiles ?? "[]") ?? new List<Git_system.Models.ECom.FileLink>()))
+                            {
+                                <a href="@File.FilePath.Replace("~", string.Empty)">@File.Filename</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="FileDownload">
+                        <label class="col-sm-2  control-label">ไฟล์ที่ทำการดาวน์โหลดเมื่อสั่งซื้อ</label>
+                        <div class="col-sm-10">
+                            <input id="ElectronicFiles" name="ElectronicFiles" class="file" type="file">
+                            @Html.ValidationMessageFor(model => model.ElectronicFiles, null, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-10  file-list git-link">
+                            @foreach (Git_system.Models.ECom.FileLink File in (Newtonsoft.Json.JsonConvert.DeserializeObject<List<Git_system.Models.ECom.FileLink>>(Model.ElectronicFiles ?? "[]") ?? new List<Git_system.Models.ECom.FileLink>()))
+                            {
+                                <a href="@File.FilePath.Replace("~", string.Empty)">@File.Filename</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs nav-justified panel-heading" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#DescriptionTH" aria-controls="home" role="tab" data-toggle="tab">คำบรรยายภาษาไทย</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#DescriptionEN" aria-controls="profile" role="tab" data-toggle="tab">คำบรรยายภาษาอังกฤษ</a>
+                                </li>
+                            </ul>
+
+                            <div class="col-lg-12">
+                                <div class="tab-content panel-body">
+                                    <div role="tabpanel" class="tab-pane active" id="DescriptionTH">
+                                        <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">คำบรรยาย</label>
+                                                <div class="col-sm-10">
+                                                    @Html.TextAreaFor(model => model.DescriptionTH, new { @class = "form-control ckeditor" })
+                                                    @Html.ValidationMessageFor(model => model.DescriptionTH, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="DescriptionEN">
+                                        <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">คำบรรยาย</label>
+                                                <div class="col-sm-10">
+                                                    @Html.TextAreaFor(model => model.DescriptionEN, new { @class = "form-control ckeditor" })
+                                                    @Html.ValidationMessageFor(model => model.DescriptionEN, null, new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "Product", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        }
+    </section>
+
+    <!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hidden">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input id="file_fileId" name="fileId" class="hidden" />
+            <button id="file_buttonFile" class="hidden" type="submit" name="Command" value="DeleteFile"></button>
+        }
+    </section>
+    <!-- /.modal-content deleteFile -->
+    <div class="modal fade" id="deleteFileModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการลบไฟล์</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะลบไฟล์หรือไม่?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="file_buttonFile" onclick="ClickToButton(this.name)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/krajee_fileinput")
+        @Scripts.Render("~/Scripts/imagesloaded")
+        @Scripts.Render("~/Scripts/bootstrap_select")
+
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            function ClickToDeleteFile(fileId) {
+                document.getElementById("file_fileId").value = fileId;
+                $("#deleteFileModal").modal("show");
+            }
+        </script>
+
+        <script>
+            $("#ImageFiles").fileinput({
+                showUpload: false,
+                maxFileCount: 10,
+                allowedFileExtensions: ["jpg", "png", "gif"],
+                browseClass: "btn btn-git-default"
+            });
+            $("#OtherFiles").fileinput({
+                showUpload: false,
+                maxFileCount: 10,
+                allowedFileExtensions: ["pdf"],
+                browseClass: "btn btn-git-default"
+            });
+            $("#ElectronicFiles").fileinput({
+                showUpload: false,
+                maxFileCount: 10,
+                allowedFileExtensions: ["pdf"],
+                browseClass: "btn btn-git-default"
+            });
+            $("#DemoElectronicFiles").fileinput({
+                showUpload: false,
+                maxFileCount: 10,
+                allowedFileExtensions: ["pdf"],
+                browseClass: "btn btn-git-default"
+            });
+
+            $("#ElectronicFileStatus").change(function () {
+                var $input = $(this);
+                if ($input.prop("checked")) {
+                    $("#FileDownload").show(1000);
+                    $("#DemoFileDownload").show(1000);
+                }
+                else {
+                    $("#FileDownload").hide(1000);
+                    $("#DemoFileDownload").hide(1000);
+                }
+            }).change();
+        </script>
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

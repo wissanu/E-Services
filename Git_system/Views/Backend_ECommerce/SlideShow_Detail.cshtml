@@ -1,0 +1,91 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.Slideshow
+
+    //Config
+    ViewBag.Title = "สไลด์";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Slide = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/krajee_fileinput")
+        @Styles.Render("~/Content/bootstrap_select")
+        <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+    }
+    <section class="panel">
+@using (Html.BeginForm("SlideShow_Detail", "Backend_ECommerce", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <header class="panel-heading clearfix">
+        <span>สไลด์</span>
+        <div class="pull-right">
+            <span>Active </span><span>@Html.CheckBoxFor(model => model.Status, new { @class = "js-switch-GreenSwitchery01" })</span>
+        </div>
+    </header>
+            <div class="panel-body">
+                <fieldset class="form-horizontal bordered-group" role="form">
+                    @Html.Partial("partial/_PartialSlideShowForm", Model)
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "SlideShow", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        }
+    </section>
+
+    <!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/switchery")
+        @Scripts.Render("~/Scripts/krajee_fileinput")
+        @Scripts.Render("~/Scripts/imagesloaded")
+        @Scripts.Render("~/Scripts/bootstrap_select")
+
+    }
+    @section BodySection_Template_scripts {
+        <script src="../../../Scripts/js/gallery.js"></script>
+        <script>
+            $("#Image").fileinput({
+                showUpload: false,
+                maxFileCount: 10,
+                allowedFileExtensions: ["jpg", "png"],
+                browseClass: "btn btn-git-default"
+            });
+        </script>
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,148 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.ConfirmPaymentBankType
+
+    //Config
+    ViewBag.Title = "Payment Setting";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_serviceMain = "active";
+    BackendMenuLayout.E_service.PaySetting = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+    }
+    <section class="panel">
+        @using (Html.BeginForm())
+        {
+            //Git_system.Models.ConfirmPaymentBankType Model = new Git_system.Models.ConfirmPaymentBankType();
+
+            @Html.AntiForgeryToken()
+            <header class="panel-heading">ธนาคาร</header>
+            <div class="panel-body">
+
+                <fieldset action="Edit Profile" accept-charset="utf-8" class="form-horizontal bordered-group" role="form">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">ชื่อบัญชี</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.NameTH, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.NameTH,null,new {@class ="text-danger"})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">ชื่อบัญชี (อังกฤษ)</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.NameEN, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.NameEN, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">ชื่อธนาคาร</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.BanknameTH, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.BanknameTH, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">ชื่อธนาคาร (อังกฤษ)</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.BanknameEN, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.BanknameEN, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">สาขา</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.BranchTH, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.BranchTH, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">สาขา (อังกฤษ)</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.BranchEN, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.BranchEN, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">เลขบัญชี</label>
+                            <div class="col-sm-10">
+                                @Html.TextBoxFor(item => Model.AccountNo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.AccountNo, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">รายละเอียด</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.DetailTH, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.DetailTH, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">รายละเอียด (อังกฤษ)</label>
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(item => Model.DetailEN, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(item => Model.DetailEN, null, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                @Html.ValidationMessage("EmailSetting", new { @class = "text-danger" })
+            </div>
+            <footer class="panel-footer">
+                <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                <button type="button" class="btn btn-git-default btn-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+            </footer>
+        }
+    </section>
+
+        //<!-- /.modal-content -->
+        <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span>คุณต้องการที่จะบันทึก?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section BodySection_Page_level_scripts {
+        }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,27 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    //Config
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    <section class="panel">
+        <header class="panel-heading">
+            <span>Permission</span>
+        </header>
+        <div class="panel-body">
+            <div>
+                คุณไม่มีสิทธิเข้าถึงเนื้อหาในส่วนนี้
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

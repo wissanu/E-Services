@@ -1,0 +1,1050 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmPayment_ConfirmPaymentBank" xml:space="preserve">
+    <value>ชำระเข้าธนาคาร</value>
+    <comment>ConfirmPayment - ConfirmPaymentBank</comment>
+  </data>
+  <data name="ConfirmPayment_Date" xml:space="preserve">
+    <value>วัน-เวลาที่ชำระ</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="ConfirmPayment_file" xml:space="preserve">
+    <value>แนบไฟล์</value>
+    <comment>ConfirmPayment - file</comment>
+  </data>
+  <data name="ConfirmPayment_Fullname" xml:space="preserve">
+    <value>ชื่อ-นามสกุล</value>
+    <comment>ConfirmPayment - name</comment>
+  </data>
+  <data name="ConfirmPayment_Other" xml:space="preserve">
+    <value>หมายเหตุ</value>
+    <comment>ConfirmPayment - Other</comment>
+  </data>
+  <data name="ConfirmPayment_PayId" xml:space="preserve">
+    <value>เลขที่การสั่งซื้อ</value>
+    <comment>ConfirmPayment - PayId</comment>
+  </data>
+  <data name="ConfirmPayment_Tel" xml:space="preserve">
+    <value>หมายเลขโทรศัพท์</value>
+    <comment>ConfirmPayment - Tel</comment>
+  </data>
+  <data name="ConfirmPayment_Total" xml:space="preserve">
+    <value>จำนวนเงิน</value>
+    <comment>ConfirmPayment - Total</comment>
+  </data>
+  <data name="Course_Title" xml:space="preserve">
+    <value>การอบรม</value>
+    <comment>Couse name</comment>
+  </data>
+  <data name="LayoutFrontend_String0" xml:space="preserve">
+    <value>วิธีใช้</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String1" xml:space="preserve">
+    <value>หลักสูตร</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String10" xml:space="preserve">
+    <value>Copyright © 2013 The Gem and Jewelry Institute of Thailand (Public Organization). All rights reserved.</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String11" xml:space="preserve">
+    <value>140, 140/1-3, 140/5 อาคารไอทีเอฟ ทาวเวอร์ ชั้น 1 - 4 และชั้น 6 ถนนสีลม แขวงสุริยวงศ์ เขตบางรัก กรุงเทพฯ 10500</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String12" xml:space="preserve">
+    <value>โทรศัพท์ 0 2634 4999  โทรสาร 0 2634 4970  อีเมล jewelry@git.or.th</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String2" xml:space="preserve">
+    <value>สินค้า</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String3" xml:space="preserve">
+    <value>ข้อมูลส่วนตัว</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String4" xml:space="preserve">
+    <value>ออกจากระบบ</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String5" xml:space="preserve">
+    <value>ลงทะเบียน</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String6" xml:space="preserve">
+    <value>เข้าสู่ระบบ</value>
+    <comment>_LayoutFrontend Nav</comment>
+  </data>
+  <data name="LayoutFrontend_String7" xml:space="preserve">
+    <value>สมาชิกสัมพันธ์</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String8" xml:space="preserve">
+    <value>นโยบายการคุ้มครองข้อมูลส่วนบุคคล</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="LayoutFrontend_String9" xml:space="preserve">
+    <value>แผนผังเว็บไซต์</value>
+    <comment>_LayoutFrontend Footer</comment>
+  </data>
+  <data name="Membership_Address" xml:space="preserve">
+    <value>ที่อยู่</value>
+    <comment>Membership - Address</comment>
+  </data>
+  <data name="Membership_Company" xml:space="preserve">
+    <value>สถานที่ทำงาน (กรอกเฉพาะชื่อ)</value>
+    <comment>Membership - Company</comment>
+  </data>
+  <data name="Membership_Country" xml:space="preserve">
+    <value>ประเทศ</value>
+    <comment>Membership - Country</comment>
+  </data>
+  <data name="Membership_Email" xml:space="preserve">
+    <value>อีเมล</value>
+    <comment>Membership - Email</comment>
+  </data>
+  <data name="Membership_Email_Re" xml:space="preserve">
+    <value>ยืนยันอีเมล</value>
+  </data>
+  <data name="Membership_Fax" xml:space="preserve">
+    <value>โทรสาร</value>
+    <comment>Membership - Fax</comment>
+  </data>
+  <data name="Membership_FirstnameEN" xml:space="preserve">
+    <value>ชื่อ (ภาษาอังกฤษ)</value>
+    <comment>Membership - FirstnameEN</comment>
+  </data>
+  <data name="Membership_FirstnameTH" xml:space="preserve">
+    <value>ชื่อ</value>
+    <comment>Membership - FirstnameTH</comment>
+  </data>
+  <data name="Membership_Id" xml:space="preserve">
+    <value>หมายเลขสมาชิก</value>
+    <comment>Membership - Id</comment>
+  </data>
+  <data name="Membership_JobTitle" xml:space="preserve">
+    <value>ตำแหน่ง</value>
+    <comment>Membership - JobTitle</comment>
+  </data>
+  <data name="Membership_LastnameEN" xml:space="preserve">
+    <value>นามสกุล (ภาษาอังกฤษ)</value>
+    <comment>Membership - LastnameEN</comment>
+  </data>
+  <data name="Membership_LastnameTH" xml:space="preserve">
+    <value>นามสกุล</value>
+    <comment>Membership - LastnameTH</comment>
+  </data>
+  <data name="Membership_MembershipNumber" xml:space="preserve">
+    <value>รหัสสมาชิกสถาบัน (ถ้ามี)</value>
+  </data>
+  <data name="Membership_MembershipRegisterType" xml:space="preserve">
+    <value>ประเภทสมาชิก</value>
+    <comment>Membership - MembershipRegisterType</comment>
+  </data>
+  <data name="Membership_Password" xml:space="preserve">
+    <value>รหัสผ่าน</value>
+    <comment>Membership - Password</comment>
+  </data>
+  <data name="Membership_Postcode" xml:space="preserve">
+    <value>รหัสไปรษณีย์</value>
+    <comment>Membership - Postcode</comment>
+  </data>
+  <data name="Membership_Province" xml:space="preserve">
+    <value>จังหวัด</value>
+    <comment>Membership - Province</comment>
+  </data>
+  <data name="Membership_RegisterDate" xml:space="preserve">
+    <value>วันที่สมัคร</value>
+    <comment>Membership - RegisterDate</comment>
+  </data>
+  <data name="Membership_RegisterDateExp" xml:space="preserve">
+    <value>วันหมดอายุ</value>
+    <comment>Membership - RegisterDateExp</comment>
+  </data>
+  <data name="Membership_Tel" xml:space="preserve">
+    <value>โทรศัพท์</value>
+    <comment>Membership - Tel</comment>
+  </data>
+  <data name="Pay_Price" xml:space="preserve">
+    <value>ราคา</value>
+  </data>
+  <data name="Pay_Quantity" xml:space="preserve">
+    <value>จำนวน</value>
+    <comment>Quantity</comment>
+  </data>
+  <data name="Product_Date" xml:space="preserve">
+    <value>วัน</value>
+  </data>
+  <data name="Product_Language" xml:space="preserve">
+    <value>ภาษา</value>
+  </data>
+  <data name="Product_Price" xml:space="preserve">
+    <value>ราคาต่อหน่วย</value>
+    <comment>Unit Price</comment>
+  </data>
+  <data name="Product_Time" xml:space="preserve">
+    <value>เวลา</value>
+  </data>
+  <data name="Product_Title" xml:space="preserve">
+    <value>หลักสูตร</value>
+    <comment>Product name</comment>
+  </data>
+  <data name="_Button_BackToHome" xml:space="preserve">
+    <value>กลับสู่หน้าหลัก</value>
+  </data>
+  <data name="_Button_Cancel" xml:space="preserve">
+    <value>ยกเลิก</value>
+    <comment>_Button - Cancel</comment>
+  </data>
+  <data name="_Button_Checkout" xml:space="preserve">
+    <value>ชำระเงิน</value>
+    <comment>Checkout</comment>
+  </data>
+  <data name="_Button_confirm" xml:space="preserve">
+    <value>ยืนยัน</value>
+    <comment>_Button - confirm</comment>
+  </data>
+  <data name="_Button_confirmPayment" xml:space="preserve">
+    <value>ยืนยันการชำระเงิน</value>
+    <comment>_Button - confirmPayment</comment>
+  </data>
+  <data name="_Button_Login" xml:space="preserve">
+    <value>เข้าสู่ระบบ</value>
+  </data>
+  <data name="_Button_Next" xml:space="preserve">
+    <value>ขั้นตอนต่อไป</value>
+  </data>
+  <data name="_Button_Register" xml:space="preserve">
+    <value>ลงทะเบียน</value>
+    <comment>Register</comment>
+  </data>
+  <data name="_HomeString1" xml:space="preserve">
+    <value>รายการสั่งซื้อ</value>
+  </data>
+  <data name="_HomeString10" xml:space="preserve">
+    <value>ไม่มีรายการสั่งซื้อที่ค้างชำระในขณะนี้</value>
+  </data>
+  <data name="_HomeString2" xml:space="preserve">
+    <value>สมัครสมาชิกเพื่อรับส่วนลดค่าหลักสูตรอบรม</value>
+  </data>
+  <data name="_HomeString3" xml:space="preserve">
+    <value>สมาชิกประเภทบุคคลธรรมดา</value>
+  </data>
+  <data name="_HomeString4" xml:space="preserve">
+    <value>สมาชิกหมดอายุแล้ว</value>
+  </data>
+  <data name="_HomeString5" xml:space="preserve">
+    <value>หมดอายุ</value>
+    <comment>exp</comment>
+  </data>
+  <data name="_HomeString6" xml:space="preserve">
+    <value>สมาชิกประเภทนิติบุคคล</value>
+  </data>
+  <data name="_HomeString7" xml:space="preserve">
+    <value>รายการสั่งซื้อที่ค้างชำระ</value>
+  </data>
+  <data name="_HomeString8" xml:space="preserve">
+    <value>วันที่ทำการสั่งซื้อ</value>
+  </data>
+  <data name="_HomeString9" xml:space="preserve">
+    <value>ราคาที่ต้องชำระ</value>
+  </data>
+  <data name="_HomeString_Next" xml:space="preserve">
+    <value>ต่อไป</value>
+  </data>
+  <data name="_HomeString_Prev" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+  </data>
+  <data name="_IndexString_Head_Title" xml:space="preserve">
+    <value>Login (E-SERVICE)</value>
+  </data>
+  <data name="_MembershipRegisterString1" xml:space="preserve">
+    <value>หัวข้อ</value>
+  </data>
+  <data name="_MembershipRegisterString10" xml:space="preserve">
+    <value>กรุณายอมรับข้อกำหนดและเงื่อนไขเพื่อดำเนินการชำระเงินต่อไป</value>
+  </data>
+  <data name="_MembershipRegisterString11" xml:space="preserve">
+    <value>เงื่อนไขและหลักเกณฑ์การคืนเงินค่าบริการให้กับผู้สมัครเข้ารับการฝึกอบรม กรุณา</value>
+  </data>
+  <data name="_MembershipRegisterString2" xml:space="preserve">
+    <value>ประเภท</value>
+  </data>
+  <data name="_MembershipRegisterString3" xml:space="preserve">
+    <value>ราคา</value>
+  </data>
+  <data name="_MembershipRegisterString4" xml:space="preserve">
+    <value>วิธีการชำระเงิน</value>
+  </data>
+  <data name="_MembershipRegisterString5" xml:space="preserve">
+    <value>โอนเงิน / Transfer</value>
+  </data>
+  <data name="_MembershipRegisterString6" xml:space="preserve">
+    <value>Credit card</value>
+  </data>
+  <data name="_MembershipRegisterString7" xml:space="preserve">
+    <value>ราคาสินค้า</value>
+  </data>
+  <data name="_MembershipRegisterString8" xml:space="preserve">
+    <value>ส่วนลด</value>
+  </data>
+  <data name="_MembershipRegisterString9" xml:space="preserve">
+    <value>ราคาทั้งหมด</value>
+  </data>
+  <data name="_MembershipRegisterString_legal" xml:space="preserve">
+    <value>คลิกที่นี่</value>
+  </data>
+  <data name="_RegisterMembership" xml:space="preserve">
+    <value>สมาชิก</value>
+  </data>
+  <data name="_RegisterStep3String1" xml:space="preserve">
+    <value>การลงทะเบียนสำเร็จ</value>
+  </data>
+  <data name="_RegisterStep3String2" xml:space="preserve">
+    <value>กรุณาตรวจสอบอีเมลของท่านเพื่อยืนยันการลงทะเบียน</value>
+  </data>
+  <data name="_TitlePage_Head_ConfirmPayment" xml:space="preserve">
+    <value>ยืนยันการชำระเงิน</value>
+    <comment>ConfirmPayment - Head</comment>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep1" xml:space="preserve">
+    <value>แบบฟอร์มลงทะเบียน</value>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep2" xml:space="preserve">
+    <value>แบบฟอร์มลงทะเบียน</value>
+  </data>
+  <data name="_TitlePage_Head_RegisterStep3" xml:space="preserve">
+    <value>แบบฟอร์มลงทะเบียน</value>
+  </data>
+  <data name="_TitleWeb_ConfirmPayment" xml:space="preserve">
+    <value>ยืนยันการชำระเงิน</value>
+    <comment>_TitleWeb - ConfirmPayment</comment>
+  </data>
+  <data name="_TitleWeb_Edit_Profile" xml:space="preserve">
+    <value>แก้ไขโปรไฟล์</value>
+    <comment>_TitleWeb - Edit_Profile</comment>
+  </data>
+  <data name="_TitleWeb_Home" xml:space="preserve">
+    <value>หน้าหลัก</value>
+  </data>
+  <data name="_TitleWeb_Index" xml:space="preserve">
+    <value>เข้าสู่ระบบ</value>
+  </data>
+  <data name="_TitleWeb_MembershipRegister" xml:space="preserve">
+    <value>สมาชิก</value>
+  </data>
+  <data name="_TitleWeb_Payment" xml:space="preserve">
+    <value>การชำระเงิน</value>
+  </data>
+  <data name="_TitleWeb_Product" xml:space="preserve">
+    <value>หลักสูตร</value>
+    <comment>Training</comment>
+  </data>
+  <data name="_TitleWeb_RegisterStep" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="__LanguageType" xml:space="preserve">
+    <value>TH</value>
+    <comment>__LanguageType</comment>
+  </data>
+  <data name="_Button_ForgetPassword" xml:space="preserve">
+    <value>ลืมรหัสผ่าน</value>
+  </data>
+  <data name="_Button_Prev" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+  </data>
+  <data name="_Button_SendResetPasswordLink" xml:space="preserve">
+    <value>ส่งข้อมูล</value>
+  </data>
+  <data name="_RegisterMembershipString1" xml:space="preserve">
+    <value>แบบฟอร์มสำหรับสมัครสมาชิก</value>
+  </data>
+  <data name="_SendResetPasswordString1" xml:space="preserve">
+    <value>ลืมรหัสผ่าน ?</value>
+  </data>
+  <data name="_SendResetPasswordString2" xml:space="preserve">
+    <value>ป้อนอีเมลแอดเดรสของคุณด้านล่าง และเราจะส่งลิงค์ให้คุณรีเซ็ตรหัสผ่านของคุณ</value>
+  </data>
+  <data name="_TitleWeb_SendResetPassword" xml:space="preserve">
+    <value>รีเซ็ตรหัสผ่าน</value>
+  </data>
+  <data name="ActionRegisterStep2String1" xml:space="preserve">
+    <value>ข้อมูลจากสมาชิกสถาบัน สวอ.</value>
+  </data>
+  <data name="ActionRegisterStep2String2" xml:space="preserve">
+    <value>สมัครสมาชิกใหม่</value>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageBody" xml:space="preserve">
+    <value>ระบบได้ทำการบันทึกรายการยืนยันการสั่งซื้อเรียบร้อยแล้ว</value>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageHead" xml:space="preserve">
+    <value>ขอบคุณที่ใช้บริการ</value>
+  </data>
+  <data name="ActionConfirmPaymentShowMessageTitle" xml:space="preserve">
+    <value>ยืนยันการชำระเงิน</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageBody" xml:space="preserve">
+    <value>ระบบจะส่งรายละเอียดการชำระเงินไปทางอีเมลที่ได้ลงทะเบียนไว้กับระบบ</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageHead" xml:space="preserve">
+    <value>ขอบคุณที่ใช้บริการ</value>
+  </data>
+  <data name="ActionMembershipRegisterShowMessageTitle" xml:space="preserve">
+    <value>สมัครสมาชิก</value>
+  </data>
+  <data name="ActionPaymentShowMessageBody" xml:space="preserve">
+    <value>ระบบจะส่งรายละเอียดการชำระเงินไปทางอีเมลที่ได้ลงทะเบียนไว้กับระบบ</value>
+  </data>
+  <data name="ActionPaymentShowMessageHead" xml:space="preserve">
+    <value>ขอบคุณที่ใช้บริการ</value>
+  </data>
+  <data name="ActionPaymentShowMessageTitle" xml:space="preserve">
+    <value>ลงทะเบียนออนไลน์</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageBody" xml:space="preserve">
+    <value>ทำการเปลี่ยนรหัสผ่านเสร็จสำบูรณ์</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageHead" xml:space="preserve">
+    <value>รีเซ็ตรหัสผ่าน</value>
+  </data>
+  <data name="ActionResetPasswordShowMessageTitle" xml:space="preserve">
+    <value>รีเซ็ตรหัสผ่าน</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageBody" xml:space="preserve">
+    <value>กรุณาตรวจสอบอีเมลของท่านเพื่อตั้งรหัสผ่านใหม่ภายในระยะเวลา 1 ชั่วโมง</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageHead" xml:space="preserve">
+    <value>ข้อมูลของท่านถูกต้อง</value>
+  </data>
+  <data name="ActionSendResetPasswordShowMessageTitle" xml:space="preserve">
+    <value>รีเซ็ตรหัสผ่าน</value>
+  </data>
+  <data name="_IndexString1" xml:space="preserve">
+    <value>อีเมล</value>
+  </data>
+  <data name="_IndexString2" xml:space="preserve">
+    <value>รหัสผ่าน</value>
+  </data>
+  <data name="_HomePaymentHistory" xml:space="preserve">
+    <value>ประวัติการสั่งซื้อ</value>
+  </data>
+  <data name="_HomePaymentStatus" xml:space="preserve">
+    <value>สถานะการสั่งซื้อ</value>
+  </data>
+  <data name="_HomeString11" xml:space="preserve">
+    <value>ไม่มีรายการสั่งซื้อในขณะนี้</value>
+  </data>
+  <data name="Membership_Password_Re" xml:space="preserve">
+    <value>ยืนยันรหัสผ่าน</value>
+    <comment>Membership - Password</comment>
+  </data>
+  <data name="Validation_Email" xml:space="preserve">
+    <value>กรุณากรอกอีเมล</value>
+  </data>
+  <data name="Validation_EmailConfirm" xml:space="preserve">
+    <value>อีเมลไม่ตรงกัน</value>
+    <comment>Email and confirmation does not match.</comment>
+  </data>
+  <data name="Validation_EmailCorrect" xml:space="preserve">
+    <value>อีเมลไม่ถูกต้อง</value>
+    <comment>Please enter correct email address.</comment>
+  </data>
+  <data name="Validation_Firstname" xml:space="preserve">
+    <value>กรุณากรอกชื่อ</value>
+  </data>
+  <data name="Validation_Lastname" xml:space="preserve">
+    <value>กรุณากรอกนามสกุล</value>
+  </data>
+  <data name="Validation_Password" xml:space="preserve">
+    <value>กรุณากรอกรหัสผ่าน</value>
+  </data>
+  <data name="Validation_PasswordConfirm" xml:space="preserve">
+    <value>รหัสผ่านไม่ตรงกัน</value>
+    <comment>Password and confirmation does not match.</comment>
+  </data>
+  <data name="Membership_Mobile" xml:space="preserve">
+    <value>โทรศัพท์มือถือ</value>
+  </data>
+  <data name="Membership_Road" xml:space="preserve">
+    <value>ถนน</value>
+  </data>
+  <data name="Membership_Amphur" xml:space="preserve">
+    <value>อำเภอ/เขต</value>
+    <comment>อำเภอ/เขต</comment>
+  </data>
+  <data name="Membership_City" xml:space="preserve">
+    <value>เมือง</value>
+    <comment>City</comment>
+  </data>
+  <data name="Membership_District" xml:space="preserve">
+    <value>ตำบล/แขวง</value>
+    <comment>ตำบล/แขวง</comment>
+  </data>
+  <data name="Membership_State" xml:space="preserve">
+    <value>รัฐ</value>
+    <comment>State</comment>
+  </data>
+  <data name="Membership_Answer" xml:space="preserve">
+    <value>คำตอบ</value>
+    <comment>Answer</comment>
+  </data>
+  <data name="Membership_BirthDay" xml:space="preserve">
+    <value>วันเกิด</value>
+    <comment>BirthDay</comment>
+  </data>
+  <data name="Membership_Question" xml:space="preserve">
+    <value>คำถาม</value>
+    <comment>Question</comment>
+  </data>
+  <data name="Membership_Religion" xml:space="preserve">
+    <value>ศาสนา</value>
+    <comment>Religion</comment>
+  </data>
+  <data name="LayoutFrontend_String13" xml:space="preserve">
+    <value>สมาชิก</value>
+  </data>
+  <data name="Validation_InformationIncorrect" xml:space="preserve">
+    <value>ข้อมูลไม่ถูกต้อง</value>
+  </data>
+  <data name="Validation_FaxNoCorrect" xml:space="preserve">
+    <value>เบอร์โทรสารไม่ถูกต้อง</value>
+  </data>
+  <data name="Validation_MobileNoCorrect" xml:space="preserve">
+    <value>เบอร์โทรศัพท์มือถือไม่ถูกต้อง</value>
+  </data>
+  <data name="Validation_TelNoCorrect" xml:space="preserve">
+    <value>เบอร์โทรศัพท์ไม่ถูกต้อง</value>
+  </data>
+  <data name="Validation_ZipcodeCorrect" xml:space="preserve">
+    <value>รหัสไปรษณีย์ไม่ถูกต้อง</value>
+  </data>
+  <data name="MembershipConfirm" xml:space="preserve">
+    <value>ยืนยันสมาชิกเสร็จสมบูรณ์</value>
+  </data>
+  <data name="CheckEmailOrPassword" xml:space="preserve">
+    <value>อีเมลหรือรหัสผ่านไม่ถูกต้อง</value>
+  </data>
+  <data name="CheckMembershipActive" xml:space="preserve">
+    <value>อีเมลยังไม่ได้รับการยืนยัน {0}</value>
+  </data>
+  <data name="RequiredAnswer" xml:space="preserve">
+    <value>กรุณากรอกคำตอบ</value>
+  </data>
+  <data name="RequiredQuestion" xml:space="preserve">
+    <value>กรุณากรอกคำถาม</value>
+  </data>
+  <data name="Email_Is_Using" xml:space="preserve">
+    <value>อีเมลถูกใช้แล้ว</value>
+  </data>
+  <data name="RequiredFile" xml:space="preserve">
+    <value>กรุณาเลือกไฟล์</value>
+  </data>
+  <data name="Membership_Firstname" xml:space="preserve">
+    <value>ชื่อ</value>
+    <comment>Membership - FirstnameTH</comment>
+  </data>
+  <data name="Membership_Lastname" xml:space="preserve">
+    <value>นามสกุล</value>
+    <comment>Membership - LastnameTH</comment>
+  </data>
+  <data name="RequiredFirstname" xml:space="preserve">
+    <value>กรุณากรอกชื่อ</value>
+  </data>
+  <data name="RequiredLastname" xml:space="preserve">
+    <value>กรุณากรอกนามสกุล</value>
+  </data>
+  <data name="Change_password" xml:space="preserve">
+    <value>เปลี่ยนรหัสผ่าน</value>
+  </data>
+  <data name="Fill_in_the_form" xml:space="preserve">
+    <value>กรอกข้อมูล</value>
+  </data>
+  <data name="Password_Resetting" xml:space="preserve">
+    <value>การตั้งค่ารหัสผ่านใหม่</value>
+  </data>
+  <data name="Timeout_resetpasswordMessage" xml:space="preserve">
+    <value>ท่านไม่ดำเนินการตั้งรหัสผ่านในเวลาที่กาหนด กรุณากรอกข้อมูลของท่านเพื่อตั้งรหัสผ่านใหม่</value>
+  </data>
+  <data name="IdNumber" xml:space="preserve">
+    <value>ลำดับ</value>
+  </data>
+  <data name="Complete_change_password" xml:space="preserve">
+    <value>เปลี่ยนรหัสผ่านเสร็จสมบูรณ์</value>
+  </data>
+  <data name="ConfirmPayment_DateDate" xml:space="preserve">
+    <value>วันที่ชำระ</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="ConfirmPayment_DateTime" xml:space="preserve">
+    <value>เวลาที่ชำระ</value>
+    <comment>ConfirmPayment - Date</comment>
+  </data>
+  <data name="Resend" xml:space="preserve">
+    <value>ส่งอีกครั้ง</value>
+  </data>
+  <data name="ExpiryDayCRM" xml:space="preserve">
+    <value>วันหมดอายุสมาชิก CRM</value>
+  </data>
+  <data name="THB" xml:space="preserve">
+    <value>บาท</value>
+  </data>
+  <data name="USD" xml:space="preserve">
+    <value>USD</value>
+  </data>
+  <data name="MembershipCRM" xml:space="preserve">
+    <value>สมาชิกสถาบัน</value>
+  </data>
+  <data name="credentials" xml:space="preserve">
+    <value>เอกสารรับรอง</value>
+  </data>
+  <data name="Payment_Proof" xml:space="preserve">
+    <value>หลักฐานการจ่ายเงิน</value>
+  </data>
+  <data name="A_photocopy_of_ID_card" xml:space="preserve">
+    <value>สำเนาบัตรประชาชน</value>
+  </data>
+  <data name="A_photocopy_of_VAT_registration_VAT20" xml:space="preserve">
+    <value>ใบทะเบียนภาษีมูลค่าเพิ่ม (ภพ.20)</value>
+  </data>
+  <data name="Legal" xml:space="preserve">
+    <value>ข้อกำหนด/เงื่อนไข</value>
+  </data>
+  <data name="DoyouhavestudyorworkexperienceinGemandJewelryField" xml:space="preserve">
+    <value>ประสบการณ์ด้านอัญมณี</value>
+    <comment>Do you have study/work experience in Gem and Jewelry Field?</comment>
+  </data>
+  <data name="HighestLevelofEducation" xml:space="preserve">
+    <value>วุฒิการศึกษาสูงสุด</value>
+    <comment>Highest Level of Education</comment>
+  </data>
+  <data name="IdentificationCardNo" xml:space="preserve">
+    <value>เลขที่บัตรประชาชน</value>
+    <comment>Identification Card No</comment>
+  </data>
+  <data name="Occupation" xml:space="preserve">
+    <value>อาชีพ</value>
+    <comment>Occupation</comment>
+  </data>
+  <data name="longTerm" xml:space="preserve">
+    <value>ระยะยาว</value>
+  </data>
+  <data name="shortTerm" xml:space="preserve">
+    <value>ระยะสั้น</value>
+  </data>
+  <data name="PasswordMustBeLongerThan8Characters" xml:space="preserve">
+    <value>รหัสผ่านต้องมีความยาวมากกว่า 8 ตัวอักษร</value>
+    <comment>The password must be longer than eight characters.</comment>
+  </data>
+  <data name="CaptchaImage" xml:space="preserve">
+    <value>ภาพตัวอักษร</value>
+    <comment>Captcha Image?</comment>
+  </data>
+  <data name="Image_code_is_not_valid" xml:space="preserve">
+    <value>ข้อความภาพตัวอักษรไม่ถูกต้อง</value>
+    <comment>image code is not valid.</comment>
+  </data>
+  <data name="Identification_no_field_is_required" xml:space="preserve">
+    <value>กรุณากรอกบัตรประชาชน</value>
+  </data>
+  <data name="Identification_no_must_be_numeric" xml:space="preserve">
+    <value>รหัสบัตรประชาชนต้องเป็นตัวเลขเท่านั้น</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>สถานที่</value>
+    <comment>Location</comment>
+  </data>
+  <data name="SizeMustNotMoreThan10MB" xml:space="preserve">
+    <value>ขนาดไม่เกิน 10 MB</value>
+    <comment>Size must not more than 10 MB</comment>
+  </data>
+  <data name="UpTo10MbPerImage" xml:space="preserve">
+    <value>ไฟล์รูปภาพขนาดไม่เกิน 10 MB</value>
+  </data>
+  <data name="ReceiptInfo" xml:space="preserve">
+    <value>รายละเอียดการจัดส่ง ใบเสร็จรับเงิน</value>
+  </data>
+  <data name="Benefit" xml:space="preserve">
+    <value>สิทธิประโยชน์</value>
+  </data>
+  <data name="_MembershipRegisterStringLegal" xml:space="preserve">
+    <value>เงื่อนไขและหลักเกณฑ์การคืนเงินค่าบริการให้กับผู้สมัครเข้ารับการบริการ กรุณา</value>
+  </data>
+  <data name="Free" xml:space="preserve">
+    <value>ฟรี! ไม่มีค่าใช้จ่าย</value>
+  </data>
+  <data name="_Payment_string1" xml:space="preserve">
+    <value>ราคาหลักสูตร</value>
+  </data>
+  <data name="Total_price" xml:space="preserve">
+    <value>ราคาสุทธิ</value>
+  </data>
+  <data name="Vat" xml:space="preserve">
+    <value>ภาษีมูลค่าเพิ่ม</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>วัน</value>
+  </data>
+  <data name="Normal_Price" xml:space="preserve">
+    <value>ราคาต่อหน่วย</value>
+  </data>
+  <data name="Add_to_cart" xml:space="preserve">
+    <value>หยิบใส่ตะกร้า</value>
+  </data>
+  <data name="GemInstituteName" xml:space="preserve">
+    <value>สถาบันวิจัยและพัฒนาอัญมณีและเครื่องประดับแห่งชาติ (องค์การมหาชน)</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>ย้อนกลับ</value>
+  </data>
+  <data name="Information_of_membership" xml:space="preserve">
+    <value>ข้อมูลสมาชิก</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>หมวดหมู่</value>
+  </data>
+  <data name="not_defined" xml:space="preserve">
+    <value>ไม่กำหนด</value>
+  </data>
+  <data name="Choose_category" xml:space="preserve">
+    <value>เลือกชนิดข้อมูล</value>
+  </data>
+  <data name="RequiredTotalPrice" xml:space="preserve">
+    <value>กรุณากรอกจำนวนเงิน</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>ยืนยัน</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>ดำเนินการต่อ</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>วันที่</value>
+  </data>
+  <data name="Deliver_status" xml:space="preserve">
+    <value>สถานะการจัดส่ง</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>รายละเอียด</value>
+  </data>
+  <data name="History" xml:space="preserve">
+    <value>ประวัติการสั่งซื้อ</value>
+  </data>
+  <data name="Miscellaneous_items" xml:space="preserve">
+    <value>รายการปลีกย่อย</value>
+  </data>
+  <data name="No_data" xml:space="preserve">
+    <value>ไม่มีข้อมูล</value>
+  </data>
+  <data name="Order_number" xml:space="preserve">
+    <value>เลขที่การสั่งซื้อ</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>ราคา</value>
+  </data>
+  <data name="Price_Per_Unit" xml:space="preserve">
+    <value>ราคาต่อหน่วย</value>
+  </data>
+  <data name="Product_id" xml:space="preserve">
+    <value>รหัสสินค้า</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>จำนวน</value>
+  </data>
+  <data name="Remove_in_cart" xml:space="preserve">
+    <value>นำออกจากตะกร้า</value>
+  </data>
+  <data name="Shopping_cart" xml:space="preserve">
+    <value>ตะกร้าสินค้า</value>
+  </data>
+  <data name="Shopping_in_cart" xml:space="preserve">
+    <value>สินค้าในตะกร้า</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>สถานะ</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>ชิ้น</value>
+  </data>
+  <data name="View_More" xml:space="preserve">
+    <value>ดูทั้งหมด</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>ที่อยู่</value>
+  </data>
+  <data name="Address_for_receipt" xml:space="preserve">
+    <value>ที่อยู่ออกใบเสร็จรับเงิน</value>
+  </data>
+  <data name="Address_is_based_on_registration_data" xml:space="preserve">
+    <value>ที่อยู่จากข้อมูลการสมัคร</value>
+  </data>
+  <data name="Address_is_based_on_The_address_of_delivery" xml:space="preserve">
+    <value>ที่อยู่จากที่อยู่การจัดส่ง</value>
+  </data>
+  <data name="Confirm_ordering" xml:space="preserve">
+    <value>ยืนยันการสั่งซื้อ</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>ประเทศ</value>
+  </data>
+  <data name="Delivery_address_and_payment" xml:space="preserve">
+    <value>ที่อยู่จัดส่งเเละการชำระเงิน</value>
+  </data>
+  <data name="Delivery_cost" xml:space="preserve">
+    <value>ค่าจัดส่ง</value>
+  </data>
+  <data name="Delivery_payment" xml:space="preserve">
+    <value>ที่อยู่สำหรับจัดส่ง</value>
+  </data>
+  <data name="Deliver_type" xml:space="preserve">
+    <value>รูปเเบบการส่งสินค้า</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>อีเมล</value>
+  </data>
+  <data name="Fullname" xml:space="preserve">
+    <value>ชื่อ - นามสกุล</value>
+  </data>
+  <data name="Money_transfer" xml:space="preserve">
+    <value>โอนเงิน</value>
+  </data>
+  <data name="ordering_name__delivery_authority" xml:space="preserve">
+    <value>ชื่อผู้สั่งซื้อ / ผู้จัดส่งสินค้า</value>
+  </data>
+  <data name="Order_list" xml:space="preserve">
+    <value>รายการสั่งซื้อสินค้า</value>
+  </data>
+  <data name="Payment_type" xml:space="preserve">
+    <value>ประเภทการชำระ</value>
+  </data>
+  <data name="Phonenumber" xml:space="preserve">
+    <value>เบอร์โทรศัพท์</value>
+  </data>
+  <data name="Please_accept_the_terms_and_conditions_to_continue_payment" xml:space="preserve">
+    <value>กรุณายอมรับข้อกำหนดเเละเงื่อนไขเพื่อดำเนินการชำระเงินต่อไป</value>
+  </data>
+  <data name="Please_check_this_box_for_confirm_that_you_have_already_read_and_accepted_into" xml:space="preserve">
+    <value>กรุณาทำเครื่องหมายด้านหน้าเพื่อยืนยันว่าคุณได้ศึกษาเเละยอมรับใน</value>
+  </data>
+  <data name="Postcode" xml:space="preserve">
+    <value>รหัสไปรษณีย์</value>
+  </data>
+  <data name="Product_name" xml:space="preserve">
+    <value>ชื่อสินค้า</value>
+  </data>
+  <data name="Province" xml:space="preserve">
+    <value>จังหวัด</value>
+  </data>
+  <data name="The_term_and_conditions_to_receiving_the_money" xml:space="preserve">
+    <value>ข้อกำหนดเเละเงื่อนไขในการรับเงิน</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>ยอดรวม</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>กรุณากรอกข้อมูล</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>แก้ไข</value>
+  </data>
+  <data name="Receipts_issued_in_the_name" xml:space="preserve">
+    <value>ออกในนาม</value>
+  </data>
+  <data name="ShipmentNumber" xml:space="preserve">
+    <value>เลขที่การจัดส่ง</value>
+  </data>
+  <data name="Demo_file" xml:space="preserve">
+    <value>ตัวอย่างไฟล์</value>
+  </data>
+  <data name="Notes_file" xml:space="preserve">
+    <value>ไฟล์ประกอบ</value>
+  </data>
+  <data name="Out_of_stock" xml:space="preserve">
+    <value>สินค้าหมด</value>
+  </data>
+  <data name="Select_more" xml:space="preserve">
+    <value>เลือกซื้อสินค้าเพิ่ม</value>
+  </data>
+  <data name="The_shipment_of_you" xml:space="preserve">
+    <value>สินค้าได้จัดส่งแล้ว</value>
+  </data>
+  <data name="Download_file" xml:space="preserve">
+    <value>ดาวน์โหลดไฟล์</value>
+  </data>
+  <data name="OnlineService" xml:space="preserve">
+    <value>บริการออนไลน์</value>
+  </data>
+  <data name="menu" xml:space="preserve">
+    <value>เมนู</value>
+  </data>
+  <data name="Datetime_send" xml:space="preserve">
+    <value>วัน-เวลา จัดส่ง</value>
+    <comment>datetime send</comment>
+  </data>
+  <data name="Name_send" xml:space="preserve">
+    <value>ชื่อผู้ส่ง</value>
+    <comment>name send</comment>
+  </data>
+  <data name="Shipment_number" xml:space="preserve">
+    <value>รหัสพัสดุคือ</value>
+    <comment>shipment number</comment>
+  </data>
+  <data name="Shipment_send_success" xml:space="preserve">
+    <value>ได้จัดส่งสินค้าของท่านแล้ว</value>
+    <comment>shipment send success</comment>
+  </data>
+  <data name="Payment_Completed" xml:space="preserve">
+    <value>การชำระเงินเสร็จสมบูรณ์</value>
+  </data>
+  <data name="Failure_in_payment" xml:space="preserve">
+    <value>เกินข้อผิดพลาดในการชำระเงิน</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>สินค้า</value>
+  </data>
+  <data name="Order_your_payment_successful" xml:space="preserve">
+    <value>รายการสั่งซื้อของคุณชำระเรียบร้อย</value>
+    <comment>Order your payment successful</comment>
+  </data>
+  <data name="choose_file" xml:space="preserve">
+    <value>เลือกไฟล์</value>
+  </data>
+  <data name="transaction_declined" xml:space="preserve">
+    <value>การดำเนินการถูกปฎิเสธ</value>
+  </data>
+  <data name="type_of_training" xml:space="preserve">
+    <value>ประเภทการฝึกอบรม</value>
+  </data>
+  <data name="has" xml:space="preserve">
+    <value>มี</value>
+  </data>
+  <data name="none" xml:space="preserve">
+    <value>ไม่มี</value>
+  </data>
+  <data name="Office_Fax" xml:space="preserve">
+    <value>โทรสารที่ทำงาน</value>
+  </data>
+  <data name="Office_Phone" xml:space="preserve">
+    <value>โทรศัพท์ที่ทำงาน</value>
+  </data>
+  <data name="Ext" xml:space="preserve">
+    <value>ต่อ</value>
+  </data>
+</root>

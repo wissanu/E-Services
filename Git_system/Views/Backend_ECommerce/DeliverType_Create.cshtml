@@ -1,0 +1,116 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.EComDeliverType
+
+    //Config
+    ViewBag.Title = "ประเภทการจัดส่ง";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.DeliverType = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/krajee_fileinput")
+        @Styles.Render("~/Content/bootstrap_select")
+
+    }
+    <section class="panel">
+        @using (Html.BeginForm("DeliverType_Create", "Backend_ECommerce", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            <header class="panel-heading clearfix">
+                <span>ประเภทการจัดส่ง</span>
+            </header>
+
+            <div class="panel-body">
+                <fieldset class="form-horizontal bordered-group" role="form">
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.NameTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NameTH, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.NameEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NameEN, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailTH, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailEN, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "DeliverType", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Create</button>
+                </p>
+            </footer>
+        }
+    </section>
+
+//<!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

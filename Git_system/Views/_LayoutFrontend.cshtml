@@ -1,0 +1,64 @@
+﻿@using Git_system.MultiResources;
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="สถาบันวิจัยและพัฒนาอัญมณีและเครื่องประดับแห่งชาติ (องค์การมหาชน) เป็นสถาบันหลักในการพัฒนา ส่งเสริม และสนับสนุนอุตสาหกรรมอัญมณีและเครื่องประดับไทย ให้สามารถแข่งขันได้ในตลาดโลก,บาหลี,เครื่องประดับ,ระบำบารอง,ระบำเลกอง,วัฒนธรรม,นาฏลีลา,เครื่องแต่งกาย,ศิลปะการแสดง">
+    <meta name="Keywords" content="สถาบันวิจัยและพัฒนาอัญมณีและเครื่องประดับแห่งชาติ (องค์การมหาชน),git,GIT,ตรวจสอบอัญมณี,ตรวจสอบโลหะมีค่า,หลักสูตรอัญมณี,หลักสูตรฝึกอบรม,พิพิธภัณฑ์อัญมณี,เครื่องประดับ, อัญมณี, เครื่องประดับ, เครื่องประดับเงิน, ตลาด, ส่งออก, ดีไซน์, ออกแบบ, ค้าปลีก,ส่งออก, อัญมณี, เครื่องประดับ, ตลาด , สถานการณ์, มูลค่า, พลอยสี, ทองคำ, เพชร, เครื่องประดับทอง, เครื่องประดับเงิน, เครื่องประดับเทียม, Eservice, ฝึกอบรม ,หลักสูตร">
+    <meta name="author" content="The Gem and Jewelry Institute of Thailand (Public Organization).">
+    <meta name="copyright" content="The Gem and Jewelry Institute of Thailand (Public Organization).">
+    <!-- /meta -->
+    <!-- core stylesheet -->
+    @RenderSection("BodySection_Core_styles", required: false)
+    @Styles.Render("~/Content/Frontend-core_stylesheet")
+    @Styles.Render("~/Content/Flag-icon-css/flags/flag-icon")
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="~/Content/Frontend/eCom.css" rel="stylesheet" />
+
+    <!-- facebook -->
+    <meta property="fb:app_id" content="1943896575835552" />
+    <meta property="og:type" content="git-eservice:web" />
+    <meta property="og:url" content="http://eservice.git.or.th" />
+    <meta property="og:title" content="The Gem and Jewelry Institute of Thailand (Public Organization)" />
+    <meta property="og:image" content="http://eservice.git.or.th/Images/fb-logo.png" />
+    <meta property="business:contact_data:street_address" content="Tower Building" />
+    <meta property="business:contact_data:locality" content="Bangkok" />
+    <meta property="business:contact_data:postal_code" content="10500" />
+    <meta property="business:contact_data:country_name" content="Thailand" />
+    <meta property="place:location:latitude" content="13.725824" />
+    <meta property="place:location:longitude" content="100.526487" />
+    <!-- facebook -->
+</head>
+<body>
+    <section class="containerMain">
+        @Html.Partial("_PartialLayoutHeader", "eService")<!-- /header -->
+        <div class="container-fluid Background-container block push">
+            <!-- template slider -->
+            @RenderSection("RenderOnBody", required: false)
+            <!-- /template slider -->
+            <div class="container">
+                @RenderBody()
+            </div>
+        </div>
+        @Html.Partial("_PartialLayoutFooter", null)
+    </section>
+
+    <!-- core scripts -->
+    @Scripts.Render("~/Scripts/Frontend-BodySection_Core_scripts")
+    @RenderSection("BodySection_Core_scripts", required: false)
+    <!-- /core scripts -->
+    <!-- page level scripts -->
+    @RenderSection("BodySection_Page_level_scripts", required: false)
+    <!-- /page level scripts -->
+    <!-- template scripts -->
+    @RenderSection("BodySection_Template_scripts", required: false)
+    <!-- /template scripts -->
+</body>
+</html>

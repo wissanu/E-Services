@@ -1,0 +1,202 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.ConfirmPayment>
+
+    //Config
+    ViewBag.Title = "การชำระเงิน";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.ConfirmPayment = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+        <link href="~/Content/bootstrap-datepicker/datepicker3.min.css" rel="stylesheet" />
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>การชำระเงิน</span>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <div class="row">
+                    <div class="col-md-offset-6 col-md-6">
+                        <div class="dataTables_filter">
+                            <label>
+                                Start date:<input id="search_date_start" type="text" class="form-control input-sm" data-date-format="d/m/yyyy" style="width:auto;" data-provide="datepicker" data-date-language="th-th" placeholder="Start date" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-6 col-md-6">
+                        <div class="dataTables_filter">
+                            <label>
+                                End date:<input id="search_date_end" type="text" class="form-control input-sm" style="width:auto;" data-date-format="d/m/yyyy" data-provide="datepicker" data-date-language="th-th" placeholder="End date" />
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                ลำดับ
+                            </th>
+                            <th>
+                                ชื่อลูกค้า
+                            </th>
+                            <th>
+                                วันเวลา
+                            </th>
+                            <th>
+                                ธนาคาร
+                            </th>
+                            <th>
+                                ราคาที่ซื้อ
+                            </th>
+                            <th>
+                                ราคาที่ยืนยัน
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ลำดับ" class="text-center"></td>
+                                <td data-title="ชื่อลูกค้า">
+                                    @Html.ActionLink(String.Format("{0} {1}", item.Pay.Membership.Firstname, item.Pay.Membership.Lastname), "DetailUser", "Backend_Product", new { id = item.Pay.MembershipId }, null)
+                                </td>
+                                <td data-title="วันเวลา" class="text-center">
+                                    @Convert.ToDateTime(item.Date).ToString(("d/M/yyyy HH:mm:ss"))
+                                </td>
+                                <td data-title="ธนาคาร" class="text-center">
+                                    @(item.ConfirmPaymentBankTypeId.HasValue ? String.Format("{0} ({1})", item.ConfirmPaymentBankType.BanknameTH, item.ConfirmPaymentBankType.AccountNo) : "-")
+                                </td>
+                                <td data-title="ราคาที่ซื้อ" class="text-center">
+                                    @Git_system.Models.Helper.PriceAndCurrency(item.Pay.Price, item.Pay.Currency)
+                                </td>
+                                <td data-title="ราคาที่ยืนยัน" class="text-center">
+                                    @Git_system.Models.Helper.PriceAndCurrency(item.Total, item.Currency, true)
+                                </td>
+                                <td data-title="สถานะ" class="text-center">
+                                    @Html.DisplayFor(showitem => item.Pay.ProcessStatusType.Name)
+                                </td>
+                                <td data-title="" class="text-center">
+                                    @Html.ActionLink("รายละเอียด", "Detail", new { id = item.Id })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot_Custom")
+        @Scripts.Render("~/Scripts/bootstrap-datepicker_and_bootstrap-datepicker-thai")
+        <script src="~/Scripts/moment/moment.js"></script>
+    }
+
+    @section BodySection_Template_scripts {
+        <script>
+            $(function () {
+                $('.datepicker').datepicker({
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            });
+        </script>
+
+        <script>
+            /* Custom filtering function which will search data in column four between two values */
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+
+                    var start_date = moment($('#search_date_start').val() != "" ? $('#search_date_start').val() : null, "D/M/YYYY");
+                    var end_date = moment($('#search_date_end').val() != "" ? $('#search_date_end').val() : null, "D/M/YYYY");
+                    var current_date = moment(data[2], "D/M/YYYY HH:mm:ss"); // use data for the age column
+
+                    var null_date_moment = moment(null)._d.toString();
+                    if (start_date._d.toString() === null_date_moment && end_date._d.toString() === null_date_moment ||
+                        start_date._d.toString() === null_date_moment && end_date >= current_date ||
+                        start_date <= current_date && end_date._d.toString() === null_date_moment ||
+                        start_date <= current_date && end_date >= current_date) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            $.extend($.fn.dataTable.defaults, {
+                "displayLength": 30,//number entity in table
+                "ordering": false,
+                "info": false
+            });
+
+            $(document).ready(function () {
+                var t = $('.dataTable').DataTable({
+                    "dom": '<"row"<"col-sm-6" T><"col-sm-6" f>>rtip',//l is entity
+                    "tableTools": {
+                        "sSwfPath": "/Scripts/DataTable/TableTool/swf/copy_csv_xls_pdf.swf",
+                        "aButtons": [
+                                        {
+                                            "sExtends": "copy",
+                                            "sButtonClass": "hidden"
+                                        },
+                                        {
+                                            "sExtends": "xls",
+                                            "oSelectorOpts": { filter: 'applied', order: 'current' }
+                                        },
+                                        {
+                                            "sExtends": "pdf",
+                                            "sButtonClass": "hidden"
+                                        },
+                                        "print"
+                        ],
+                        "columnDefs": [{
+                            "searchable": false,
+                            "orderable": false,
+                            "targets": 0
+                        }],
+                        "order": [[1, 'asc']]
+                    }
+                });
+
+                t.on('order.dt search.dt', function () {
+                    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+
+                    t.column(0).nodes().each(function (cell, i) {
+                        if (cell.isConnected)
+                            t.data()[i][0] = cell.innerHTML;
+                    });
+                }).draw();
+
+                $('#search_date_start, #search_date_end').change(function () {
+                    t.draw();
+                });
+            });
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@using Git_system.MultiResources
+@model Git_system.Models.Membership
+@{
+    //Config
+    ViewBag.Title = Multi._RegisterMembership;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+}
+
+<div class="row">
+    <div class="col-md-12 col-md-offset-6 text-center">
+        <h5 class="text-git-style-bold">@Multi._RegisterMembershipString1</h5>
+    </div>
+    <div class="col-sm-16 col-sm-offset-4">
+        <div class="row">
+            @if (Model.MembershipRegisterTypeId == 1)
+            {
+                <div class="col-sm-12 text-center linkForm">
+                    <a href="@Url.Action("MembershipRegister", "Home", new { @id = 1 })">
+                        @if (Multi.__LanguageType == "TH")
+                        {
+                            <img src="~/Images/normal.png" class="img-thumbnail">
+                        }
+                        else
+                        {
+                            <img src="~/Images/Individual_EN.png" class="img-thumbnail">
+                        }
+                    </a>
+<p>
+@ViewBag.product_Individual_Price @Multi.THB
+</p>
+                </div>
+                <div class="col-sm-12 text-center linkForm">
+                    <a href="@Url.Action("MembershipRegister", "Home", new { @id = 2 })">
+                        @if (Multi.__LanguageType == "TH")
+                        {
+                            <img src="~/Images/corparate.png" class="img-thumbnail">
+                        }
+                        else
+                        {
+                            <img src="~/Images/corparate_EN.png" class="img-thumbnail">
+                        }
+                    </a>
+<p>@ViewBag.product_Corparate_Price @Multi.THB</p>
+                </div>
+            }
+            else if (Model.MembershipRegisterTypeId == 2)
+            {
+                <div class="col-sm-12 text-center linkForm">
+                    <a href="@Url.Action("MembershipRegister", "Home", new { @id = 3 })">
+                        @if (Multi.__LanguageType == "TH")
+                        {
+                            <img src="~/Images/normal.png" class="img-thumbnail">
+                        }
+                        else
+                        {
+                            <img src="~/Images/Individual_EN.png" class="img-thumbnail">
+                        }
+                    </a>
+                    <p>
+                        @ViewBag.product_Individual_Price @Multi.USD
+                    </p>
+                </div>
+                <div class="col-sm-12 text-center linkForm">
+                    <a href="@Url.Action("MembershipRegister", "Home", new { @id = 4 })">
+                        @if (Multi.__LanguageType == "TH")
+                        {
+                            <img src="~/Images/corparate.png" class="img-thumbnail">
+                        }
+                        else
+                        {
+                            <img src="~/Images/corparate_EN.png" class="img-thumbnail">
+                        }
+                    </a>
+                    <p>@ViewBag.product_Corparate_Price @Multi.USD</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

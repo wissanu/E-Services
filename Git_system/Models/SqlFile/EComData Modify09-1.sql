@@ -1,0 +1,7 @@
+SET QUOTED_IDENTIFIER OFF;
+GO
+
+IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
+GO
+
+ALTER TABLE [dbo].[ConfirmPayments] ALTER COLUMN [ConfirmPaymentBankTypeId] smallint NULL

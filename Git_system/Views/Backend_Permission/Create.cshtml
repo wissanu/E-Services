@@ -1,0 +1,60 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model Git_system.Models.Permission
+
+    ViewBag.Title = "การกำหนดสิทธิ์";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.AdminAndSecurityMain = "active";
+    BackendMenuLayout.AdminAndSecurity.PermissionsManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+
+    }
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            การกำหนดสิทธิ์
+        </header>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.Partial("partial/_PartialEditForm", Model)
+            <footer class="panel-footer">
+                <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                <button type="button" class="btn btn-git-default center-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+            </footer>
+        }
+    </section>
+
+        //<!-- /.modal-content -->
+        <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span>คุณต้องการที่จะบันทึก?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section BodySection_Page_level_scripts {
+            <!--Switch for switchery-->
+            @Scripts.Render("~/Scripts/switchery")
+        }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

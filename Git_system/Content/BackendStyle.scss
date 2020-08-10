@@ -1,0 +1,17 @@
+﻿.panel-git-default {
+    //border-color: #2b3c94;
+
+    > .panel-heading {
+        color: #ffffff;
+        background-color: #2b3c94;
+        border-color: #2b3c94;
+
+        + .panel-collapse .panel-body {
+            border-top-color: #2b3c94;
+        }
+    }
+
+    > .panel-footer + .panel-collapse .panel-body {
+        border-bottom-color: #2b3c94;
+    }
+}

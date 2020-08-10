@@ -1,0 +1,397 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    @model IEnumerable<Git_system.Models.Product>
+
+    //Config
+    ViewBag.Title = Multi._TitleWeb_Product;
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+
+    Git_system.Models.Membership membershipView = new Git_system.Models.Membership();
+    membershipView = ViewBag.membershipView;
+
+    @section BodySection_Core_styles {
+        <style>
+            /*Custom*/
+            table.productGroup th {
+                vertical-align: middle !important;
+                text-align: center;
+            }
+
+            table.productGroup td, th {
+                vertical-align: middle !important;
+            }
+
+            table.productGroup thead {
+                background-color: #efefef;
+                color: #2b3c94;
+            }
+
+            table.productGroup thead, tbody, thead > tr > th {
+                /*border: 2px solid #ddd;*/
+                border-bottom: 2px none #ddd !important;
+            }
+
+            table.productGroup tbody tr > td {
+                border: 2px none #ddd;
+                /*border-left: 2px solid #ddd;
+                border-right: 2px solid #ddd;*/
+            }
+
+            table.productGroup tbody tr.group {
+                /*border-top: 2px solid #ddd;*/
+            }
+
+            table.productGroup tbody tr.old {
+                background-color: #fff;
+            }
+
+            table.productGroup tbody tr.even {
+                background-color: #BFE2FF;
+            }
+
+            .table-responsive {
+                border: 1px none #ddd !important;
+            }
+        </style>
+    }
+    <div class="row">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <!--define tabs-->
+            <!--dropdown list-->
+            <div class="visible-xs-block">
+                <ul class="nav nav-tabs">
+                    <li class="dropdown">
+                        <label href="#" data-toggle="dropdown" class="dropdown" aria-expanded="false"><span>@Multi.type_of_training  <b class="caret"></b></span></label>
+
+                        <ul class="dropdown-menu">
+                            @{
+            int tabCount = 0;
+                            }
+                            @for (int i = 3; i >= 1; i--)
+                            {
+                                Boolean isShortTerm = ((i == 3) || (i == 1));
+                                Boolean isLongTerm = i >= 2;
+
+                                List<Product> products = Model.Where(p => p.isShortTerm == isShortTerm && p.isLongTerm == isLongTerm).ToList();
+
+                                if (products.Count() > 0)
+                                {
+                                    string tabid = "TabIdis" + i;
+                                    string showClass = "";
+                                    if (tabCount == 0)
+                                    { showClass = "active"; }
+                                    tabCount++;
+                                    if (i == 3)
+                                    {
+                                        <li class="@showClass"><a href="#@tabid" data-toggle="tab"><label>@Multi.LayoutFrontend_String1</label></a></li>
+                                    }
+                                    else if (i == 1)
+                                    {
+                                        <li class="@showClass"><a href="#@tabid" data-toggle="tab"><label>@Multi.shortTerm</label></a></li>
+                                    }
+                                    else if (i == 2)
+                                    {
+                                        <li class="@showClass"><a href="#@tabid" role="tab" data-toggle="tab"><label>@Multi.longTerm</label></a></li>
+                                    }
+                                }
+
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Nav tabs -->
+            <div class="hidden-xs">
+                <ul class="nav nav-tabs " role="tablist">
+                    @{
+                            tabCount = 0;
+                            List<Git_system.Models.ProductNews> productNews = ViewBag.productNews;
+                    }
+                    @for (int i = 3; i >= 1; i--)
+                    {
+                        Boolean isShortTerm = ((i == 3) || (i == 1));
+                        Boolean isLongTerm = i >= 2;
+
+                        List<Product> products = Model.Where(p => p.isShortTerm == isShortTerm && p.isLongTerm == isLongTerm).ToList();
+
+                        if (products.Count() > 0)
+                        {
+                            string tabid = "TabIdis" + i;
+                            string showClass = "";
+                            if (tabCount == 0)
+                            { showClass = "active"; }
+                            tabCount++;
+                            if (i == 3)
+                            {
+                                <li class="@showClass"><a href="#@tabid" data-toggle="tab"><label>@Multi.LayoutFrontend_String1</label></a></li>
+                            }
+                            else if (i == 1)
+                            {
+                                <li class="@showClass"><a href="#@tabid" data-toggle="tab"><label>@Multi.shortTerm</label></a></li>
+                            }
+                            else if (i == 2)
+                            {
+                                <li class="@showClass"><a href="#@tabid" role="tab" data-toggle="tab"><label>@Multi.longTerm</label></a></li>
+                            }
+                        }
+
+                    }
+                </ul>
+            </div>
+
+                <!-- Tab panes -->
+            <div class="tab-content container">
+
+                @{
+            tabCount = 0;
+                }
+                @for (int i = 3; i >= 1; i--)
+                {
+                    Boolean isShortTerm = ((i == 3) || (i == 1));
+                    Boolean isLongTerm = i >= 2;
+
+                    List<Product> products = Model.Where(p => p.isShortTerm == isShortTerm && p.isLongTerm == isLongTerm).ToList();
+
+                    if (products.Count() > 0)
+                    {
+                        int table_group_count = 0;
+
+                        string tabid = "TabIdis" + i;
+                        string showClass = "";
+                        if (tabCount == 0)
+                        { showClass = "in active"; }
+                        tabCount++;
+
+                        Git_system.Models.ProductNews productNew = productNews.Where(p => p.Id.Equals(i)).FirstOrDefault();
+
+                        <div role="tabpanel" class="tab-pane fade @showClass" id='@tabid'>
+                            <div class="col-sm-24">
+                                @if (productNew != null)
+                                {
+                                    if (Multi.__LanguageType == "TH")
+                                    {@Html.Raw(productNew.DetailTH)}
+                                    else
+                                    {@Html.Raw(productNew.DetailEN)}
+                                }
+                            </div>
+
+                            <div class="visible-xs">
+                                @foreach (var item in products)
+                                {
+                                    <div class="panel panel-default">
+                                        <!-- Default panel contents -->
+                                        <div class="panel-heading">
+                                            @if (Multi.__LanguageType == "TH")
+                                            {@item.TitleTH}
+                                            else
+                                            {@item.TitleEN}
+                                        </div>
+
+                                        <div>
+                                            @foreach (var course in item.Courses)
+                                            {
+                                                <dl class="dl-horizontal dl-horizontal-short">
+                                                    <dt>@Multi._Button_Register :</dt>
+                                                    <dd>
+                                                        <input type="checkbox" name="selectedObjects" value="@course.Id" />
+                                                    </dd>
+                                                    <dt>@Multi.Product_Title :</dt>
+                                                    <dd>
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {@course.TitleTH}
+                                                        else
+                                                        {@course.TitleEN}
+                                                    </dd>
+                                                    <dt>@Multi.Location :</dt>
+                                                    <dd>
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {@course.Product.LocationTH}
+                                                        else
+                                                        {@course.Product.LocationEN}
+                                                    </dd>
+                                                    <dt>@Multi.Duration :</dt>
+                                                    <dd>@Helper.DateToSting(Convert.ToDateTime(course.DateStart), Convert.ToDateTime(course.DateEnd))</dd>
+                                                    <dt>@Multi.Product_Time :</dt>
+                                                    <dd>
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {
+                                                            @String.Format("{0} - {1}", Convert.ToDateTime(course.DateStart).ToString("HH:mm"), Convert.ToDateTime(course.DateEnd).ToString("HH:mm"))
+                                                        }
+                                                        else
+                                                        {
+                                                            @String.Format("{0} - {1}", Convert.ToDateTime(course.DateStart).ToString("hh:mm tt"), Convert.ToDateTime(course.DateEnd).ToString("hh:mm tt"))
+                                                        }
+                                                    </dd>
+                                                    <dt>@Multi.Normal_Price :</dt>
+                                                    <dd>
+                                                        @Helper.PriceAndCurrency(item.toTotalPriceForMembership(membershipView), Helper.getCurrency(membershipView))
+                                                    </dd>
+                                                    <dt>@Multi.Product_Language :</dt>
+                                                    <dd>
+                                                        @if (item.SupportEN && item.SupportTH)
+                                                        {
+                                                            <label>TH / EN</label>
+                                                        }
+                                                        else if (item.SupportTH)
+                                                        {
+                                                            <label>TH</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            <label>EN</label>
+                                                        }
+                                                    </dd>
+                                                </dl>
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="col-sm-24 table-responsive hidden-xs">
+                                <table class="table productGroup">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>@Multi.Product_Title</th>
+                                            <th>@Multi.Location</th>
+                                            <th>@Multi.Duration</th>
+                                            <th>@Multi.Product_Time</th>
+                                            <th>@Multi.Normal_Price</th>
+                                            <th>@Multi.Product_Language</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var item in products)
+                                        {
+                                            table_group_count++;
+                                            int countItem = 0;
+                                            <tr class="group @(table_group_count % 2 == 1 ? "old" : "even")">
+                                                <td></td>
+                                                <td>
+                                                    <b>
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {@item.TitleTH}
+                                                        else
+                                                        {@item.TitleEN}
+                                                    </b>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                            foreach (var course in item.Courses)
+                                            {
+                                                countItem++;
+                                                <tr class="@(table_group_count % 2 == 1 ? "old" : "even")">
+                                                    <td align="center"><input type="checkbox" name="selectedObjects" value="@course.Id" /></td>
+                                                    <td>
+
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {@course.TitleTH}
+                                                        else
+                                                        {@course.TitleEN}
+                                                    </td>
+                                                    <td>
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {@course.Product.LocationTH}
+                                                        else
+                                                        {@course.Product.LocationEN}
+                                                    </td>
+                                                    <td align="center" class="text-nowrap">
+                                                        @Helper.DateToSting(Convert.ToDateTime(course.DateStart), Convert.ToDateTime(course.DateEnd))
+                                                    </td>
+                                                    <td align="center" class="text-nowrap">
+                                                        @if (Multi.__LanguageType == "TH")
+                                                        {
+                                                            @String.Format("{0} - {1}", Convert.ToDateTime(course.DateStart).ToString("HH:mm"), Convert.ToDateTime(course.DateEnd).ToString("HH:mm"))
+                                                        }
+                                                        else
+                                                        {
+                                                            @String.Format("{0} - {1}", Convert.ToDateTime(course.DateStart).ToString("hh:mm tt"), Convert.ToDateTime(course.DateEnd).ToString("hh:mm tt"))
+                                                        }
+                                                        <br />
+                                                    </td>
+
+                                                    @if (countItem == 1)
+                                                    {
+                                                        <td align="center" class="text-nowrap" rowspan="@item.Courses.Count">
+                                                            @Helper.PriceAndCurrency(item.toTotalPriceForMembership(membershipView), Helper.getCurrency(membershipView))
+                                                        </td>
+                                                        <td align="center" class="text-nowrap" rowspan="@item.Courses.Count">
+                                                            @if (item.SupportEN && item.SupportTH)
+                                                            {
+                                                                <label>TH / EN</label>
+                                                            }
+                                                            else if (item.SupportTH)
+                                                            {
+                                                                <label>TH</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label>EN</label>
+                                                            }
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                            <tr class="@(table_group_count % 2 == 1 ? "old" : "even")">
+                                                <td></td>
+                                                <td>
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    {@item.DetailTH}
+                                                    else
+                                                    {@item.DetailEN}
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+
+            <div class="col-sm-4 col-sm-offset-20">
+                @{
+                Git_system.Models.Membership membershipViewReg = new Git_system.Models.Membership();
+                membershipViewReg = ViewBag.membershipView;
+                if (membershipViewReg == null)
+                {
+                    @Html.ActionLink(Multi._Button_Login, "Home", null, new { @class = "btn btn-git-default btn-block" })
+                }
+                else
+                {
+                    <button class="btn btn-git-default btn-block" type="submit">@Multi._Button_Register</button>
+                }
+                }
+            </div>
+        }
+    </div>
+    @section BodySection_Core_scripts {
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

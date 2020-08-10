@@ -1,0 +1,151 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+    //End Config
+
+    @section BodySection_Core_styles {
+
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+
+    }
+    <div class="row" ng-app="eComApp" ng-controller="ProductMoreCtrl">
+        <div ng-if="loadObject.status" class="text-center">
+            <div class="sk-cube-grid">
+                <div class="sk-cube sk-cube1"></div>
+                <div class="sk-cube sk-cube2"></div>
+                <div class="sk-cube sk-cube3"></div>
+                <div class="sk-cube sk-cube4"></div>
+                <div class="sk-cube sk-cube5"></div>
+                <div class="sk-cube sk-cube6"></div>
+                <div class="sk-cube sk-cube7"></div>
+                <div class="sk-cube sk-cube8"></div>
+                <div class="sk-cube sk-cube9"></div>
+            </div>
+            <span ng-bind="loadObject.message"></span>
+        </div>
+        <div ng-show="!loadObject.status" class="ng-hide">
+            <!--box content for mobile-->
+            <div class="visible-xs-block">
+                <div class="paragraph-bt-large pagination-right white-text" style="width: 100%; background-color: #2B3C96; -moz-border-radius: 62px 62px 62px 62px; -webkit-border-radius: 62px 62px 62px 62px; border-radius: 62px 62px 62px 62px; border: 5px solid #404D98; text-align: center;">
+                    <img src="~/Images/cart.png" />&nbsp;<label>@Multi.Shopping_in_cart @Multi.Quantity {{totalItems}} @Multi.Unit</label>
+                </div>
+            </div>
+            <!--box content fix right-->
+            <div class="hidden-xs">
+                <a class="cartCount" href="@Url.Action("ProductShoppingCart", "Home", null)">
+                    <div class="inner-block" style="z-index:5"></div>
+                    <div class="outer-block" style="z-index:5">
+                        <div class="margin-category">
+                            <label class="white-text font-size-16">@Multi.Shopping_in_cart</label>&nbsp;<label class="white-text font-size-14">@Multi.Quantity</label><br><label class="white-text inner-part-number font-size-30" ng-bind="totalItems"></label>&nbsp;<label class="white-text font-size-16">@Multi.Unit</label>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!--nav sidebar -->
+            <div class="col-sm-6 col-md-5">
+                <div class="row">
+                    <div class="sidebar-nav">
+                        <div class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header">
+                                <span class="visible-xs navbar-brand" style="float:left;">@Multi.Miscellaneous_items </span>
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse" style="float:left;">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                            </div>
+                            <div class="navbar-collapse collapse sidebar-navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <label class="purple-text font-size-20">GIT E-Store</label>
+
+                                    <li ng-repeat="category in Categories">
+                                        <a href="@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{category.Id}}" ng-click="changeCategory(category.Id)">
+                                            <span class="purple-text glyphicon glyphicon-play"></span>
+                                            <span class="font-size-16 purple-text" ng-bind="category.Name"></span>
+                                        </a>
+                                    </li>
+                                    <hr class="fix-divider" />
+                                    <li>
+                                        <a href="@Url.Action("ProductTrackShipment", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.Deliver_status</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("ProductOrderHistory", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.History</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("ProductShoppingCart", "Home", null)">
+                                            <span class="glyphicon glyphicon-play purple-text"></span>
+                                            <span class="font-size-16 purple-text">@Multi.Shopping_cart</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="input-group input-group-sm col-sm-22 col-sm-offset-1">
+                                            <input type="text" class="form-control" ng-model="searchValue" onkeypress="if (event.which == 13) document.getElementById('searchButton').click()" autofocus>
+                                            <span class="input-group-btn">
+                                                <a id="searchButton" class="btn btn-git-default" ng-href="/Home/ProductViewMore#?Search={{searchValue}}" ng-click="search(searchValue)">Go!</a>
+                                            </span>
+                                        </div><!-- /input-group -->
+                                    </li>
+                                </ul>
+                            </div><!--/.nav-collapse -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-18 col-md-18">
+                <div class="row">
+                    <ul class="nav nav-tabs width-nav" style="margin-top:0;" ng-if="titleBar != ''">
+                        <li class="optical-background">
+                            <label class="font-style-nav">
+                                <span ng-bind="titleBar"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <!--define tabs end-->
+                    <!--content tabs-->
+                    <div class="col-md-24">
+                        <div class="row">
+                            <div ng-if="productLists.length == 0">
+                                <div class="col-xs-24">
+                                    <h3>Not found.</h3>
+                                </div>
+                            </div>
+                            <div ng-if="productLists.length > 0" product-show-md8="page_dataWithPage" product-show-max="0" class="row" ng-init="isLocation = @Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())">
+                            </div>
+                            <div ng-show="page_totalItems > page_items_per_page" style="float:right;">
+                                <uib-pagination total-items="page_totalItems" ng-model="page_currentPage" max-size="page_maxSize" items-per-page="page_items_per_page" ng-change="pageChanged()" previous-text="&laquo;" next-text="&raquo;" class="pagination-sm" boundary-link-numbers="true" rotate="false"></uib-pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--content tabs end-->
+            <!--section 2 end-->
+        </div>
+    </div>
+
+    @section BodySection_Core_scripts {
+
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

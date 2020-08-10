@@ -1,0 +1,113 @@
+﻿@model Git_system.Models.Permission
+
+<div class="panel-body">
+    <fieldset class="form-horizontal bordered-group" role="form">
+        @Html.TextBoxFor(model => model.permissionId, new { @class = "form-control hidden", @readonly = "true" })
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">ชื่อ</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">รายละเอียด</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(model => model.Detail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Detail, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isAdmin)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isAdmin, new { @class = "js-switch-GreenSwitchery01" })
+                @Html.ValidationMessageFor(model => model.isAdmin, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isUser)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isUser, new { @class = "js-switch-GreenSwitchery02" })
+                @Html.ValidationMessageFor(model => model.isUser, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isProduct)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isProduct, new { @class = "js-switch-GreenSwitchery03" })
+                @Html.ValidationMessageFor(model => model.isProduct, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isPayment)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isPayment, new { @class = "js-switch-GreenSwitchery04" })
+                @Html.ValidationMessageFor(model => model.isPayment, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isLog)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isLog, new { @class = "js-switch-GreenSwitchery05" })
+                @Html.ValidationMessageFor(model => model.isLog, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isESlide)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isESlide, new { @class = "js-switch-GreenSwitchery06" })
+                @Html.ValidationMessageFor(model => model.isESlide, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEProduct)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEProduct, new { @class = "js-switch-GreenSwitchery07" })
+                @Html.ValidationMessageFor(model => model.isEProduct, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEStock)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEStock, new { @class = "js-switch-GreenSwitchery13" })
+                @Html.ValidationMessageFor(model => model.isEStock, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEPayView)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEPayView, new { @class = "js-switch-GreenSwitchery08" })
+                @Html.ValidationMessageFor(model => model.isEPayView, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEPayConfirm)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEPayConfirm, new { @class = "js-switch-GreenSwitchery09" })
+                @Html.ValidationMessageFor(model => model.isEPayConfirm, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEDeliver)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEDeliver, new { @class = "js-switch-GreenSwitchery10" })
+                @Html.ValidationMessageFor(model => model.isEDeliver, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEPromotion)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEPromotion, new { @class = "js-switch-GreenSwitchery11" })
+                @Html.ValidationMessageFor(model => model.isEPromotion, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Html.LabelFor(model => model.isEStatistic)</label>
+            <div class="col-sm-10">
+                @Html.CheckBoxFor(model => model.isEStatistic, new { @class = "js-switch-GreenSwitchery12" })
+                @Html.ValidationMessageFor(model => model.isEStatistic, null, new { @class = "text-danger" })
+            </div>
+        </div>
+    </fieldset>
+</div>

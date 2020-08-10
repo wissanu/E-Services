@@ -1,0 +1,111 @@
+﻿@using Git_system.Models;
+
+@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComConfirmOrder>
+
+    //Config
+    ViewBag.Title = "การชำระเงิน";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.Payment = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+
+    }
+    <section class="panel">
+        <header class="panel-heading">การชำระเงิน</header>
+        <div class="panel-body">
+            <div class="panel-body">
+                @if (Model.Count() > 0)
+                {
+                    <div class="no-more-tables">
+                        <table class="table table-bordered table-striped table-condensed dataTable">
+                            <thead>
+                                <tr>
+                                    <th>หมายเลขการชำระเงิน</th>
+                                    <th>
+                                        หมายเลขการสั่งซื้อ
+                                    </th>
+                                    <th>
+                                        ชื่อลูกค้า
+                                    </th>
+                                    <th>
+                                        ราคา
+                                    </th>
+                                    <th>
+                                        ราคาที่ชำระ
+                                    </th>
+                                    <th>
+                                        ประเภทการสั่งซื้อ
+                                    </th>
+                                    <th>
+                                        ธนาคาร
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td data-title="หมายเลขการชำระเงิน">
+                                            @Html.DisplayFor(showitem => item.Id)
+                                        </td>
+                                        <td data-title="หมายเลขการสั่งซื้อ">
+                                            @Html.DisplayFor(showitem => item.EComOrder.Id)
+                                        </td>
+                                        <td data-title="ชื่อลูกค้า">
+                                            @String.Format("{0} {1}", item.EComOrder.Membership.Firstname, item.EComOrder.Membership.Lastname)
+                                        </td>
+                                        <td data-title="ราคา" class="text-nowrap text-right">
+                                            @Helper.PriceAndCurrency(item.EComOrder.Price, item.EComOrder.Currency, true)
+                                        </td>
+                                        <td data-title="ราคาที่ชำระ" class="text-nowrap text-right">
+                                            @Helper.PriceAndCurrency(item.Price, item.EComOrder.Currency, true)
+                                        </td>
+                                        <td data-title="ประเภทการสั่งซื้อ" class="text-center">
+                                            @String.Format("{0}", (item.EComOrder.PaymentType == 1 && item.ConfirmPaymentBankTypeId.HasValue) ? "Transfer" : "Credit card")
+                                        </td>
+                                        <td data-title="ธนาคาร" class="text-center">
+                                            @(item.ConfirmPaymentBankTypeId.HasValue ? String.Format("{0} ({1})", item.ConfirmPaymentBankType.BanknameTH, item.ConfirmPaymentBankType.AccountNo) : "-")
+                                        </td>
+
+                                        <td data-title="" class="text-center">
+                                            @Html.ActionLink("รายละเอียด", "Payment_Detail", new { id = item.Id })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <span>ไม่พบข้อมูล</span>
+                }
+            </div>
+        </div>
+    </section>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

@@ -1,0 +1,240 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    @model IEnumerable<Git_system.Models.Form.Frontend_RegisterStep2>
+    //Config
+    ViewBag.Title = "ผู้ลงทะเบียนออนไลน์";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.RegisterMain = "active";
+    BackendMenuLayout.Register.RegisterManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>ผู้ลงทะเบียนใช้บริการออนไลน์</span>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table id="datatable" class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                ลำดับ
+                            </th>
+                            <th>หมายเลขสมาชิก</th>
+                            <th>
+                                ชื่อ - นามสกุล
+                            </th>
+
+                            <th>บริษัท</th>
+                            <th>ตำแหน่ง</th>
+
+                            <th>วัดเกิด</th>@* 8 *@
+                            <th>ศาสนา</th>@* 9 *@
+                            <th>คำถาม</th>@* 10 *@
+                            <th>คำตอบ</th>@* 11 *@
+
+                            <th>ประเทศ</th>@* 12 *@
+                            <th>รัฐ / จังหวัด</th>@* 13 *@
+                            <th>เมือง / อำเภอ</th>@* 14 *@
+                            <th>ตำบล</th>@* 15 *@
+                            <th>ถนน</th>@* 16 *@
+                            <th>ที่อยู่</th>@* 17 *@
+
+                            <th>รหัสไปรษณีย์</th>
+                            <th>โทรศัพท์</th>
+                            <th>โทรศัพท์มือถือ</th>
+                            <th>โทรสาร</th>
+                            <th>
+                                อีเมล
+                            </th>
+                            <th>
+                                ประเภท
+                            </th>
+                            <th>
+                                วันที่สมัคร
+                            </th>
+                            <th>
+                                วันที่หมดอายุ
+                            </th>
+                            <th>หมายเลขสมาชิก CRM</th>
+                            <th>กลุ่มสมาชิก CRM</th>
+                            <th>โทรศัพท์สมาชิก CRM</th>
+                            <th>วันหมดอายุสมาชิก CRM</th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ลำดับ" class="text-center"></td>
+                                <td data-title="หมายเลขสมาชิก" class="text-center">
+                                    @Html.DisplayFor(showitem => item.Id)
+                                </td>
+                                <td data-title="ชื่อ - สกุล">
+                                    @string.Format("{0} {1}", item.Firstname, item.Lastname)
+                                    @if (item.MembershipRegisterTypeId == 1 || item.MembershipRegisterTypeId == 3 || item.MembershipRegisterTypeId == 5)
+                                    {
+                                        if (!(item.FirstnameEN == null || item.LastnameEN == null))
+                                        {
+                                            string nameEng = string.Format(" ({0} {1})", item.FirstnameEN, item.LastnameEN);
+                                            @nameEng;
+                                        }
+                                    }
+                                </td>
+                                @* ไม่แสดง *@
+                                <td>@Html.DisplayFor(showitem => item.Company)</td>@* 3 *@
+                                <td>@Html.DisplayFor(showitem => item.JobTitle)</td>@* 4 *@
+
+                                <td>@item.BirthDay.ToString("dd/MM/yyyy")</td>@* 5 *@
+                                <td>@Html.DisplayFor(showitem => item.Religion)</td>@* 6 *@
+                                <td>@Html.DisplayFor(showitem => item.QuestionList.QuestionTH)</td>@* 7 *@
+                                <td>@Html.DisplayFor(showitem => item.Answer)</td>@* 8 *@
+
+                                <td>@Html.DisplayFor(showitem => item.CountryName)</td>@* 9 *@
+                                <td>@Html.DisplayFor(showitem => item.State)@Html.DisplayFor(showitem => item.ProvinceName)</td>@* 10 *@
+                                <td>@Html.DisplayFor(showitem => item.City)@Html.DisplayFor(showitem => item.AmphurName)</td>@* 11 *@
+                                <td>@Html.DisplayFor(showitem => item.DistrictName)</td>@* 12 *@
+                                <td>@Html.DisplayFor(showitem => item.Road)</td>@* 13 *@
+                                <td>@Html.DisplayFor(showitem => item.Address)</td>@* 14 *@
+
+                                <td>@Html.DisplayFor(showitem => item.Zipcode)</td>@* 15 *@
+                                <td>@Html.DisplayFor(showitem => item.TelNo)</td>@* 16 *@
+                                <td>@Html.DisplayFor(showitem => item.MobileNo)</td>@* 17 *@
+                                <td>@Html.DisplayFor(showitem => item.FaxNo)</td>@* 18 *@
+                                @*ไม่แสดง*@
+                                <td data-title="อีเมล">
+                                    @Html.DisplayFor(showitem => item.Email)@* 19 *@
+                                </td>
+                                <td data-title="ประเภท">
+                                    @Html.DisplayFor(showitem => item.MembershipRegisterType.Name)@* 20 *@
+                                </td>
+                                <td data-title="วันที่สมัคร">
+                                    @* 21 *@
+                                    @Html.DisplayFor(showitem => item.RegisterDate)
+                                </td>
+                                <td data-title="วันหมดอายุ">
+                                    @* 22 *@
+                                    @Convert.ToDateTime(item.RegisterDateExp).ToString(("dd/MM/yyyy"))
+                                </td>
+                                <td data-title="หมายเลขสมาชิก CRM">
+                                    @Html.DisplayFor(showitem => item.IdCRM)
+                                </td>
+                                <td data-title="กลุ่มสมาชิก CRM">
+                                    @Html.DisplayFor(showitem => item.GroupCRM)
+                                </td>
+                                <td data-title="โทรศัพท์สมาชิก CRM">
+                                    @Html.DisplayFor(showitem => item.MobileCRM)
+                                </td>
+                                <td data-title="วันหมดอายุสมาชิก CRM">
+                                    @Convert.ToDateTime(item.ExpCRM).ToString(("dd/MM/yyyy"))
+                                </td>
+                                <td data-title="กิจกรรม" class="text-center">
+                                    @Html.ActionLink("รายละเอียด", "Detail", new { id = item.Id })@* 27 *@
+                                    <a href="#" data-toggle="modal" data-target=".bs-modal-sm" onclick="$('#sendMailTo').val('@item.Id');">ส่งลิงค์รีเซ็ตรหัสผ่าน</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการส่งลิ๊งค์</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะส่งลิงค์รีเซ็ตรหัสผ่าน?</span>
+                </div>
+                <div class="modal-footer">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <input id="sendMailTo" name="sendMailTo" type="hidden" />
+                        <button type="submit" class="btn btn-git-default btn-sm">Send</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot_Custom")
+    }
+    @section BodySection_Template_scripts {
+        <script>
+            $.extend($.fn.dataTable.defaults, {
+                "displayLength": 30,//number entity in table
+                "ordering": false,
+                "info": false,
+                "columnDefs": [
+                        {
+                            "targets": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 22, 23, 24, 25, 26],
+                            "visible": false,
+                            "searchable": false
+                        }, {
+                            "targets": [27],
+                            "searchable": false
+                        }
+                ]
+            });
+
+            $(document).ready(function () {
+                var t = $('.dataTable').DataTable({
+                    "dom": '<"row"<"col-sm-6" T><"col-sm-6" f>>rtip',//l is entity
+                    "tableTools": {
+                        "sSwfPath": "/Scripts/DataTable/TableTool/swf/copy_csv_xls_pdf.swf",
+                        "aButtons": [
+                                        {
+                                            "sExtends": "copy",
+                                            "sButtonClass": "hidden"
+                                        },
+                                        {
+                                            "sExtends": "xls",
+                                            "oSelectorOpts": { filter: 'applied', order: 'current' },
+                                            "mColumns": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26]
+                                        },
+                                        {
+                                            "sExtends": "pdf",
+                                            "sButtonClass": "hidden"
+                                        },
+                                        "print"
+                        ]
+                    }
+                });
+
+                t.on('order.dt search.dt', function () {
+                    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                        cell.innerHTML = i + 1;
+                    });
+
+                    t.column(0).nodes().each(function (cell, i) {
+                        if (cell.isConnected)
+                            t.data()[i][0] = cell.innerHTML;
+                    });
+                }).draw();
+            });
+        </script>
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

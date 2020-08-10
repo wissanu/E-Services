@@ -1,0 +1,91 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>error404</title>
+    <link href="~/Content/Frontend/fonts.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/bootstrap.css" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Roboto, 'Helvetica normal', tahoma;
+            color: white;
+            font-size: 1.8rem;
+            /*background-color: #4F6CFF;*/
+            background: #2276ad;
+            background: linear-gradient(30deg, #2276ad, #6ec654);
+        }
+
+        a {
+            color: white;
+        }
+
+            a:hover, a:focus {
+                color: white;
+            }
+
+        h1 {
+            font-size: 10em;
+            font-weight: bolder;
+            text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            font-size: 3em;
+            font-weight: bolder;
+            text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        h3 {
+            font-size: 1.5em;
+            font-weight: bolder;
+            text-shadow: 4px 4px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        @@media (max-width: 767px) {
+            body {
+                font-size: 1rem;
+            }
+        }
+
+        .header {
+            font-size: 2rem;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        .center-wrapper {
+            display: table;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            position: relative;
+        }
+
+            .center-wrapper .center-content {
+                display: table-cell;
+                vertical-align: middle;
+                width: 100%;
+                height: 100%;
+                float: none;
+                z-index: 9999;
+            }
+    </style>
+</head>
+<body class="center-wrapper">
+    <div class="center-content">
+        <section class="text text-center">
+            <h1>404</h1>
+            <h2>Page not found</h2>
+            <h3>@Html.ActionLink("Back to Home", "Home")</h3>
+        </section>
+    </div>
+</body>
+</html>

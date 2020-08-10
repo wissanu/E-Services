@@ -1,0 +1,46 @@
+[
+  {
+    "outputFile": "Content/Frontend/Main.css",
+    "inputFile": "Content/Frontend/Main.scss",
+    "minify": {
+      "enabled": true
+    },
+    "sourceMap": false,
+    "options": {
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFile": "Content/BackendStyle.css",
+    "inputFile": "Content/BackendStyle.scss",
+    "minify": {
+      "enabled": true
+    },
+    "sourceMap": false,
+    "options": {
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFile": "Content/Frontend/eCom.css",
+    "inputFile": "Content/Frontend/eCom.scss",
+    "minify": {
+      "enabled": true
+    },
+    "sourceMap": false,
+    "options": {
+      "sourceMap": true
+    }
+  },
+  {
+    "outputFile": "Content/GitStyle.css",
+    "inputFile": "Content/GitStyle.scss",
+    "minify": {
+      "enabled": true
+    },
+    "sourceMap": false,
+    "options": {
+      "sourceMap": true
+    }
+  }
+]

@@ -1,0 +1,113 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model IEnumerable<Git_system.Models.EComDeliverPromotion>
+
+    ViewBag.Title = "โปรโมชั่นการจัดส่ง";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_CommerceMain = "active";
+    BackendMenuLayout.E_Commerce.DeliverPromotion = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+        @Styles.Render("~/Content/DataTable_exprot")
+    }
+    <section class="panel">
+        <header class="panel-heading">
+            <span>โปรโมชั่นการจัดส่ง</span>
+            <div class="pull-right">
+                <span>@Html.ActionLink("Create", "DeliverPromotionCreate")</span>
+            </div>
+            <div class="clearfix"></div>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed dataTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                ชื่อส่วนลด
+                            </th>
+                            <th>
+                                ส่วนลด
+                            </th>
+                            <th>
+                                สมาชิกออนไลน์
+                            </th>
+                            <th>
+                                สมาชิกออนไลน์ (อินเตอร์)
+                            </th>
+                            <th>
+                                บุคคลธรรมดา
+                            </th>
+                            <th>
+                                บุคคลธรรมดา (อินเตอร์)
+                            </th>
+                            <th>
+                                นิติบุคคล
+                            </th>
+                            <th>
+                                นิติบุคคล (อินเตอร์)
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-title="ชื่อส่วนลด" style="text-align:left;">
+                                    @Html.DisplayFor(showitem => item.NameTh)
+                                </td>
+                                <td data-title="ส่วนลด">
+                                    @Html.DisplayFor(showitem => item.Percent) %
+                                </td>
+                                <td data-title="สมาชิกออนไลน์" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isGuest)
+                                </td>
+                                <td data-title="สมาชิกออนไลน์ (อินเตอร์)" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isGuestInter)
+                                </td>
+                                <td data-title="บุคคลธรรมดา" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isIndividual)
+                                </td>
+                                <td data-title="บุคคลธรรมดา (อินเตอร์)" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isIndividualInter)
+                                </td>
+                                <td data-title="นิติบุคคล" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isCorporate)
+                                </td>
+                                <td data-title="นิติบุคคล (อินเตอร์)" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.isCorparateInter)
+                                </td>
+                                <td data-title="สถานะ" class="text-center">
+                                    @Html.Partial("partial/_PartialPartOfStatusCheckMinus", item.ActiveStatus)
+                                </td>
+                                <td data-title="">@Html.ActionLink("แก้ไข", "DeliverPromotionDetail", new { id = item.Id })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    @section BodySection_Page_level_scripts {
+        @Scripts.Render("~/Scripts/responsive-tables")
+        @Scripts.Render("~/Scripts/DataTable_exprot")
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

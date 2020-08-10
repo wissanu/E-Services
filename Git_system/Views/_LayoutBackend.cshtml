@@ -1,0 +1,321 @@
+﻿@{
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = ViewBag.BackendMenuLayout; ;
+}
+
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <meta name="robots" content="noindex, nofollow" />
+    <!-- /meta -->
+
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/BackendMain")
+    @RenderSection("HeadSection", required: false)
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- load modernizer -->
+    @*<script src="~/Scripts/vendor/modernizr.js"></script>*@
+
+    @Scripts.Render("~/Scripts/BackendMain")
+</head>
+<!-- body -->
+<body>
+    <div class="app">
+        <!-- top header -->
+        <header class="header header-fixed navbar">
+            <div class="brand">
+                <a href="javascript:;" class="fa fa-bars off-left visible-xs" data-toggle="off-canvas" data-move="ltr"></a>
+                <a href="@Url.Action("Dashboard", "Backend", null)" class="navbar-brand text-white">
+                    <i class="fa fa-stop mg-r-sm"></i>
+                    <span class="heading-font">
+                        GIT <b>E-SERVICE</b>
+                    </span>
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right off-right">
+                <li class="hidden-xs">
+                    <a href="javascript:;">
+                        @if (Request.IsAuthenticated)
+                        {
+                            ViewBag.Username = Html.Encode(User.Identity.Name);
+                        }
+                        @ViewBag.Username
+                    </a>
+                </li>
+                <li class="quickmenu">
+                    <a href="javascript:;" data-toggle="dropdown">
+                        <img src="~/Images/avatar.jpg" class="avatar pull-left img-circle" alt="user" title="user">
+                        <i class="caret mg-l-xs hidden-xs no-margin"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right mg-r-xs">
+                        <li>
+                            @Html.ActionLink("Profile", "AdminProfile", "Backend_Useradmin", new { id = ViewBag.CurrentUseradminId }, null)
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            @Html.ActionLink("Sign Out", "Logout", "Backend")
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <!-- /top header -->
+        <section class="layout">
+            <!-- sidebar menu -->
+            <aside class="sidebar canvas-left">
+                <!-- main navigation -->
+                <nav class="main-navigation">
+                    <ul>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.AdminAndSecurityMain">
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-lock"></i>
+                                <span>ผู้ดูแลระบบ และ รักษาความปลอดภัย</span>
+                                <i class="toggle-accordion"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@BackendMenuLayout.AdminAndSecurity.AdminManage">
+                                    <a href="@Url.Action("Home", "Backend_Useradmin", null)">
+                                        <span>ผู้ดูแลระบบ</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.AdminAndSecurity.PermissionsManage">
+                                    <a href="@Url.Action("Home", "Backend_Permission",null)">
+                                        <span>การกำหนดสิทธิ์</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.AdminAndSecurity.ChangePassword">
+                                    <a href="@Url.Action("AdminProfile", "Backend_Useradmin", new { id = ViewBag.CurrentUseradminId })">
+                                        <span>การเปลี่ยนรหัสผ่าน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.AdminAndSecurity.Logs">
+                                    <a href="@Url.Action("Home", "Backend_Log", null)">
+                                        <span>บันทึกการใช้งาน</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.RegisterMain">
+                            <a href="@Url.Action("Home", "Backend_MembershipRegister", null)">
+                                <i class="fa fa-users"></i>
+                                <span>ผู้ลงทะเบียนใช้บริการออนไลน์</span>
+                            </a>
+                        </li>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.MembershipMain">
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-user"></i>
+                                <span>สมาชิกสถาบัน</span>
+                                <i class="toggle-accordion"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@BackendMenuLayout.Membership.MembershipManage">
+                                    <a href="@Url.Action("Home", "Backend_Membership", null)">
+                                        <span>ระบบจัดการสมาชิกสถาบัน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Membership.PaymentProcess">
+                                    <a href="@Url.Action("Payment", "Backend_Membership", null)">
+                                        <span>รายการสั่งซื้อ</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Membership.ConfirmPayment">
+                                    <a href="@Url.Action("Confirm", "Backend_Membership", null)">
+                                        <span>การชำระเงิน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Membership.ConfigPrice">
+                                    <a href="@Url.Action("ConfigMembershipRegister", "Backend_Membership", null)">
+                                        <span>การกำหนดราคาค่าสมัครสมาชิก</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.TraningMain">
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-folder-open"></i>
+                                <span>หลักสูตรอบรม</span>
+                                <i class="toggle-accordion"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@BackendMenuLayout.Traning.News">
+                                    <a href="@Url.Action("News", "Backend_Product", null)">
+                                        <span>ประชาสัมพันธ์</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Traning.Product_SKU">
+                                    <a href="@Url.Action("Home", "Backend_ProductSKU", null)">
+                                        <span>โปรโมชั่น</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Traning.Product_Group hidden">
+                                    <a href="@Url.Action("Home", "Backend_Product", null)">
+                                        <span>กลุ่มสินค้า</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Traning.Product">
+                                    <a href="@Url.Action("Home", "Backend_Product", null)">
+                                        <span>หลักสูตร</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Traning.PaymentProcess">
+                                    <a href="@Url.Action("Home", "Backend_PaymentProcess", null)">
+                                        <span>รายการสั่งซื้อ</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.Traning.ConfirmPayment">
+                                    <a href="@Url.Action("Home", "Backend_PaymentConfirm_payment", null)">
+                                        <span>การชำระเงิน</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.E_CommerceMain">
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-folder-open"></i>
+                                <span>ระบบ E-Commerce</span>
+                                <i class="toggle-accordion"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@BackendMenuLayout.E_Commerce.Slide">
+                                    <a href="@Url.Action("SlideShow", "Backend_ECommerce", null)">
+                                        <span>สไลด์</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Product">
+                                    <a href="@Url.Action("Product", "Backend_ECommerce", null)">
+                                        <span>สินค้า</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Category">
+                                    <a href="@Url.Action("ProductCategory", "Backend_ECommerce", null)">
+                                        <span>หมวดหมู่</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Stock">
+                                    <a href="@Url.Action("ProductStock", "Backend_ECommerce", null)">
+                                        <span>คลังสินค้า</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Order">
+                                    <a href="@Url.Action("Order", "Backend_ECommerce", null)">
+                                        <span>การสั่งซื้อ</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Payment">
+                                    <a href="@Url.Action("Payment", "Backend_ECommerce", null)">
+                                        <span>การชำระเงิน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.DeliverType">
+                                    <a href="@Url.Action("DeliverType", "Backend_ECommerce", null)">
+                                        <span>ตั้งค่าการจัดส่ง</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Deliver">
+                                    <a href="@Url.Action("Deliver", "Backend_ECommerce", null)">
+                                        <span>การจัดส่ง</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.DeliverPromotion">
+                                    <a href="@Url.Action("DeliverPromotion", "Backend_ECommerce", null)">
+                                        <span>โปรโมชั่นการจัดส่ง</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Promotion">
+                                    <a href="@Url.Action("Promotion", "Backend_ECommerce", null)">
+                                        <span>โปรโมชั่น</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_Commerce.Statistic">
+                                    <a href="@Url.Action("Statistic", "Backend_ECommerce", null)">
+                                        <span>สถิติ</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown show-on-hover @BackendMenuLayout.E_serviceMain">
+                            <a href="javascript:;" data-toggle="dropdown">
+                                <i class="fa fa-gears"></i>
+                                <span>การตั้งค่าระบบ</span>
+                                <i class="toggle-accordion"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="@BackendMenuLayout.E_service.EmailSetting">
+                                    <a href="@Url.Action("Home", "Backend_EmailSetting", null)">
+                                        <span>การตั้งค่าอีเมล</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_service.EmailSettingAdmin">
+                                    <a href="@Url.Action("Admin", "Backend_EmailSetting", null)">
+                                        <span>การตั้งค่าอีเมลแจ้งเตือน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_service.PaySetting">
+                                    <a href="@Url.Action("Home", "Backend_PaymentSetting", null)">
+                                        <span>การตั้งค่าการชำระเงิน</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_service.LegalSetting">
+                                    <a href="@Url.Action("Home", "Backend_LegalConfig", null)">
+                                        <span>การตั้งค่าข้อกำหนด/เงื่อนไข</span>
+                                    </a>
+                                </li>
+                                <li class="@BackendMenuLayout.E_service.BenefitSetting">
+                                    <a href="@Url.Action("Home", "Backend_BenefitSetting", null)">
+                                        <span>การตั้งค่าสิทธิประโยชน์</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /main navigation -->
+                <!-- footer -->
+                <footer></footer>
+                <!-- /footer -->
+            </aside>
+            <!-- /sidebar menu -->
+            <!-- main content -->
+            <section class="main-content">
+                <!-- content wrapper -->
+                <div class="content-wrap">
+                    @RenderBody()
+                </div>
+                <!-- /content wrapper -->
+            </section>
+            <!-- /main content -->
+        </section>
+    </div>
+    <!-- core scripts -->
+    @Scripts.Render("~/Scripts/backend/core_scripts")
+    <script>
+        function ClickToButton(idButton) {
+            document.getElementById(idButton).click();
+        }
+        function ChangeNameForButton(Toname) {
+            document.getElementById("ButtonSubmitForModal").setAttribute("name", Toname);
+        }
+    </script>
+    <!-- /core scripts -->
+    <!-- page level scripts -->
+    @RenderSection("BodySection_Page_level_scripts", required: false)
+    @Scripts.Render("~/Scripts/backend/page_level_scripts")
+    <!-- /page level scripts -->
+    <!-- template scripts -->
+    @RenderSection("BodySection_Template_scripts", required: false)
+    @Scripts.Render("~/Scripts/backend/template_scripts")
+    <!-- /template scripts -->
+</body>
+<!-- /body -->
+</html>

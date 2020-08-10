@@ -1,0 +1,333 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+    //Config
+    ViewBag.Title = "Email Setting";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+    //End Config
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.E_serviceMain = "active";
+    BackendMenuLayout.E_service.EmailSettingAdmin = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    }
+
+    <section role="tabpanel" class="panel" style="border-width:0;">
+        @using (Html.BeginForm("Admin", null))
+        {
+            Git_system.Models.EmailMessage[] emailMessages = new List<Git_system.Models.EmailMessage>().ToArray();
+            emailMessages = ViewBag.EmailMessage;//ชื่อต้องตรงกับหน้า action ใน Controller
+
+            @Html.AntiForgeryToken()
+            <header class="panel-heading">ข้อความการแจ้งเตือน</header>
+            <div class="row">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills nav-justified panel-heading" role="tablist">
+                    <li role="presentation" class="active"><a href="#alertMembership" aria-controls="Membership" role="tab" data-toggle="tab">การสมัครสมาชิก</a></li>
+                    <li role="presentation" class=""><a href="#alertPaymentProduct" aria-controls="PaymentProduct" role="tab" data-toggle="tab">การสั่งซื้อหลักสูตร</a></li>
+                    <li role="presentation" class=""><a href="#alertPaymentMembership" aria-controls="PaymentMembershp" role="tab" data-toggle="tab">การสมัครสมาชิกสถาบัน</a></li>
+                    <li role="presentation"><a href="#alertConfirmPayment" aria-controls="ConfirmPayment" role="tab" data-toggle="tab">การยืนยันชำระค่าสินค้า (E-Service)</a></li>
+                    <li role="presentation" class=""><a href="#alertEPaymentProduct" aria-controls="EPaymentProduct" role="tab" data-toggle="tab">การสั่งซื้อสินค้า</a></li>
+                    <li role="presentation"><a href="#alertEConfirmPayment" aria-controls="EConfirmPayment" role="tab" data-toggle="tab">การยืนยันชำระค่าสินค้า (E-Commerce)</a></li>
+                    <li role="presentation"><a href="#alertEConfirmPaymentSuccess" aria-controls="EConfirmPaymentSuccess" role="tab" data-toggle="tab">การชำระค่าสินค้าสำเร็จ</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="col-lg-12">
+                    <div class="tab-content panel-body">
+                        @for (int i = 0; i < emailMessages.Count(); i++)
+                        {
+                            switch (emailMessages[i].Id)
+                            {
+                                case 5:
+                                    <div role="tabpanel" class="tab-pane active" id="alertMembership">
+                                        <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                            @Html.HiddenFor(item => emailMessages[i].Id)
+                                            @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                            @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                                <div class="col-sm-10">
+                                                    @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2">ข้อความ</label>
+                                                <div class="col-sm-10">
+                                                    @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                    @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                                </div>
+                                            </div>
+                                            <div class="text-center text-danger">
+                                                <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {urllink0} = ลิ๊งค์</span>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    break;
+                                case 6:
+                                <div role="tabpanel" class="tab-pane" id="alertPaymentProduct">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม, {email} = อีเมล, {urllink0} = ลิ๊งค์, {paymentList} = รายละเอียดหลักสูตรที่ทำการสั่งซื้อ, {bankList} = รายชื่อธนาคาร, {order_promotiom_list} = รายละเอียดโปรโมชั่น, {order_datetime} = เวลาการสั่งซื้อ, {order_id} = เลขที่การสั่งซื้อ, {paymentTotalPrice} = ราคาสุทธิ, {paymentSumPrice} = ราคาสินค้า, {paymentVatPrice} = ภาษีมูลค่าเพิ่ม, {paymentMembershipType} = ประเภทสมาชิกที่สมัคร</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                                case 7:
+                                <div role="tabpanel" class="tab-pane" id="alertPaymentMembership">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {urllink0} = ลิ๊งค์ , {paymentList} = รายละเอียดการสมัคร, {bankList} = รายชื่อธนาคาร, {order_datetime} = เวลาการสั่งซื้อ, {order_id} = เลขที่การสั่งซื้อ, {paymentTotalPrice} = ราคาสุทธิ, {paymentSumPrice} = ราคาสินค้า, {paymentVatPrice} = ภาษีมูลค่าเพิ่ม, {paymentMembershipType} = ประเภทสมาชิกที่สมัคร</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                                case 8:
+                                <div role="tabpanel" class="tab-pane" id="alertConfirmPayment">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {urllink0} = ลิ๊งค์ , {paymentList} = รายละเอียดหลักสูตรที่ทำการสั่งซื้อ , {paymentTotalPrice} = ราคาที่ต้องชำระ , {confirmPrice} = ราคาที่ยืนยัน , {confirmDate} = เวลาที่ยืนยัน , {confirmDetailList} = รายละเอียดการยืนยัน</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                                case 10:
+                                <div role="tabpanel" class="tab-pane" id="alertEPaymentProduct">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {urllink0} = ลิ๊งค์ , {eComPaymentList} = รายละเอียดสินค้าที่ทำการสั่งซื้อ , {paymentTotalPrice} = ราคาที่ต้องชำระ</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                                case 11:
+                                <div role="tabpanel" class="tab-pane" id="alertEConfirmPayment">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {urllink0} = ลิ๊งค์ , {eComPaymentList} = รายละเอียดสินค้าที่ทำการสั่งซื้อ , {paymentTotalPrice} = ราคาที่ต้องชำระ</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                                case 12:
+                                <div role="tabpanel" class="tab-pane" id="alertEConfirmPaymentSuccess">
+                                    <fieldset accept-charset="utf-8" class="form-horizontal" role="form">
+                                        @Html.HiddenFor(item => emailMessages[i].Id)
+                                        @Html.HiddenFor(item => emailMessages[i].TitleEN)
+                                        @Html.HiddenFor(item => emailMessages[i].MessageEN)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">อีเมลรับการแจ้งเตือน</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].EmailAlert, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].EmailAlert)
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">หัวเรื่อง</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextBoxFor(item => emailMessages[i].TitleTH, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].TitleTH)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-2">ข้อความ</label>
+                                            <div class="col-sm-10">
+                                                @Html.TextAreaFor(item => emailMessages[i].MessageTH, new { @class = "form-control ckeditor", @rows = "4" })
+                                                @Html.ValidationMessageFor(item => emailMessages[i].MessageTH)
+                                            </div>
+                                        </div>
+                                        <div class="text-center text-danger">
+                                            <span>{fullname} = ชื่อเต็ม , {email} = อีเมล , {paymentList} = รายละเอียดสินค้าที่ทำการสั่งซื้อ , {paymentTotalPrice} = ราคาที่ต้องชำระ</span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                    break;
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-footer">
+                <button id="ButtonSubmit" class="hidden" type="submit" name="command" value="SaveMassage">Check and Save</button>
+                <button type="button" class="btn btn-git-default btn-block" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+            </div>
+        }
+    </section>
+
+    <!-- /.modal-content -->
+    <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                </div>
+                <div class="modal-body">
+                    <span>คุณต้องการที่จะบันทึก?</span>
+                </div>
+                <div class="modal-footer">
+                    <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @section BodySection_Page_level_scripts {
+        <script>
+            //เพิ่ม class ที่ทำให้ validation-error เป็นสี แดง โดยใช้ class text-danger
+            $(".field-validation-error").addClass("text-danger");
+        </script>
+
+    }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

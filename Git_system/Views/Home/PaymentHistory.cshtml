@@ -1,0 +1,249 @@
+﻿@{
+    //Config
+    ViewBag.Title = "Home";
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+}
+@model IEnumerable<Git_system.Models.Pay>
+@using Git_system.MultiResources
+@section BodySection_Core_styles {
+    @Styles.Render("~/Content/responsive-tables")
+
+}
+
+<div class="row">
+    <div class="col-sm-24" id="myPaymentModalBody">
+
+        @if (Model.Count() != 0)
+        {
+            foreach (var Pay in Model)
+            {
+                <div class="">
+                    <header class="panel-heading">
+                        <span class="text text-primary">@Multi._HomeString8 : @(Multi.__LanguageType == "TH" ? Convert.ToDateTime(Pay.Date).ToString("d MMM yyyy HH:mm") : Convert.ToDateTime(Pay.Date).ToString("d MMM yyyy hh:mm tt"))</span>
+                        @if (ViewBag.getShow == 1)
+                        {
+                            <span>
+                                @Multi._HomeString9 : @Git_system.Models.Helper.PriceAndCurrency(Pay.Price, Pay.Currency)
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="pull-right">@Multi._HomePaymentStatus : @Pay.ProcessStatusType.Name</span>
+                        }
+                    </header>
+                    <div class="panel-body">
+                        <div id="no-more-tables">
+                            <table class="table table-bordered table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        @if (Pay.PayItems.FirstOrDefault().Course.Product.Group == 1)
+                                        {
+                                            <th>
+                                                @Multi.Product_Title
+                                            </th>
+                                            <th>
+                                                @(Multi.Course_Title)
+                                            </th>
+                                            <th>@Multi.Location</th>
+                                            <th>@Multi.Product_Date</th>
+                                            <th>@Multi.Product_Time</th>
+                                            <th>
+                                                @Multi.Pay_Quantity
+                                            </th>
+                                        }
+                                        else
+                                        {
+                                            <th>
+                                                @Multi._MembershipRegisterString1
+                                            </th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Pay.PayItems)
+                                    {
+                                        <tr>
+                                            @if (Pay.PayItems.FirstOrDefault().Course.Product.Group == 1)
+                                            {
+                                                <td data-title="@Multi.Product_Title">
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    {@Html.DisplayFor(showitem => item.Course.Product.TitleTH) }
+                                                    else
+                                                    {@Html.DisplayFor(showitem => item.Course.Product.TitleEN) }
+                                                </td>
+                                                <td data-title="@Multi.Course_Title">
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    {@Html.DisplayFor(showitem => item.Course.TitleTH) }
+                                                    else
+                                                    {@Html.DisplayFor(showitem => item.Course.TitleEN) }
+                                                </td>
+                                                <td data-title="@Multi.Location">
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    {@item.Course.Product.LocationTH}
+                                                    else
+                                                    {@item.Course.Product.LocationEN}
+                                                </td>
+                                                <td data-title="@Multi.Product_Date">
+                                                    @Git_system.Models.Helper.DateToSting(Convert.ToDateTime(item.Course.DateStart), Convert.ToDateTime(item.Course.DateEnd))
+                                                </td>
+                                                <td data-title="@Multi.Product_Time">
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    {
+                                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("HH:mm"), Convert.ToDateTime(item.Course.DateEnd).ToString("HH:mm"));
+                                                    }
+                                                    else
+                                                    {
+                                                        @String.Format("{0} - {1}", Convert.ToDateTime(item.Course.DateStart).ToString("hh:mm tt"), Convert.ToDateTime(item.Course.DateEnd).ToString("hh:mm tt"));
+                                                    }
+                                                </td>
+                                                <td data-title="@Multi.Pay_Quantity">
+                                                    @Html.DisplayFor(showitem => item.Quantity)
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td data-title="@Multi._MembershipRegisterString1">
+                                                    @if (Multi.__LanguageType == "TH")
+                                                    { @String.Format("{0} {1} {2}", item.Course.Product.TitleTH, Multi._MembershipRegisterString2, item.Course.TitleTH) }
+                                                    else
+                                                    { @String.Format("{0} {1} {2}", item.Course.Product.TitleEN, Multi._MembershipRegisterString2, item.Course.TitleEN) }
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            @if (ViewBag.getShow == 1)
+                            {
+                                <div class="col-sm-6 col-sm-offset-18 col-md-4 col-md-offset-20">
+                                    <a href="@Url.Action("ConfirmPayment", "Home", new {@id = Pay.Id})" class="btn btn-git-default btn-block btn-xs">
+                                        @Multi._Button_confirmPayment
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            }
+        }
+        else
+        {
+            <section class="panel">
+                <div class="panel-body">
+                    <div>
+                        <p>@Multi._HomeString10</p>
+                    </div>
+                </div>
+            </section>
+        }
+    </div>
+</div>
+@if (Model.Count() != 0)
+{
+    <section class="row">
+        <input type='hidden' id='current_page' />
+        <input type='hidden' id='show_per_page' />
+        <div id='page_navigation' class="col-sm-8 col-sm-offset-8"></div>
+    </section>
+}
+
+@section BodySection_Page_level_scripts {
+    @Scripts.Render("~/Scripts/responsive-tables")
+}
+@section BodySection_Template_scripts {
+    @if (Model.Count() != 0)
+    {
+        <script>
+            $(document).ready(function () {
+
+                //how much items per page to show
+                var show_per_page = 2;
+                //getting the amount of elements inside content div
+                var number_of_items = $('#myPaymentModalBody').children().size();
+                //calculate the number of pages we are going to have
+                var number_of_pages = Math.ceil(number_of_items / show_per_page);
+
+                //set the value of our hidden input fields
+                $('#current_page').val(0);
+                $('#show_per_page').val(show_per_page);
+
+                //now when we got all we need for the navigation let's make it '
+
+                /*
+                what are we going to have in the navigation?
+                    - link to previous page
+                    - links to specific pages
+                    - link to next page
+                */
+                var navigation_html = '<div id="page_navigation_previous" class="col-xs-12"><a class="btn btn-git-default btn-block" href="javascript:previous();">' + '@Multi._HomeString_Prev' + '</a></div>';
+                var current_link = 0;
+                while (number_of_pages > current_link) {
+                    navigation_html += '<a class="hidden page_link" longdesc="' + current_link + '">' + (current_link + 1) + '</a>';
+                    current_link++;
+                }
+                navigation_html += '<div id="page_navigation_next" class="col-xs-12"><a class="btn btn-git-default btn-block" href="javascript:next();">' + '@Multi._HomeString_Next' + '</a></div>';
+
+                $('#page_navigation').html(navigation_html);
+
+                //add active_page class to the first page link
+                $('#page_navigation .page_link:first').addClass('active_page');
+
+                //hide all the elements inside myPaymentModalBody div
+                $('#myPaymentModalBody').children().css('display', 'none');
+
+                //and show the first n (show_per_page) elements
+                $('#myPaymentModalBody').children().slice(0, show_per_page).css('display', 'block');
+
+                if (number_of_pages == 1) {
+                    $('#page_navigation').hide()
+                }
+
+            });
+
+            function previous() {
+
+                new_page = parseInt($('#current_page').val()) - 1;
+                //if there is an item before the current active link run the function
+                if ($('.active_page').prev('.page_link').length == true) {
+                    go_to_page(new_page);
+                }
+
+            }
+
+            function next() {
+                new_page = parseInt($('#current_page').val()) + 1;
+                //if there is an item after the current active link run the function
+                if ($('.active_page').next('.page_link').length == true) {
+                    go_to_page(new_page);
+                }
+
+            }
+            function go_to_page(page_num) {
+                //get the number of items shown per page
+                var show_per_page = parseInt($('#show_per_page').val());
+
+                //get the element number where to start the slice from
+                start_from = page_num * show_per_page;
+
+                //get the element number where to end the slice
+                end_on = start_from + show_per_page;
+
+                //hide all children elements of myPaymentModalBody div, get specific items and show them
+                $('#myPaymentModalBody').children().css('display', 'none').slice(start_from, end_on).css('display', 'block');
+                $('#myPaymentModalBody').slideUp("slow").slideDown("slow");
+
+                /*get the page link that has longdesc attribute of the current page and add active_page class to it
+                and remove that class from previously active page link*/
+                $('.page_link[longdesc=' + page_num + ']').addClass('active_page').siblings('.active_page').removeClass('active_page');
+
+                //update the current page input field
+                $('#current_page').val(page_num);
+            }
+        </script>
+
+    }
+}

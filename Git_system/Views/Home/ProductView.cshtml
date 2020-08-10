@@ -1,0 +1,288 @@
+﻿@using Git_system.MultiResources
+@using Git_system.Models;
+@{
+
+    //Config
+    ViewBag.Title = Multi.Product;
+    Layout = "~/Views/_LayoutFrontendECom.cshtml";
+
+    //End Config
+
+    @section BodySection_Core_styles {
+        <script src="~/Scripts/angular/libsBundle.min.js"></script>
+        <link rel="stylesheet" href="~/Scripts/angular/ngTable/ng-table.min.css" />
+
+        <script src="~/Scripts/angular/eComApp/eComBundle.js"></script>
+
+    }
+
+    @section RenderOnBody{
+        <div class="row" ng-app="eComApp" ng-controller="MainCtrl">
+            <div ng-if="loadObject.status" class="text-center">
+                <div class="sk-cube-grid">
+                    <div class="sk-cube sk-cube1"></div>
+                    <div class="sk-cube sk-cube2"></div>
+                    <div class="sk-cube sk-cube3"></div>
+                    <div class="sk-cube sk-cube4"></div>
+                    <div class="sk-cube sk-cube5"></div>
+                    <div class="sk-cube sk-cube6"></div>
+                    <div class="sk-cube sk-cube7"></div>
+                    <div class="sk-cube sk-cube8"></div>
+                    <div class="sk-cube sk-cube9"></div>
+                </div>
+                <span ng-bind="loadObject.message"></span>
+            </div>
+
+            <!--slider-->
+            <div id="slider_git" class="carousel slide ng-hide" ng-show="!loadObject.status" data-ride="carousel">
+                <!-- Indicators -->
+                @*<ol class="carousel-indicators" ng-if="slideshows.length > 1">
+                        <li ng-repeat="slideshow in slideshows" data-target="#slider_git" data-slide-to="{{$index}}" ng-class="::{active:$first}"></li>
+                    </ol>*@
+
+                <!--Indicators end-->
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    <div class="item" ng-repeat="slideshow in slideshows" ng-class="::{active:$first}">
+
+                        <a ng-href="{{slideshow.Link}}" target="_blank">
+                            <img ng-src="{{slideshow.Image}}" style="max-width: 1200px; margin-left: auto; margin-right: auto; width:100%;" onload="loadDomImageSlideShow($(this))">
+                        </a>
+
+                        @*<div class="carousel-caption">
+                                <span ng-bind="slideshow.Title"></span>
+                            </div>*@
+                    </div>
+                </div>
+                <!-- Wrapper for slides end-->
+                <!--controls-->
+                <a class="left carousel-control" href="#slider_git" role="button" data-slide="prev" ng-if="slideshows.length > 1">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#slider_git" role="button" data-slide="next" ng-if="slideshows.length > 1">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <!--controls end-->
+            <!--slider end-->
+
+            <div class="container ng-hide" ng-show="!loadObject.status">
+                <!--box content for mobile-->
+                <div class="visible-xs-block">
+                    <div class="paragraph-bt-large pagination-right white-text" style="width: 100%; background-color: #2B3C96; -moz-border-radius: 62px 62px 62px 62px; -webkit-border-radius: 62px 62px 62px 62px; border-radius: 62px 62px 62px 62px; border: 5px solid #404D98; text-align: center;">
+                        <img src="~/Images/cart.png" />&nbsp;<label>@Multi.Shopping_in_cart @Multi.Quantity {{totalItems}} @Multi.Unit</label>
+                    </div>
+                </div>
+                <!--box content fix right-->
+                <div class="hidden-xs">
+                    <a class="cartCount" href="@Url.Action("ProductShoppingCart", "Home", null)">
+                        <div class="inner-block" style="z-index:5"></div>
+                        <div class="outer-block" style="z-index:5">
+                            <div class="margin-category">
+                                <label class="white-text font-size-16">@Multi.Shopping_in_cart</label>&nbsp;<label class="white-text font-size-14">@Multi.Quantity</label><br><label class="white-text inner-part-number font-size-30">{{totalItems}}</label>&nbsp;<label class="white-text font-size-16">@Multi.Unit</label>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!--search page-->
+                <div class="col-md-24 search_page">
+                    <div class="row">
+                        <div class="">
+                            <div style="float:left;">
+                                <label>GIT E-Store</label>
+                            </div>
+                            <div style="float:left;" class="col-sm-8 col-md-5">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control" ng-model="searchValue" onkeypress="if (event.which == 13) document.getElementById('searchButton').click()" autofocus>
+                                    <span class="input-group-btn">
+                                        <a id="searchButton" class="btn btn-git-default" ng-href="/Home/ProductViewMore#?Search={{searchValue}}">Go!</a>
+                                    </span>
+                                </div><!-- /input-group -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--search page end-->
+                <!--section 1 start-->
+                <div class="col-md-24">
+                    <div class="row">
+                        <!--define tabs-->
+
+                        <div class="visible-xs-block">
+                            <ul class="nav nav-tabs">
+                                <li class="dropdown eCom-select">
+                                    <label href="#" data-toggle="dropdown" class="dropdown" aria-expanded="false"><span>@Multi.Choose_category<b class="caret"></b></span></label>
+
+                                    <ul class="dropdown-menu">
+                                        <li ng-class="{'active':$first}" ng-repeat="category in Categories">
+                                            <a data-toggle="tab" href="#category{{category.Id}}" ng-click="setActiveCategory(category.Id)">
+                                                <label>{{category.Name}}</label>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <ul class="nav nav-tabs navbar-right">
+                                    <a href="@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{activeCategoryId}}"><label style=" cursor:pointer">@Multi.View_More</label></a>
+                                </ul>
+                            </ul>
+                        </div>
+                        <div class="hidden-xs">
+                            <ul class="nav nav-tabs">
+                                <li ng-class="{'active':$first}" ng-repeat="category in Categories">
+                                    <a data-toggle="tab" href="#category{{category.Id}}" ng-click="setActiveCategory(category.Id)">
+                                        <label>{{category.Name}}</label>
+                                    </a>
+                                </li>
+                                <ul class="nav nav-tabs navbar-right">
+                                    <a href="@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{activeCategoryId}}"><label style="cursor:pointer">@Multi.View_More</label></a>
+                                </ul>
+                            </ul>
+                        </div>
+                        <!--defind tabs end-->
+                        <!--content tabs-->
+                        <div class="tab-content">
+                            <div class="tab-pane fade in fadeInLeft fadeOutLeft" ng-class="{'active':$first}" id="category{{category.Id}}" ng-repeat="category in Categories">
+                                <div class="col-md-24">
+                                    <!-- product item -->
+                                    <div product-show category="{{category.Id}}" limit="8" class="row" ng-init="isLocation = @Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--content tabs end-->
+                    </div>
+                </div>
+                <!--section 1 end-->
+                <!--section 2 start-->
+                <!--define tabs start-->
+                <div class="col-md-24 CategoryProductTransparent" ng-repeat="category in CategoriesOnPage">
+                    <div class="row">
+                        <ul class="nav nav-tabs">
+                            <li><label><span>{{category.Name}}</span></label></li>
+                            <ul class="nav nav-tabs navbar-right">
+                                <a href='@Url.Action("ProductViewMore", "Home", null)#?CategoryId={{category.Id}}'><label style="cursor:pointer">@Multi.View_More</label></a>
+                            </ul>
+                        </ul>
+                        <div class="col-md-24">
+                            <!--define tabs end-->
+                            <!--content tabs-->
+                            <div product-show category="{{category.Id}}" limit="4" class="row" ng-init="isLocation = @Html.Raw(Multi.__LanguageType.Equals("TH").ToString().ToLower())">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @section BodySection_Core_scripts {
+        <script>
+            function loadDomImageSlideShow(domImage) {
+                var firstDomImage = domImage.context;
+
+                var maxHeight = 400;
+                var height = firstDomImage.height > maxHeight ? 400 : firstDomImage.height;
+                var fixPadding = 50;
+                var previousColor = getColorAvg(firstDomImage, 0, 0, fixPadding, height, 0, 0, fixPadding, height);
+                var nextColor = getColorAvg(firstDomImage, firstDomImage.width - fixPadding, 0, firstDomImage.width, height, 0, 0, firstDomImage.width, height);
+
+                var domWrapperImage = domImage.parents("div.item");
+                var setStyle = getGS(previousColor, nextColor);
+                domWrapperImage[0].style.cssText = setStyle;
+            }
+
+            function getGS(startHexColor, endHexColor) {
+                function changeStr(str) {
+                    return str.replace(new RegExp("{m}", "g"), startHexColor).replace(new RegExp("{s}", "g"), startHexColor).replace(new RegExp("{e}", "g"), endHexColor);
+                }
+
+                return changeStr("background: #{m};" +
+                "background: -moz-linear-gradient(left, #{s} 0%, #{e} 100%);" +
+                "background: -webkit-gradient(left top, right top, color-stop(0%, #{s}), color-stop(100%, #{e}));" +
+                "background: -webkit-linear-gradient(left, #{s} 0%, #{e} 100%);" +
+                "background: -o-linear-gradient(left, #{s} 0%, #{e} 100%);" +
+                "background: -ms-linear-gradient(left, #{s} 0%, #{e} 100%);" +
+                "background: linear-gradient(to right, #{s} 0%, #{e} 100%);" +
+                "filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#{s}', endColorstr='#{e}', GradientType=1 );");
+            }
+
+            function getColorAvg(image, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight) {
+                var canvasElement = document.createElement("canvas");
+                var ctxCanvas = canvasElement.getContext('2d');
+                ctxCanvas.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+
+                return getColors(ctxCanvas);
+            }
+
+            // returns a map counting the frequency of each color
+            // in the image on the canvas
+            function getColors(c) {
+                var col, colors = {};
+                var pixels, r, g, b, a;
+                r = g = b = a = 0;
+                pixels = c.getImageData(0, 0, c.canvas.width, c.canvas.height);
+                for (var i = 0, data = pixels.data; i < data.length; i += 4) {
+                    r = data[i];
+                    g = data[i + 1];
+                    b = data[i + 2];
+                    a = data[i + 3]; // alpha
+                    // skip pixels >50% transparent
+                    if (a < (255 / 2))
+                        continue;
+                    col = rgbToHex(r, g, b);
+                    if (!colors[col])
+                        colors[col] = 0;
+                    colors[col]++;
+                }
+
+                var coll = [];
+                $.each(colors, function (index, value) {
+                    return coll.push([index, value]);
+                });
+                coll.sort(function (a, b) {
+                    if (a < b) {
+                        return 1;
+                    }
+                    if (a > b) {
+                        return -1;
+                    }
+                    return 0;
+                });
+
+                return coll[0][0];
+            }
+
+            function rgbToHex(r, g, b) {
+                if (r > 255 || g > 255 || b > 255)
+                    throw "Invalid color component";
+                function hex2Char(str) {
+                    var s = str.toString(16)
+                    return s.length == 2 ? s : "0" + s;
+                }
+                return hex2Char(r) + hex2Char(g) + hex2Char(b);
+            }
+
+            function hexTorgb(hex) {
+
+                function cutHex(h) { return (h.charAt(0) == "#") ? h.substring(1, 7) : h }
+                function hexToR(h) { return parseInt((cutHex(h)).substring(0, 2), 16) }
+                function hexToG(h) { return parseInt((cutHex(h)).substring(2, 4), 16) }
+                function hexToB(h) { return parseInt((cutHex(h)).substring(4, 6), 16) }
+
+                var R = hexToR("#FFFFFF");
+                var G = hexToG("#FFFFFF");
+                var B = hexToB("#FFFFFF");
+                return [R, G, B];
+            }
+        </script>
+    }
+    @section BodySection_Page_level_scripts {
+
+    }
+    @section BodySection_Template_scripts {
+
+    }
+}

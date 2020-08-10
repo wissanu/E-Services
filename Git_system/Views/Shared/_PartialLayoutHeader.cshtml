@@ -1,0 +1,96 @@
+﻿@using Git_system.MultiResources;
+
+<header id="header" class="container-fluid block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-24">
+                <div class="row">
+                    <div class="col-md-9 col-sm-11 hidden-xs">
+                        <a href="@((Model == "eService") ? Url.Action("Home", "Home", null) : Url.Action("ProductView", "Home", null))">
+                            @if (Model == "eService")
+                            {<img src="~/Images/GIT_Headder_New.png" class="img-responsive display-inline" />}
+                            else
+                            { <img src="~/Images/GIT_EcomHeadder_New.png" class="img-responsive display-inline" />}
+                        </a>
+                    </div>
+                    <div class="col-md-12 col-sm-12 visible-xs text-center">
+                        <a href="@((Model == "eService") ? Url.Action("Home", "Home", null) : Url.Action("ProductView", "Home", null))">
+                            @if (Model == "eService")
+                            {<img src="~/Images/GIT_Headder_New.png" class="img-responsive display-inline" />}
+                            else
+                            { <img src="~/Images/GIT_EcomHeadder_New.png" class="img-responsive display-inline" />}
+                        </a>
+                    </div>
+
+                    <div class="col-md-15 col-sm-13 hidden-xs" @*style="position:absolute; bottom:0; right:0; top:0;"*@>
+                        <div class="row" @*style="height:100%;"*@>
+                            <div class="col-sm-24">
+                                <span class="pull-right">
+                                    @if (Request.Cookies[".FOENAUTH"] == null)
+                                    {
+                                        if (Multi.__LanguageType == "TH")
+                                        {
+                                            <a onclick="setLanguage('en')">
+                                                <span class="flag-icon flag-icon-us grayscale"></span>
+                                            </a>
+                                            <a onclick="setLanguage('th')">
+                                                <span class=" flag-icon flag-icon-th"></span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a onclick="setLanguage('en')">
+                                                <span class=" flag-icon flag-icon-us"></span>
+                                            </a>
+                                            <a onclick="setLanguage('th')">
+                                                <span class=" flag-icon flag-icon-th grayscale">
+                                                </span>
+                                            </a>
+                                        }
+                                    }
+                                </span>
+                            </div>
+                            <div class="col-sm-24" @*style="position:absolute; bottom:0;"*@>
+                                <span class="pull-right GIT_Nav text-right">
+                                    @Html.Partial(Model == "eService" ? "_PartialLayoutHeaderMenuEService" : "_PartialLayoutHeaderMenuECom", null)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 visible-xs text-center" @*style="padding-top: 20px;"*@>
+                        <div class="row">
+                            <div class="col-sm-24" style="z-index:2">
+                                <span class="pull-right">
+                                    @if (Request.Cookies[".FOENAUTH"] == null)
+                                    {
+                                        if (Multi.__LanguageType == "TH")
+                                        {
+                                            <a onclick="setLanguage('en')">
+                                                <span class="flag-icon flag-icon-us grayscale"></span>
+                                            </a>
+                                            <a onclick="setLanguage('th')">
+                                                <span class="flag-icon flag-icon-th"></span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a onclick="setLanguage('en')">
+                                                <span class="flag-icon flag-icon-us"></span>
+                                            </a>
+                                            <a onclick="setLanguage('th')">
+                                                <span class="flag-icon flag-icon-th grayscale"></span>
+                                            </a>
+                                        }
+                                    }
+                                </span>
+                            </div>
+                            <div class="col-sm-24 GIT_Nav" @*style="z-index:1"*@>
+                                @Html.Partial(Model == "eService" ? "_PartialLayoutHeaderMenuEService" : "_PartialLayoutHeaderMenuECom", null)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

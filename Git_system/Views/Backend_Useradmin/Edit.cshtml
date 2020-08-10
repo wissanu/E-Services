@@ -1,0 +1,160 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.Form.Backend_Useradmin
+
+    ViewBag.Title = "ผู้ดูแลระบบ";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.AdminAndSecurityMain = "active";
+    BackendMenuLayout.AdminAndSecurity.AdminManage = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/bootstrap-select")
+    }
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            ผู้ดูแลระบบ
+        </header>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <div class="panel-body">
+                <fieldset class="form-horizontal bordered-group" role="form">
+                    <div class="form-group" style="display:none;">
+                        <label class="col-sm-2 control-label">@Html.LabelFor(model => model.Id)</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(model => model.Id)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ชื่อผู้ใช้</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.userName, new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(model => model.userName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ชื่อ</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Firstname)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">นามสกุล</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Lastname, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Lastname)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">อีเมล</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ตำแหน่ง</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.JobTitle, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.JobTitle)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ฝ่าย</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Department, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Department)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">โทรศัพท์</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Tel, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Tel)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">รหัสผ่าน</label>
+                        <div class="col-sm-10">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ยืนยันรหัสผ่าน</label>
+                        <div class="col-sm-10">
+                            @Html.PasswordFor(model => model.Confirm_Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Confirm_Password)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">สิทธิการใช้งาน</label>
+                        <div class="col-sm-10">
+                            @Html.DropDownList("Permission_permissionId", null, null, new { @class = "form-control selectpicker", @data_style = "btn-white" })
+                            @Html.ValidationMessageFor(model => model.Permission_permissionId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">สถานะ</label>
+                        <div class="col-sm-10">
+                            @Html.CheckBoxFor(model => model.Active, new { @class = "js-switch-GreenSwitchery01" })
+                            @Html.ValidationMessageFor(model => model.Active)
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "Home", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        }
+    </section>
+
+        //<!-- /.modal-content -->
+        <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                    </div>
+                    <div class="modal-body">
+                        <span>คุณต้องการที่จะบันทึก?</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @section BodySection_Page_level_scripts {
+            @Scripts.Render("~/Scripts/switchery")
+            @Scripts.Render("~/Scripts/bootstrap-select")
+            <script>
+                //เพิ่ม class ที่ทำให้ validation-error เป็นสี แดง โดยใช้ class text-danger
+                $(".field-validation-error").addClass("text-danger");
+            </script>
+        }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}

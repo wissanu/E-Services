@@ -1,0 +1,22 @@
+﻿@model Git_system.Models.Form.Frontend_ShowMessage
+@{
+    //Config
+    ViewBag.Title = "";
+    Layout = "~/Views/_LayoutFrontend.cshtml";
+    //End Config
+}
+
+<div class="row">
+    <div class="col-md-24">
+        <div class="row text-center">
+            <h2 class="text-git-style text-git-style-bold">@Model.Header</h2>
+            <h3 class="text-git-style-bold">@Model.Message</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.setTimeout(function () {
+        window.location.href = "@Url.Action(Model.RedirectAction, "Home", null)";
+    }, 5000);
+</script>

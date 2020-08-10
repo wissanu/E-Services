@@ -1,0 +1,346 @@
+﻿@if (Request.IsAuthenticated)//ต้องกำหนดใน webconfig ด้วย
+{
+
+    @model Git_system.Models.Product
+
+    ViewBag.Title = "หลักสูตร";
+    Layout = "~/Views/_LayoutBackend.cshtml";
+
+    Git_system.Models.BackendLayout.BackendMenuLayout BackendMenuLayout = new Git_system.Models.BackendLayout.BackendMenuLayout();
+    BackendMenuLayout.TraningMain = "active";
+    BackendMenuLayout.Traning.Product = "active";
+    ViewBag.BackendMenuLayout = BackendMenuLayout;
+
+    //body
+    @section HeadSection {
+        @Styles.Render("~/Content/responsive-tables")
+    }
+    <section class="panel">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <header class="panel-heading clearfix">
+                <span>หลักสูตร</span>
+                <div class="pull-right" style="margin-left:15px;">
+                    <span>Active </span><span>@Html.CheckBoxFor(model => model.Active, new { @class = "js-switch-GreenSwitchery03" })</span>
+                </div>
+            </header>
+
+            <div class="panel-body">
+                <fieldset class="form-horizontal bordered-group" role="form">
+
+                    <div class="form-group" style="display:none;">
+                        <label class="col-sm-2 control-label">@Html.LabelFor(model => model.Id)</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @readonly = "true" })
+                            @Html.ValidationMessageFor(model => model.Id)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.TitleTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TitleTH)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ชื่อ (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.TitleEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.TitleEN)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailTH)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">รายละเอียด (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.DetailEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.DetailEN)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">สถานที่</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.LocationTH, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LocationTH)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">สถานที่ (อังกฤษ)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.LocationEN, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.LocationEN)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ระยะสั้น</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.isShortTerm, new { @class = "js-switch-GreenSwitchery05" })
+                                    @Html.ValidationMessageFor(model => model.isShortTerm)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ระยะยาว</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.isLongTerm, new { @class = "js-switch-GreenSwitchery06" })
+                                    @Html.ValidationMessageFor(model => model.isLongTerm)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ภาษาไทย</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.SupportTH, new { @class = "js-switch-GreenSwitchery01" })
+                                    @Html.ValidationMessageFor(model => model.SupportTH)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ภาษาอังกฤษ</label>
+                                <div class="col-sm-8">
+                                    @Html.CheckBoxFor(model => model.SupportEN, new { @class = "js-switch-GreenSwitchery02" })
+                                    @Html.ValidationMessageFor(model => model.SupportEN)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden">
+                        <label class="col-sm-2 control-label">จำนวน</label>
+                        <div class="col-sm-10">
+                            @Html.TextBoxFor(model => model.Limit, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Limit)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">ราคา สมาชิกออนไลน์</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Price)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา สมาชิกออนไลน์ (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceInter, new { @class = "form-control" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา บุคคลธรรมดา</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceIndividual, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PriceIndividual)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา บุคคลธรรมดา (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceIndividualInter, new { @class = "form-control" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceIndividualInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา นิติบุคคล</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceCorporate, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.PriceCorporate)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-4  control-label">ราคา นิติบุคคล (อินเตอร์)</label>
+                                <div class="col-sm-8">
+                                    @Html.TextBoxFor(model => model.PriceCorporateInter, new { @class = "form-control" })
+                                    <p class="help-block no-margin">ราคาเป็นดอลลาร์สหรัฐอเมริกา (USD)</p>
+                                    @Html.ValidationMessageFor(model => model.PriceCorporateInter)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">ชำระด้วยบัตรเครดิต</label>
+                        <div class="col-sm-10">
+                            @Html.CheckBoxFor(model => model.isCreditCard, new { @class = "js-switch-GreenSwitchery04" })
+                            @Html.ValidationMessageFor(model => model.isCreditCard)
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <p>@Html.ValidationSummary(true)</p>
+                <p class="text-center">
+                    @Html.ActionLink("Back", "Home", null, new { @class = "btn btn-git-default" })
+                    <button id="ButtonSubmit" class="hidden" type="submit">Save</button>
+                    <button type="button" class="btn btn-git-default" data-toggle="modal" data-target=".bs-modal-sm" onclick="ChangeNameForButton('ButtonSubmit')">Save</button>
+                </p>
+            </footer>
+        }
+    </section>
+
+    <section class="panel">
+        <header class="panel-heading clearfix">
+            <span>รุ่น</span>
+            <span class="pull-right">
+                @Html.ActionLink("Create", "Create", "Backend_ProductCourse", new { @id = Model.Id }, new { @class = "pull-right" })
+            </span>
+        </header>
+        <div class="panel-body">
+            <div class="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>
+                                รุ่น
+                            </th>
+                            <th>
+                                วัน
+                            </th>
+                            <th>
+                                เวลา
+                            </th>
+                            <th>
+                                สถานะ
+                            </th>
+                            <th>
+                                โปรโมชั่น
+                            </th>
+                            <th>
+                                สั่งซื้อ
+                            </th>
+                            <th>
+                                ชำระแล้ว
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Courses)
+                        {
+                            <tr>
+                                <td data-title="รุ่น">
+                                    @Html.DisplayFor(showitem => item.TitleTH)
+                                </td>
+                                <td data-title="วัน" class="text-center">
+                                    @Html.ValueFor(showitem => item.DateStart, "{0:dd/MM/yyyy}") - @Html.ValueFor(showitem => item.DateEnd, "{0:dd/MM/yyyy}")
+                                </td>
+                                <td data-title="เวลา" class="text-center">
+                                    @Html.ValueFor(showitem => item.DateStart, "{0:hh:mm tt}") - @Html.ValueFor(showitem => item.DateEnd, "{0:hh:mm tt}")
+                                </td>
+                                <td data-title="สถานะ" class="text-center">
+                                    @if (item.Active)
+                                    { <span class="text-success">Active</span> }
+                                    else
+                                    { <span class="text-danger">Inactive</span> }
+                                </td>
+                                <td data-title="โปรโมชั่น" class="text-center">
+                                    @if (item.ProductSKUActive)
+                                    { <span class="text-success">Active</span> }
+                                    else
+                                    { <span class="text-danger">Inactive</span> }
+                                </td>
+                                <td data-title="สั่งซื้อ" class="text-center">
+                                    @Html.ActionLink(item.PayItems.Select(pt => Convert.ToInt32(pt.Quantity)).Sum().ToString(), "DetailCourse", new { @courseId = item.Id, @status = 1 })
+                                </td>
+                                <td data-title="ชำระแล้ว" class="text-center">
+                                    @Html.ActionLink(item.PayItems.Where(pt => pt.Pay.ProcessStatusTypeId.Equals(2)).Select(pt => Convert.ToInt32(pt.Quantity)).Sum().ToString(), "DetailCourse", new { @courseId = item.Id, @status = 2 })
+                                </td>
+                                <td data-title="Action" class="text-center">
+                                    @Html.ActionLink("Edit", "Edit", "Backend_ProductCourse", new { @id = item.Id }, null)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+                        //<!-- /.modal-content -->
+                        <div class="modal fade bs-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h5 class="modal-title text-center" id="myModalLabel">ยืนยันการบันทึก</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span>คุณต้องการที่จะบันทึก?</span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="ButtonSubmitForModal" type="submit" class="btn btn-git-default btn-sm" name="ButtonSubmit" onclick="ClickToButton(this.name)">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @section BodySection_Page_level_scripts {
+                            <script>
+                                //เพิ่ม class ที่ทำให้ validation-error เป็นสี แดง โดยใช้ class text-danger
+                                $(".field-validation-error").addClass("text-danger");
+                            </script>
+                            @Scripts.Render("~/Scripts/switchery")
+                            @Scripts.Render("~/Scripts/responsive-tables")
+                        }
+}
+else
+{
+    <script type="text/javascript">
+        window.location.href = "@Url.Action("index", "Backend")";
+    </script>
+}
